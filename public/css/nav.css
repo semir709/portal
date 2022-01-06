@@ -1,0 +1,16 @@
+
+.ss_nav_width {
+    width: 100%;
+}
+
+.ss_nav_background {
+    background: #21292F;
+}
+
+.ss_nav_background a, i {
+    color: #fff;
+}
+
+.ss_nav_background button {
+    color: #fff !important;
+}

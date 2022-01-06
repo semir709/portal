@@ -1,0 +1,85 @@
+
+
+.ss_main_articles {
+    color: #fff;
+    margin-top: 50px;
+}
+
+.ss_main_articles_size {
+    max-height: 420px;
+    padding: 0;
+}
+
+.ss_img_holder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ss_img_holder img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.ss_img_holder_right {
+    position: relative;
+    width: 100%;
+    height: 50%;
+}
+
+.ss_img_holder_right img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.ss_dark_filter {
+    position: absolute;
+    background: black;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0.3;
+}
+
+.ss_text_right_article {
+    position: absolute;
+    color: #ffffff;
+    top:80%;
+    left: 10px;
+}
+
+.ss_header_holder {
+    width: 100%;
+    height: 100%;
+}
+
+.ss_article_info_main {
+    position: absolute;
+    top: 35%;
+    left: 10px;
+    width: 95%;
+    height: 55%;
+}
+
+.ss_article_info_right {
+    position: absolute;
+    top: 25%;
+    left: 10px;
+    width: 95%;
+    height: 55%;
+}
+
+.ss_img_author_holder {
+    width: 35px;
+    height: 35px;
+}
+
+.ss_img_author_holder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 60%;
+}

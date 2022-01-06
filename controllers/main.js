@@ -1,6 +1,7 @@
 
+
 module.exports = {
     home: function(req, res) {
-        res.send("Hello");
+        res.render('home.ejs')
     }
 }
