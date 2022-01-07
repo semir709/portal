@@ -35,3 +35,14 @@
     width: 60%;
     height: 150px;
 }
+
+.ss_page_link {
+    background: #21292F;
+    color: #fff;
+    border-radius: 10%;
+}
+
+.ss_page_link:hover {
+    color: #fff ;
+    background: #21292F;
+}
