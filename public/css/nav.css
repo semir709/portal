@@ -5,12 +5,26 @@
 
 .ss_nav_background {
     background: #21292F;
+    height: 40px;
 }
 
 .ss_nav_background a, i {
     color: #fff;
 }
 
+.ss_nav_background a:hover, i:hover, i:focus, a:focus {
+    color: #fff !important;
+}
+
 .ss_nav_background button {
     color: #fff !important;
+}
+
+.ss_list {
+    padding: 0px 10px;
+}
+
+.ss_list:hover {
+    background: #008cff;
+    cursor: pointer;
 }
