@@ -10,13 +10,13 @@
 }
 
 .line {
-    border: black solid 1px;
+    border-top: black solid 1px;
     width: 100%;
 }
 
 .ss_side_img_holder {
     width: 100%;
-    height: 200px;
+    height: 150px;
 }
 
 .ss_side_img_holder img {
@@ -25,15 +25,33 @@
     width: 100%;
 } 
 
+.ss_img_author_holder img:hover {
+    cursor: pointer;
+}
+
+.ss_img_content_holder img:hover {
+    cursor: pointer;
+}
+
 .ss_content_header {
     display: block;
     height: 80%;
     width: 100%;
+    font-weight: 400;
+}
+
+.ss_content_header p {
+    font-weight: 300;
 }
 
 .ss_info_content_holder {
     width: 60%;
     height: 150px;
+}
+
+.ss_info_content_holder h3:hover {
+    color: #008cff;
+    cursor: pointer;
 }
 
 .ss_page_link {
@@ -45,4 +63,18 @@
 .ss_page_link:hover {
     color: #fff ;
     background: #21292F;
+}
+
+.ss_side_content_holder p {
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.ss_side_content_holder p:hover, img:hover{
+    cursor: pointer;
+}
+
+.ss_author_choice_header {
+    font-weight: 400;
+    font-size: 25px;
 }
