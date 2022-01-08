@@ -18,74 +18,125 @@
     <%- include('partials/home_nav.ejs')%>
 
     <div class="container">
+
         <div class="row ss_main_articles">
+
             <div  class="col-1"></div>
+
             <div class="col-6 ss_main_articles_size">
-                <div class="ss_img_holder">
-                    <img src="/img/1.jpg" alt="">
-                    <div class="ss_dark_filter"></div>
+
+                <div class="ss_main_article">
+
+                    <div class="ss_img_holder">
+
+                        <img src="/img/1.jpg" alt="">
+                        <div class="ss_dark_filter"></div>
+
+                    </div>
+
                     <div class="ss_article_info_main">
+
                         <div class="ss_header_holder d-flex align-items-end">
-                            <h1 class="">Lorem ipsum dolor sit amet.asdasdasd</h1>
+                            <h1 class="ss_main_header">Best phones in this moment</h1>
                         </div>
 
                         <div class="d-flex align-items-center">
+
                             <div class="ss_img_author_holder">
+
                                 <img src="/img/niko.jpg" alt="">
+                                <div class="ss_dark_filter rounded-circle"></div>
+
                             </div>
-                            <p class="mb-0 ms-2">Lorem ipsum dolor sit amet.</p>
+
+                            <p class="ss_paragraphs">Semir Selman, 01/08/2022</p>
+
                         </div>
                     </div>
+
                 </div>
                 
             </div>
 
             <div class="col-4 ss_main_articles_size">
 
+                <div class="ss_main_right_content">
+
                     <div class="ss_img_holder_right">
+
                         <img src="img/gpu.jpg" alt="">
                         <div class="ss_dark_filter"></div>
-                        <div class="ss_article_info_right">
-                            <div class="ss_header_holder d-flex align-items-end">
-                                <h2 class="fs-4">Lorem ipsum dolor sit amet.asdasdasd</h2>
+
+                    </div>
+
+                    <div class="ss_article_info_right">
+
+                        <div class="ss_header_holder d-flex align-items-end">
+                            <h2 class="fs-4">Best GPU right now</h2>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+
+                            <div class="ss_img_author_holder">
+
+                                <img src="/img/3.jpg" alt="">
+                                <div class="ss_dark_filter rounded-circle"></div>
+
                             </div>
-                            <div class="d-flex align-items-center">
-                                <div class="ss_img_author_holder">
-                                    <img src="/img/3.jpg" alt="">
-                                </div>
-                                <p class="mb-0 ms-2">Lorem ipsum dolor sit amet.</p>
-                            </div>
+
+                            <p class="ss_paragraphs">Semir Selman, 01/08/2022</p>
+
                         </div>
                     </div>
-                    
+
+                </div>
+
+                <div class="ss_main_right_content">
+
                     <div class="ss_img_holder_right">
+
                         <img src="img/cpu.jpg" alt="">
                         <div class="ss_dark_filter"></div>
-                        <div class="ss_article_info_right">
-                            <div class="ss_header_holder d-flex align-items-end">
-                                <h2 class="fs-4">Lorem ipsum dolor sit amet.asdasdasd</h2>
+                        
+                    </div>
+
+                    <div class="ss_article_info_right">
+
+                        <div class="ss_header_holder d-flex align-items-end">
+                            <h2 class="fs-4">Best CPU right now</h2>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+
+                            <div class="ss_img_author_holder">
+
+                                <img src="/img/niko.jpg" alt="">
+                                <div class="ss_dark_filter rounded-circle"></div>
+
                             </div>
-                            <div class="d-flex align-items-center">
-                                <div class="ss_img_author_holder">
-                                    <img src="/img/niko.jpg" alt="">
-                                </div>
-                                <p class="mb-0 ms-2">Lorem ipsum dolor sit amet.</p>
-                            </div>
+
+                            <p class="ss_paragraphs">Semir Selman, 01/08/2022</p>
+
                         </div>
                     </div>
+                </div>    
                       
-                
+               
             </div>
         </div>
 
         <%- include('partials/content.ejs')%>
 
         <div class="row">
+
             <div class="col-1"></div>
+
             <div class="col-10 p-0">
                 <div class="line mb-5"></div>
             </div>
+
             <div class="col-1"></div>
+
         </div>
 
         <%-include('partials/pagination.ejs')%>
