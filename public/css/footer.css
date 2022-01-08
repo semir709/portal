@@ -1,0 +1,23 @@
+.ss_footer_holder {
+    margin-top: 30px;
+    background: #21292F;
+    width: 100%;
+    height: 300px;
+
+}
+
+.ss_footer_info {
+    width: 35%;
+    padding: 2% 0% 0% 8%;
+    color: #fff;
+
+}
+
+.ss_footer_info h3 {
+    margin: 0px 0px 20px 40px;
+}
+.ss_info {
+    border-left: #fff solid 1px;
+    height: 70%;
+    padding: 10px 0px 0px 40px;
+}
