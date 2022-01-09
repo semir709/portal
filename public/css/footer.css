@@ -22,12 +22,23 @@
     padding: 10px 0px 0px 40px;
 }
 
-
-.ss_page_link:focus {
-    background: #008cff;
-    box-shadow: none;
+.ss_info p {
+    font-size: 17px;
 }
 
-.ss_page_link:hover {
-    background: #008cff;
+.ss_info p:hover {
+    color: #008cff;
+    cursor: pointer;
+}
+
+.ss_info i:hover {
+    cursor: pointer;
+}
+
+.ss_info i {
+    font-size: 30px;
+}
+
+.ss_social {
+    margin-bottom: 15px;
 }

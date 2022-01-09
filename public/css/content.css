@@ -60,9 +60,15 @@
     border-radius: 10%;
 }
 
+.ss_page_link:focus {
+    background: #008cff;
+    box-shadow: none;
+    color: #fff;
+}
+
 .ss_page_link:hover {
-    color: #fff ;
-    background: #21292F;
+    background: #008cff;
+    color: #fff;
 }
 
 .ss_side_content_holder p {

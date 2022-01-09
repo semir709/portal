@@ -16,6 +16,10 @@ body {
     padding: 0;
 }
 
+.ss_main_articles_size:hover {
+    cursor: pointer;
+}
+
 .ss_main_article {
     position: relative;
     width: 100%;
@@ -59,6 +63,7 @@ body {
     top: 0;
     opacity: 0.3;
 }
+
 
 .ss_header_holder {
     width: 100%;
