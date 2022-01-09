@@ -21,3 +21,13 @@
     height: 70%;
     padding: 10px 0px 0px 40px;
 }
+
+
+.ss_page_link:focus {
+    background: #008cff;
+    box-shadow: none;
+}
+
+.ss_page_link:hover {
+    background: #008cff;
+}

@@ -7,6 +7,10 @@ body {
     margin-top: 50px;
 }
 
+.ss_main_articles h1:hover, p:hover, h2:hover, img:hover {
+    cursor: pointer;
+}
+
 .ss_main_articles_size {
     max-height: 420px;
     padding: 0;
