@@ -6,5 +6,8 @@ module.exports = {
     },
     next: function(req, res) {
         res.render('next_page.ejs')
+    },
+    content: function(req, res) {
+        res.render('content.ejs')
     }
 }

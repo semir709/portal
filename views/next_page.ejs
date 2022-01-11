@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/content.css">
+    <link rel="stylesheet" href="/css/all_contents.css">
     <link rel="stylesheet" href="/css/footer.css">
     <title>Tech portal</title>
   </head>
@@ -19,7 +19,12 @@
 
     <div class="container">
 
-        <%- include('partials/content.ejs')%>
+      <div class="row mt-5 mb-5">
+
+        <%- include('partials/all_contents.ejs')%>
+        <%- include('partials/side_content.ejs')%>
+
+    </div>
 
         <div class="row">
 
