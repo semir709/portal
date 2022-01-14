@@ -1,0 +1,62 @@
+
+body {
+    background: #FAFAFA;
+}
+
+.ss_bg {
+    background: #21292F;
+    height: 40px;
+}
+
+.ss_bg p {
+    color: #fff;
+}
+
+.logo {
+    width: 50px;
+    height: 20px;
+    background: #fff;
+}
+
+.ss_form_login {
+    background: #fff;
+    border: 1px solid #C0C0C0;
+    padding: 5% 20%;
+}
+
+.ss_form_login input:focus {
+    box-shadow: none;
+    border: 1px solid #21292F;
+}
+
+.ss_form_login input:checked {
+    background: #21292F;
+}
+
+.ss_submit_login {
+    background: #21292F;
+    color: #fff;
+    width: 100%;
+}
+
+.ss_submit_login:hover {
+    color: #fff;
+}
+
+.ss_different_strategy {
+    margin-top: 10%;
+    border: 1px solid #C0C0C0;
+    padding: 10px;
+    width: 100%;
+    background: #fff;
+}
+
+.ss_different_strategy p {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.ss_google_icon {
+    margin-left: 20px;
+}
+
