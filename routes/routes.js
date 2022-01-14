@@ -11,4 +11,6 @@ route.get('/home/page:page', main.next);
 
 route.get('/content:name', main.content)
 
+route.get('/about', main.about);
+
 module.exports = route;

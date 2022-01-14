@@ -9,5 +9,8 @@ module.exports = {
     },
     content: function(req, res) {
         res.render('content.ejs')
+    },
+    about: function(req, res) {
+        res.render('about.ejs');
     }
 }
