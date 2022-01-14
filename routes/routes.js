@@ -15,5 +15,6 @@ route.get('/content:name', main.content)
 route.get('/about', main.about);
 
 route.get('/login', admin.login);
+route.get('/admin:name', admin.home);
 
 module.exports = route;

@@ -1,0 +1,50 @@
+
+.ss_admin_nav {
+    background: #21292F;
+    height: 100vh;
+}
+
+.ss_ul {
+    height: 100%;
+}
+
+.ss_ul li:hover label {
+    color: #fff;
+}
+
+.ss_ul li:hover i {
+    color: #fff;
+}
+
+.ss_ul li:first-child:hover {
+    background: none;
+    
+}
+
+.ss_admin_nav i, label, li {
+    color: #B0A9A9;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.ss_dashboard {
+    margin-bottom: 30px;
+}
+
+.ss_category {
+    margin-bottom: 40px;
+}
+
+.ss_media {
+    margin-bottom: 40px;
+}
+
+.ss_settings {
+    margin-bottom: 100px;
+}
+
+.ss_welcome_name {
+    font-size: 60px;
+    margin-top: 20px;
+    font-weight: 300;
+}
