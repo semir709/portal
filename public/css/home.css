@@ -1,10 +1,52 @@
+
 body {
     font-family: 'Roboto', sans-serif;
+}
+
+
+/* .ss_navbar {
+    background: red;
+} */
+
+
+.ss_nav_width {
+    width: 100%;
+}
+
+.ss_nav_background {
+    background: #21292F;
+    height: 40px;
+}
+
+.ss_nav_background a, i {
+    color: #fff;
+}
+
+.ss_nav_background a:hover, i:hover, i:focus, a:focus {
+    color: #fff !important;
+}
+
+.ss_nav_background button {
+    color: #fff !important;
+}
+
+.ss_list {
+    padding: 0px 10px;
+}
+
+.ss_list:hover {
+    background: #008cff;
+    cursor: pointer;
+}
+
+.ss_container {
+    padding: 0% 10%;
 }
 
 .ss_main_articles {
     color: #fff;
     margin-top: 50px;
+    margin: 5% 0%;
 }
 
 .ss_main_articles h1:hover, p:hover, h2:hover, img:hover {
@@ -43,17 +85,9 @@ body {
     height: 50%;
 }
 
-/* .ss_img_holder_right {
-    position: relative;
-    width: 100%;
-    height: 100%;  
+.ss_content_size {
+    margin: 5% 0%;
 }
-
-.ss_img_holder_right img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-} */
 
 .ss_dark_filter {
     position: absolute;
@@ -67,6 +101,28 @@ body {
 
 .ss_header_holder {
     width: 100%;
+    height: 100%;
+}
+
+.ss_carousel {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.ss_carousel_info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.ss_carousel_info h1{
+    display: block;
+    width: 100%;
+    height: 20%;
+}
+
+.ss_carousel img {
     height: 100%;
 }
 
@@ -110,4 +166,209 @@ body {
     margin: 0px 0px 0px 15px;
     opacity: 0.7;
     font-weight: 300;
+}
+
+.ss_side_padding {
+    font-size: large;
+}
+
+.ss_img_content_holder {
+    height: 200px;
+    width: 100%;
+}
+
+.ss_img_content_holder img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.line {
+    border-top: black solid 1px;
+    width: 100%;
+}
+
+.ss_side_img_holder {
+    width: 100%;
+    height: 150px;
+}
+
+.ss_side_img_holder img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+} 
+
+.ss_img_author_holder img:hover {
+    cursor: pointer;
+}
+
+.ss_img_content_holder img:hover {
+    cursor: pointer;
+}
+
+.ss_content_header {
+    display: block;
+    height: 80%;
+    width: 100%;
+    font-weight: 400;
+}
+
+.ss_content_header p {
+    font-weight: 300;
+}
+
+.ss_info_content_holder {
+    width: 60%;
+    height: 150px;
+}
+
+.ss_info_content_holder h3:hover {
+    color: #008cff;
+    cursor: pointer;
+}
+
+.ss_page_link {
+    background: #21292F;
+    color: #fff;
+    border-radius: 10%;
+}
+
+.ss_page_link:focus {
+    background: #008cff;
+    box-shadow: none;
+    color: #fff;
+}
+
+.ss_page_link:hover {
+    background: #008cff;
+    color: #fff;
+}
+
+.ss_side_content_holder p {
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.ss_side_content_holder p:hover, img:hover{
+    cursor: pointer;
+}
+
+.ss_author_choice_header {
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.ss_author {
+    width: 100%;
+    
+}
+
+.ss_img_staff_holder {
+    width: 20%;
+    height: 200px;
+    margin-right: 20px;
+    
+}
+
+.ss_img_staff_holder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+} 
+
+
+
+
+@media (max-width: 1200px) {
+    .ss_side_padding {
+        font-size:calc(1.275rem + .3vw)!important;
+        font-weight: 400;
+        
+    }
+
+    .ss_side_img_holder {
+        width: 100%;
+        height: 200px;
+    }
+
+    .ss_navbar  {
+        background: #21292F;
+        z-index: 100;
+    }
+
+    .ss_nav_background {
+        height: 50px;
+    }
+
+}
+
+@media (max-width: 992px) {
+
+    .ss_img_staff_holder {
+        width: 25%;
+        height: 200px;
+        
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .ss_container {
+        padding: 0% 5%;
+    }
+
+    .ss_content_header  {
+        height: 70px;
+        /* margin-bottom: 20px */
+    }
+
+    .ss_img_staff_holder {
+        width: 100%;
+        height: 300px;
+        float: none;
+        display: block;
+        
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .ss_carousel {
+        height: 300px;
+    }
+
+    /* .ss_img_staff_holder {
+        width: 100%;
+        height: 350px;
+        float: none;
+        display: block;
+        
+    } */
+
+
+    
+
+}
+
+
+@media (max-width: 430px) {
+
+    .ss_carousel {
+        height: 250px;
+    }
+    
+
+}
+
+@media (max-width: 330px) {
+
+    .ss_carousel {
+        height: 200px;
+    }
+    
+
 }

@@ -10,20 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/all_contents.css">
     <link rel="stylesheet" href="/css/footer.css">
     <title>Tech portal</title>
   </head>
   <body>
     <%- include('partials/home_nav.ejs')%>
 
-    <div class="container">
+    <div class="container ss_container">
 
-        <div class="row ss_main_articles">
+        <div class="row ss_main_articles ">
 
-            <div  class="col-1"></div>
+            <!-- <div  class="col-1"></div> -->
 
-            <div class="col-6 ss_main_articles_size">
+            <div class="col-7 ss_main_articles_size d-none d-lg-block">
 
                 <div class="ss_main_article">
 
@@ -58,7 +57,7 @@
                 
             </div>
 
-            <div class="col-4 ss_main_articles_size">
+            <div class="col-5 ss_main_articles_size d-none d-lg-block">
 
                 <div class="ss_main_right_content">
 
@@ -91,7 +90,7 @@
 
                 </div>
 
-                <div class="ss_main_right_content">
+                <div class="ss_main_right_content d-none d-lg-block">
 
                     <div class="ss_img_holder">
 
@@ -120,27 +119,144 @@
                         </div>
                     </div>
                 </div>    
-                      
                
             </div>
+
+
+
+            <div id="carouselExampleIndicators" class="carousel slide d-lg-none p-0" data-bs-ride="carousel">
+
+                <div class="carousel-indicators">
+
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                </div>
+
+                <div class="carousel-inner">
+
+                  <div class="carousel-item ss_carousel active">
+
+                    <img src="/img/se.jpg" class="d-block w-100" alt="...">
+                    <div class="ss_dark_filter"></div>
+
+
+
+                    <div class=" ss_carousel_info">   
+
+                        <h1>Lorem ipsum dolor sit amet. as as as asasd</h1>
+
+                        <div class="d-flex">
+
+                            <div class="ss_img_author_holder">
+
+                                <img src="/img/se.jpg" alt="">
+                                <div class="ss_dark_filter rounded-circle"></div>
+    
+                            </div>
+    
+                            <p>Lorem ipsum dolor sit amet.</p>
+
+                        </div>
+    
+                    </div>
+                    
+                  </div>
+
+                  <div class="carousel-item ss_carousel">
+
+                    <img src="/img/sl.jpg" class="d-block w-100" alt="...">
+                    <div class="ss_dark_filter"></div>
+
+                    <div class=" ss_carousel_info">   
+
+                        <h1>Lorem ipsum dolor sit amet. as as as asasd</h1>
+
+                        <div class="d-flex">
+
+                            <div class="ss_img_author_holder">
+
+                                <img src="/img/se.jpg" alt="">
+                                <div class="ss_dark_filter rounded-circle"></div>
+    
+                            </div>
+    
+                            <p>Lorem ipsum dolor sit amet.</p>
+
+                        </div>
+    
+                    </div>
+                    
+                  </div>
+
+                  <div class="carousel-item ss_carousel">
+
+                    <img src="/img/ss.jpg" class="d-block w-100" alt="...">
+                    <div class="ss_dark_filter"></div>
+
+                    <div class=" ss_carousel_info">   
+
+                        <h1>Lorem ipsum dolor sit amet. as as as asasd</h1>
+
+                        <div class="d-flex">
+
+                            <div class="ss_img_author_holder">
+
+                                <img src="/img/se.jpg" alt="">
+                                <div class="ss_dark_filter rounded-circle"></div>
+    
+                            </div>
+    
+                            <p>Lorem ipsum dolor sit amet.</p>
+
+                        </div>
+    
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+
+                </button>
+              </div>
         </div>
 
-        <div class="row mt-5 mb-5">
+        <div class="row mt-5 mb-5 ss_content_size">
 
-            <%- include('partials/all_contents.ejs')%>
-            <%- include('partials/side_content.ejs')%>
+    
+            <div class="col-xl-9 ps-0 mb-md-5">
+                <%- include('partials/all_contents.ejs')%>
+            </div>
+
+            <div class="col-xl-3 order-lg-3 p-md-0 p-0">
+
+                <%- include('partials/side_content.ejs')%>
+
+            </div>
+
 
         </div>
 
         <div class="row">
 
-            <div class="col-1"></div>
-
-            <div class="col-10 p-0">
+            <div class="col-12 p-0">
                 <div class="line mb-5"></div>
             </div>
-
-            <div class="col-1"></div>
 
         </div>
 
