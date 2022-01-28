@@ -477,6 +477,43 @@ body {
 
 }
 
+/*new users*/
+
+.ss_card_edit_user {
+
+    margin: 20px auto;
+    border: 1px solid #C0C0C0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #E0DEDE;  
+    background: #fff;
+}
+
+.ss_card_edit_user h2 {
+    font-weight: 300;
+}
+
+.ss_inputs_new_user {
+    width: 60%;
+    margin-right: 40px;
+}
+
+.ss_inputs_new_user input {
+    display: block;
+    margin: 10px 0px;
+    border-radius: 10px;
+    border: 1px solid #C0C0C0;
+    width: 100%;
+}
+
+.ss_buttons_new_user button{
+    border: 1px solid #C0C0C0;
+    border-radius: 10px;
+    background: #fff;
+    color: #5c5c5c;
+    margin-right: 20px;
+    width: 100px;
+}
 
 @media (max-width: 1200px) {
 
@@ -651,6 +688,20 @@ body {
 
     .ss_modal_footer button:last-child {
         margin-left: 4px;
+    }
+
+    /*new user*/
+
+    .ss_main_info_new_user {
+        display: block !important;
+    }
+
+    .ss_inputs_new_user {
+        width: 80%;
+    }
+
+    .ss_radio_new_users {
+        margin-bottom: 20px;
     }
 }
 
