@@ -1,0 +1,55 @@
+
+<div class="row mt-5">
+
+    <div class="col-md-1 col-sm-12"></div>
+
+    <div class="col-md-3 col-sm-7 col-9">
+
+       
+         <input type="text" class="form-control ss_input" placeholder="Name or role..." >
+         
+    </div>
+
+    <div class="col-md-7 col-sm-12 col-3">
+
+        <button class="ss_button_drop_down"><i class="fas fa-chevron-down"></i></button>
+
+        <ul class="ss_list_all_users">
+            <li>Confirmed</li>
+            <li>Not confirmed</li>
+            <li>Trashed</li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-1 col-sm-12"></div>
+
+</div>
+
+<%- include('partials/popup_edit_users.ejs') %>
+
+<div class="row ss_row_users">
+    
+
+    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6">
+
+        <div class="ss_card">
+
+            <span><i class="fas fa-times"></i></span>
+            <h2>Niko Nikic</h2>
+            <p>Editor</p>
+            <p>niko@gmail.com</p>
+            <p>061-111-112</p>
+
+            <div class="d-flex justify-content-between ss_buttns_card">
+
+                <button>View</button>
+                <button data-bs-target="#editModalUsers" data-bs-toggle="modal">Edit</button>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+</div>

@@ -2,7 +2,6 @@
 body {
     background: #FAFAFA;
 }
-
 .ss_left_side {
   width: 15%;
   transition: 1s;
@@ -357,6 +356,128 @@ body {
     margin: 10px 10px 0px 0px 
 }
 
+/*all users*/
+
+.ss_list_all_users {
+    margin-top: 10px;
+}
+
+.ss_list_all_users li{
+    display: inline-block;
+    margin-left: 20px;
+    color: black;
+    opacity: 0.8;
+/*privremeno -------------------------------*/
+    display: none;
+}
+
+.ss_list_all_users li:hover {
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
+
+.ss_button_drop_down {
+    display: none;
+}
+
+.ss_card {
+    border-radius: 10px;
+    border: 1px solid #E0DEDE;
+    margin-top: 40px ;
+    padding: 0px 5px 10px 10px;
+    box-shadow: 10px 10px 5px #E0DEDE;
+}
+
+.ss_row_users {
+    padding: 0px 5%;
+}
+
+.ss_card span {
+    float: right;
+    
+}
+
+.ss_card h2 {
+    font-weight: 300;
+
+}
+
+.ss_card button {
+     width: 80px;
+     border: 1px solid #E0DEDE;
+     background: #21292F;
+     color: #fff;
+     border-radius: 10px;
+     padding: 5px;
+}
+
+.ss_inputs_modal {
+    width: 60%;
+    margin-right: 10% !important;
+}
+
+.ss_inputs_modal input {
+    margin-bottom: 20px;
+}
+
+.ss_modal_content_edit_users {
+    max-width: 600px;
+}
+
+.ss_roles_modal label {
+    color: black;
+    opacity: 0.8;
+}
+
+.ss_password_info {
+    width: 60%;
+    margin-bottom: 20px;
+}
+
+.ss_password_info button {
+    background: #fff;
+    border: 1px solid #C0C0C0;
+    border-radius: 10px;
+    opacity: 0.7;
+    margin-left: 20px;
+
+}
+
+.ss_social_edit_user {
+    width: 70%;
+}
+
+.ss_social_edit_user div {
+    margin-bottom: 20px;
+}
+
+.ss_social_edit_user i {
+  font-size: 40px;
+}
+
+.ss_social_edit_user input {
+    margin-left: 20px;
+
+}
+
+.ss_modal_footer button {
+    width: 80px;
+    border: none;
+    background: #008cff;
+}
+
+.ss_button:focus {
+    box-shadow: none;
+}
+
+
+.ss_modal_footer button:last-child {
+    background: #bb0303;
+    margin-left: auto;
+
+}
+
+
 @media (max-width: 1200px) {
 
     .ss_btn_nav {
@@ -453,6 +574,21 @@ body {
 
 }
 
+@media (max-width: 768px) {
+    .ss_list_all_users {
+        padding-left: 0px ;
+    }
+
+    .ss_list_all_users li:first-child {
+        margin-left: 2px;
+    }
+
+    /*all users*/
+
+    .ss_modal_content_edit_users {
+        max-width: 500px;
+    }
+}
 @media (max-width:576px) {
 
     
@@ -466,6 +602,55 @@ body {
     }
     .ss_header_content  i {
         font-size: 25px;
+    }
+
+    .ss_button_drop_down {
+        display: block;
+    }
+    .ss_list_all_users {
+        max-width: 0px;
+        
+    }
+
+    .drop_down_list {
+        
+        max-width: auto;
+        transition: 1s;
+    }
+
+    .ss_card button {
+        padding: 0px;
+   }
+
+   /*all users*/
+
+   .ss_social_edit_user {
+    width: 100%;
+    }
+
+    .ss_main_info_user {
+        display: block !important;
+        margin-bottom: 20px;
+    }
+    .ss_modal_content_edit_users {
+        max-width: 400px;
+        
+    }
+
+    .ss_password_div {
+        display: block !important;
+    }
+
+    .ss_password_div button {
+        margin:10px 0px 0px 0px;
+    }
+
+    .ss_password_info {
+        width: 100%;
+    }
+
+    .ss_modal_footer button:last-child {
+        margin-left: 4px;
     }
 }
 
@@ -500,4 +685,5 @@ body {
         font-size: 15px;
         margin-top: 5px;
     }
+
 }

@@ -46,3 +46,22 @@ $("#label_search").click(function() {
     input_search.classList.toggle("ss_input_streach");
 });
 
+
+//all users
+
+$(".ss_list_all_users li").click(function() {
+
+    $(".ss_list_all_users li ").css("border-bottom", "none");
+
+    
+    
+    $(this).css("border-bottom", "1px solid black")
+});
+
+
+$(".ss_button_drop_down").click(function() {
+    let list = document.getElementsByClassName("ss_list_all_users")[0];
+
+    list.classList.toggle("drop_down_list");
+   
+});
