@@ -529,6 +529,25 @@ body {
     font-size: 30px;
 }
 
+/*user view*/
+
+.ss_img_view {
+    height: 200px;
+}
+
+.ss_user_info_view i {
+    font-size: 35px;
+    margin-right: 10px;
+}
+
+.ss_user_info_view div {
+    margin-bottom: 10px;
+}
+
+.ss_user_info_view {
+    opacity: 0.8;
+}
+
 @media (max-width: 1200px) {
 
     .ss_btn_nav {
@@ -638,6 +657,12 @@ body {
 
     .ss_modal_content_edit_users {
         max-width: 500px;
+    }
+
+    /*view user*/
+
+    .ss_img_view {
+        height: 250px;
     }
 }
 @media (max-width:576px) {
@@ -749,6 +774,16 @@ body {
     .ss_header_content  h2 {
         font-size: 15px;
         margin-top: 5px;
+    }
+
+    /*view user*/
+
+    .ss_social_container_view {
+        display: block !important;
+    }
+
+    .ss_img_view {
+        height: 200px;
     }
 
 }
