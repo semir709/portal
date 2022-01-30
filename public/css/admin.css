@@ -548,12 +548,79 @@ body {
     opacity: 0.8;
 }
 
+/*settings*/
+
+.ss_img_settings {
+    height: 150px;
+}
+
+.ss_container_settings {
+    border: 1px solid #C0C0C0;
+    background: #fff;
+    margin: 10px 40px;
+    padding: 10px;
+}
+
+.ss_settings_main_inputs label{
+    display: block;
+}
+
+.ss_settings_main_inputs div {
+    margin-bottom: 10px;
+}
+
+.ss_settings_main_inputs input{
+    width: 50%;
+    border: 1px solid #C0C0C0;
+    border-radius: 10px;
+}
+
+.ss_content_page_settings {
+    width: 50%;
+}
+
+.ss_content_page_settings div:last-child {
+    margin-left: auto;
+}
+
+.ss_content_page_settings label{
+    display: block;
+}
+
+.ss_content_page_settings input {
+    border: 1px solid #C0C0C0;
+    border-radius: 10px;
+    width: 150px;
+}
+
+.ss_settings_save_button {
+    width: 170px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #C0C0C0;
+    padding: 5px;
+    margin-top: 80px;
+}
+
 @media (max-width: 1200px) {
 
     .ss_btn_nav {
         left: 90%;
        
     }
+
+    /*setting*/
+
+    .ss_content_page_settings {
+        display: block !important;
+
+    }
+
+    .ss_content_page_settings  div{
+        margin-bottom: 20px;
+        
+    }
+
 
 }
 
@@ -640,6 +707,12 @@ body {
 
     .ss_header_content {
         min-height: 50%;
+    }
+
+    /*settings*/
+
+    .ss_settings_main_inputs input{
+        width: 80%;
     }
 
 }
@@ -785,5 +858,17 @@ body {
     .ss_img_view {
         height: 200px;
     }
+
+    /*settings*/
+
+    .ss_container_settings {
+        margin: 10px 0px; 
+        
+    }
+
+    .ss_settings_main_inputs input {
+        width: 100%;
+    }
+    
 
 }
