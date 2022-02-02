@@ -6,6 +6,10 @@ module.exports = {
 
     home: function(req, res) {
         res.render('admin.ejs')
+    },
+
+    singin: function(req, res) {
+        res.render('singin.ejs');
     }
 
 }
