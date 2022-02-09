@@ -66,3 +66,13 @@ $(".ss_button_drop_down").click(function() {
    
 });
 
+//trumbowyg
+$('#txt_area').trumbowyg();
+
+//add content
+
+$('#btn_right_block').on('click', function() {
+    let right_block = document.getElementsByClassName('ss_right_block')[0];
+
+    right_block.classList.toggle("ss_show_block");
+});
