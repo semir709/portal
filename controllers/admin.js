@@ -24,7 +24,7 @@ module.exports = {
         const con = db.getCon();
 
 
-        const content = await con.promise().query('SELECT id_content, title, image, full_name FROM content INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? '
+        const content = await con.promise().query('SELECT id_content, title, content.image, full_name FROM content INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? '
         ,['1']);
 
         res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data: content[0]});
@@ -111,8 +111,16 @@ module.exports = {
         res.render('new_user.ejs', {name: 'Niko Nikic', header_name: 'New user'});
     },
 
-    settings: function(req, res) {
-        res.render('settings.ejs', {name: 'Niko Nikic', header_name: 'Settings'});
+    settings: async function(req, res) {
+
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT site_icon AS icon, site_logo AS logo, site_title, 
+        site_tagline, post_per_page, pagination_count FROM settings`);
+
+        console.log(data[0]);
+
+        res.render('settings.ejs', {name: 'Niko Nikic', header_name: 'Settings', data: data[0]});
     },
 
 }

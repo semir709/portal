@@ -10,7 +10,7 @@
 
             <div class="ss_img_holder">
 
-                <img src="/img/ss.jpg" alt="">
+                <img src="<%= data[0].icon %>" alt="">
 
             </div>
 
@@ -23,14 +23,14 @@
                 <div class="">
 
                     <label for="">Site title</label>
-                    <input type="text">
+                    <input type="text" value="<%= data[0].site_title %>">
 
                 </div>
 
                 <div class="">
 
                     <label for="">Site tagline</label>
-                    <input type="text">
+                    <input type="text" value="<%= data[0].site_tagline %>">
 
                 </div>
 
@@ -49,7 +49,7 @@
 
             <div class="ss_img_holder">
 
-                <img src="/img/sa.jpg" alt="">
+                <img src="<%= data[0].logo %>" alt="">
 
             </div>
 
@@ -61,12 +61,12 @@
 
                 <div class="">
                     <label for="">Post per page</label>
-                    <input type="text">
+                    <input type="text" value="<%= data[0].post_per_page %>">
                 </div>
 
                 <div class="">
                     <label for="">Pagination count</label>
-                    <input type="text">
+                    <input type="text" value="<%= data[0].pagination_count %>">
                 </div>
 
             </div>
