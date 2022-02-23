@@ -302,3 +302,46 @@ $('#main_display').on('click', '#category_edit', function() {
     $('#editModal').attr('data-id', this.getAttribute('data-id'));
 
 });
+
+/* Edit user*/
+
+$('#main_display').on('click', '#button_edit_user', function() {
+
+    let card = $(this).parents()[1];
+
+    let name = $(card).find('.user_name').text();
+    let role = $(card).find('.user_role').text();
+    let email = $(card).find('.user_email').text();
+    let num = $(card).find('.user_num').text();
+
+    $('#input_user_name').val(name);
+    $('#input_user_email').val(email);
+    $('#input_user_num').val(num);
+    $('#input_user_role').val(role);
+
+    $('#input_user_facebook').val(this.getAttribute('data-facebook'));
+    $('#input_user_twitter').val(this.getAttribute('data-twitter'));
+    $('#input_user_instagram').val(this.getAttribute('data-instagram'));
+    
+});
+
+/*View User*/
+
+
+$('#main_display').on('click', '#view_user', function() {
+
+    const main_display = $('#main_display');
+
+    const id = this.getAttribute('data-id');
+
+    $.ajax({
+        type: 'GET',
+        url: '/admin/view_user' + id,
+        success: function(res) {
+
+            main_display.html(res);
+
+        }
+    });
+    
+});

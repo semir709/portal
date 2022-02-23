@@ -29,27 +29,30 @@
 <%- include('partials/popup_edit_users.ejs') %>
 
 <div class="row ss_row_users">
+
+    <% for(let i = 0; i < data.length; i++ ) { %>
+
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6">
+
+            <div class="ss_card">
     
-
-    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6">
-
-        <div class="ss_card">
-
-            <span><i class="fas fa-times"></i></span>
-            <h2>Niko Nikic</h2>
-            <p>Editor</p>
-            <p>niko@gmail.com</p>
-            <p>061-111-112</p>
-
-            <div class="d-flex justify-content-between ss_buttns_card">
-
-                <button>View</button>
-                <button data-bs-target="#editModalUsers" data-bs-toggle="modal">Edit</button>
-
+                <span><i class="fas fa-times"></i></span>
+                <h2 class="user_name"><%= data[i].full_name %></h2>
+                <p class="user_role"><%= data[i].user_role %></p>
+                <p class="user_email"><%= data[i].e_mail %></p>
+                <p class="user_num"><%= data[i].num %></p>
+    
+                <div class="d-flex justify-content-between ss_buttns_card">
+    
+                    <button id="view_user" data-id="<%= data[i].id_user %>">View</button>
+                    <button id="button_edit_user" data-bs-target="#editModalUsers" data-bs-toggle="modal" data-facebook="<%= data[i].facebook %>" data-twitter="<%= data[i].twitter %>" data-instagram="<%= data[i].instagram %>">Edit</button>
+    
+                </div>
+    
             </div>
-
+    
         </div>
 
-    </div>
+    <% } %>
     
 </div>

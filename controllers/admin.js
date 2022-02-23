@@ -80,8 +80,31 @@ module.exports = {
         res.render('media.ejs', {name: 'Niko Nikic', header_name: 'Media'});
     },
 
-    user: function(req, res) {
-        res.render('all_users.ejs', {name: 'Niko Nikic', header_name: 'User'});
+    user: async function(req, res) {
+
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users`);
+
+
+        res.render('all_users.ejs', {name: 'Niko Nikic', header_name: 'User', data: data[0]});
+    },
+
+    user_view: async function(req, res) {
+
+        const id = req.params.id;
+
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT full_name, user_role, e_mail, num,
+        about, image, facebook, twitter, instagram FROM users WHERE id_user = ?`, [id]);
+
+        const name = data[0][0].full_name;
+        const role = data[0][0].user_role;
+
+
+        res.render('user_view.ejs', {name: name, header_name: role, data: data[0]});
+
     },
 
     new_user: function(req, res) {

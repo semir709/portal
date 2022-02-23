@@ -29,8 +29,11 @@ route.get('/admin/add_new',admin.add_new);
 route.get('/admin/category',admin.category);
 route.get('/admin/inbox',admin.inbox);
 route.get('/admin/media',admin.media);
+
 route.get('/admin/user',admin.user);
+route.get('/admin/view_user:id', admin.user_view);
 route.get('/admin/new_user',admin.new_user);
+
 route.get('/admin/settings',admin.settings);
 
 
