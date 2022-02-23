@@ -294,3 +294,11 @@ $(document).on('keypress', function(e) {
         tag_category();
     }
 });
+
+/* Edit modal */
+
+$('#main_display').on('click', '#category_edit', function() {
+
+    $('#editModal').attr('data-id', this.getAttribute('data-id'));
+
+});

@@ -60,8 +60,16 @@ module.exports = {
         res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new'});
     },
 
-    category: function(req, res) {
-        res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category'});
+    category: async function(req, res) {
+
+        const con = db.getCon();
+        
+
+        const data = await con.promise().query(`SELECT category.id_category AS id, category_name, count(category_name) AS count FROM category
+        INNER JOIN content_category ON content_category.id_category = category.id_category
+        group by category_name`); 
+
+        res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category', data: data[0]});
     },
 
     inbox: function(req, res) {
