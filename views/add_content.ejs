@@ -1,147 +1,214 @@
+<%-include('partials/top_header_admin.ejs') %>
 
+<% if(typeof data != 'undefined') { %>
 
-<div class="row px-lg-3 mt-lg-4">
+    <div class="row px-lg-3 mt-lg-4">
 
-    <div class="col-lg-9 order-2 order-lg-1 ">
-        <input class="ss_input ss_input_category_name" type="text">
-
-        <div class="ss_link d-sm-flex">
-
-            <p>https://www.siteName.com/content/some-header</p>
-            <button>Edit</button>
-
+        <div class="col-lg-9 order-2 order-lg-1 ">
+            <input class="ss_input ss_input_category_name" value="<%=data[0].title %>" type="text">
+    
+            <div class="ss_link d-sm-flex">
+    
+                <p>https://www.siteName.com/content/some-header</p>
+                <button>Edit</button>
+    
+            </div>
+    
+            <div class="ss_txt_area">
+                <textarea id="txt_area" cols="30" rows="20"><%=data[0].article%></textarea>
+            </div>
         </div>
+    
+        <div class="col-lg-3 order-1 order-lg-2 mb-3 mb-lg-0 ss_right_block_holder ">
+    
+            <button class="ss_btn_right_block" id="btn_right_block" type="button" >
+                <span ><i class="fas fa-cog"></i></span>
+            </button>
+    
+            <div class="ss_right_block">
+        
+                <div class="ss_inputs_block">
+        
+                    <p>Publish</p>
+                    <div class="ss_line"></div>
 
-        <div class="ss_txt_area">
-            <textarea id="txt_area" cols="30" rows="20"></textarea>
+                    <div class="mb-3">
+
+                        <select class="form-select" id="inputGroupSelect01">
+
+                            <% let options_id = ['1','2','3','4']; %>
+                            <% let options = ['', 'Publish','Draft','Schedule','Trashe']; %>
+
+                            <% for(let i = 0; i < options_id.length; i++) { %>
+                                <% let selected = (data[0].publish == options_id[i]) ? 'selected' : ''; %>
+
+                                <option value="<%= options_id[i]%>" <%= selected %> > <%= options[options_id[i]] %> </option>
+                            <% } %>
+                            
+                        </select>
+
+                    </div>
+        
+                </div>
+        
+                <div class="ss_inputs_block">
+        
+                    <p>Post</p>
+                    <div class="ss_line"></div>
+
+                    
+
+                    <div class="mb-3">
+                        <select class="form-select" id="inputGroupSelect01">
+
+                            <% let post_place_id = ['1','2','3']; %>
+                            <% let post_place_options = ['', 'Main article','Article','Author choise']; %>
+
+                            <% for(let i = 0; i < post_place_id.length; i++) { %>
+                                <% let selected = (data[0].post_place == post_place_id[i]) ? 'selected' : ''; %>
+
+                                <option value="<%= post_place_id[i]%>" <%= selected %> > <%= post_place_options[post_place_id[i]] %> </option>
+                            <% } %>
+
+                        </select>
+                    </div>
+        
+                </div>
+        
+        
+                <div class="ss_inputs_block">
+        
+                    <p>Category</p>
+                    <div class="ss_line"></div>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="ss_input_tag ">
+                        <button class="btn" id="btn_tag">Click</button>
+                    </div>
+
+                    <div class="ss_tags_container">
+                        
+                        <% data.forEach( e => { %>
+
+                            <div class="tag_category">
+                                <span><%= e.category_name %></span>
+                            </div> 
+
+                        <% }); %>
+
+            
+                    </div>
+                    
+        
+                </div>
+    
+                <div class="ss_button_post">
+    
+                    <button>Post</button>
+                    <button>Preview</button>
+    
+                </div>
+        
+            </div>
+    
         </div>
+    
     </div>
 
-    <div class="col-lg-3 order-1 order-lg-2 mb-3 mb-lg-0 ss_right_block_holder ">
+<% } else { %>
 
-        <button class="ss_btn_right_block" id="btn_right_block" type="button" >
-            <span ><i class="fas fa-cog"></i></span>
-        </button>
+    <div class="row px-lg-3 mt-lg-4">
 
-        <div class="ss_right_block">
+        <div class="col-lg-9 order-2 order-lg-1 ">
+            <input class="ss_input ss_input_category_name" value="" type="text">
     
-            <div class="ss_inputs_block">
+            <div class="ss_link d-sm-flex">
     
-                <p>Publish</p>
-                <div class="ss_line"></div>
-    
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control ss_input" aria-label="Text input with dropdown button">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>
-                </div>
+                <p>https://www.siteName.com/content/some-header</p>
+                <button>Edit</button>
     
             </div>
     
-            <div class="ss_inputs_block">
-    
-                <p>Post</p>
-                <div class="ss_line"></div>
-    
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control ss_input" aria-label="Text input with dropdown button">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>
-                </div>
-    
+            <div class="ss_txt_area">
+                <textarea id="txt_area" cols="30" rows="20"></textarea>
             </div>
+        </div>
     
+        <div class="col-lg-3 order-1 order-lg-2 mb-3 mb-lg-0 ss_right_block_holder ">
     
-            <div class="ss_inputs_block">
+            <button class="ss_btn_right_block" id="btn_right_block" type="button" >
+                <span ><i class="fas fa-cog"></i></span>
+            </button>
     
-                <p>Category</p>
-                <div class="ss_line"></div>
-    
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control ss_input" aria-label="Text input with dropdown button">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>
+            <div class="ss_right_block">
+        
+                <div class="ss_inputs_block">
+        
+                    <p>Publish</p>
+                    <div class="ss_line"></div>
+        
+                    <div class="mb-3">
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option value="" disabled selected value></option>
+                            <option value="1">Publish</option>
+                            <option value="2">Draft</option>
+                            <option value="3">Schedule</option>
+                            <option value="3">Trashe</option>
+                        </select>
+                    </div>
+        
+                </div>
+        
+                <div class="ss_inputs_block">
+        
+                    <p>Post</p>
+                    <div class="ss_line"></div>
+        
+                    <div class="mb-3">
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option value="" disabled selected value></option>
+                            <option value="1">Main article</option>
+                            <option value="2">Article</option>
+                            <option value="3">Author choise</option>
+                        </select>
+                    </div>
+        
+                </div>
+        
+        
+                <div class="ss_inputs_block">
+        
+                    <p>Category</p>
+                    <div class="ss_line"></div>
+        
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control ss_input" aria-label="Text input with dropdown button">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+        
                 </div>
     
-            </div>
+                <div class="ss_button_post">
     
-            <div class="ss_permissions_block">
+                    <button>Post</button>
+                    <button>Preview</button>
     
-                <p>Permissions</p>
-                <div class="ss_line mb-3"></div>
-    
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        SuperAdmin
-                    </label>
                 </div>
-    
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Admin
-                    </label>
-                </div>
-    
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Editor
-                    </label>
-                </div>
-    
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Author
-                    </label>
-                </div>
-    
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Contributor
-                    </label>
-                </div>
-    
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Supporter
-                    </label>
-                </div>
-    
-            </div>
-
-            <div class="ss_button_post">
-
-                <button>Post</button>
-                <button>Preview</button>
-
+        
             </div>
     
         </div>
-
+    
     </div>
 
-</div>
+<% } %>
+
+
 

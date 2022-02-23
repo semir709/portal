@@ -1,11 +1,10 @@
-<div class="row mt-5">
+<%-include('partials/top_header_admin.ejs') %>
+<div class="row mt-5 justify-content-between  px-5">
 
-    <div class="col-lg-1 col-md-0"></div>
-
-    <div class="col-lg-6 col-md-7 col-sm-9">
+    <div class="col-lg-9 col-md-8 col-md-7 col-sm-9 p-0">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light ss_navbar_search_con">
-          <div class="container-fluid ss_bg_con">
+          <div class="container-fluid ss_bg_con p-0">
 
             
 
@@ -25,7 +24,7 @@
               <ul class="navbar-nav ss_nav_all_content justify-content-between">
 
                 <li class="nav-item">
-                  <a class="nav-link ss_nav_a " aria-current="page" >Published</a>
+                  <a class="nav-link ss_nav_a "  >Published</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link ss_nav_a" >Drafts</a>
@@ -47,9 +46,7 @@
 
     </div>
 
-    <div class="col-lg-1 col-md-1"></div>
-
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-3 col-md-4 col-md-4 p-0">
 
         
         <input type="text" class="form-control ss_input ss_search_content" placeholder="Author or category..." >
@@ -57,100 +54,17 @@
 
     </div>
 
-    <div class="col-lg-1 col-md-0"></div>
 
 </div>
 
-<div class="row mt-5 ss_row_content">
+<%- include('partials/popup_delete.ejs') %>
+<%- include('partials/popup_edit.ejs') %>
 
-  <div class="col-lg-5 p-0 ss_col_img">
+<div id="all_content"> 
 
-      <div class="ss_img_holder">
-        <img src="/img/si.jpg" alt="">
-      </div>
-
-  </div>
-
-  <div class="col-lg-7 p-0 ps-2">
-
-    <div class="d-flex ss_header_content justify-content-between">
-
-      <h2>Lorem ipsum dolor sit </h2>
-
-      <div class="dropdown">
-
-        <span id="dropdownMenuButton1" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" >Edit</a></li>
-          <li><a class="dropdown-item" >Trash</a></li>
-          <li><a class="dropdown-item" >Veiw post</a></li>
-          <li><a class="dropdown-item" >Copy link</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="d-flex">
-
-      <div class="ss_img_holder ss_img_author_holder">
-        <img src="/img/si.jpg" alt="">
-      </div>
-
-      <p>Lorem ipsum dolor sit amet.</p>
-
-    </div>
-
-  </div>
-
-    
+  <%- include('partials/all_content_data.ejs') %>
 
 </div>
 
-<div class="row mt-5 ss_row_content">
-
-  <div class="col-lg-5 p-0 ss_col_img">
-
-      <div class="ss_img_holder">
-        <img src="/img/si.jpg" alt="">
-      </div>
-
-  </div>
-
-  <div class="col-lg-7 p-0 ps-2">
-
-    <div class="d-flex ss_header_content justify-content-between">
-
-      <h2>Lorem ipsum dolor sit </h2>
-
-      <div class="dropdown">
-
-        <span id="dropdownMenuButton1" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" >Edit</a></li>
-          <li><a class="dropdown-item" >Trash</a></li>
-          <li><a class="dropdown-item" >Veiw post</a></li>
-          <li><a class="dropdown-item" >Copy link</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="d-flex">
-
-      <div class="ss_img_holder ss_img_author_holder">
-        <img src="/img/si.jpg" alt="">
-      </div>
-
-      <p>Lorem ipsum dolor sit amet.</p>
-
-    </div>
-
-  </div>
-
-    
-
-</div>
 
 

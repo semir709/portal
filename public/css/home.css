@@ -104,6 +104,10 @@ body {
     height: 100%;
 }
 
+.ss_header_holder:hover {
+    color: #008cff;
+}
+
 .ss_carousel {
     position: relative;
     width: 100%;
