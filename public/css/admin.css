@@ -656,6 +656,9 @@ body {
     width: 100%;
 }
 
+.ss_txt_area textarea {
+    width: 100%;
+}
 
 .ss_right_block {
     border:1px solid #C0C0C0;

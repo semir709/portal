@@ -60,6 +60,12 @@ module.exports = {
         res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new'});
     },
 
+    upload_image: function(req, res) {
+
+        res.status(200).send({ "file": "/img/" + req.file.filename, "success": true});
+
+    },
+
     category: async function(req, res) {
 
         const con = db.getCon();

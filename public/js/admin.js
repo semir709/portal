@@ -41,6 +41,39 @@ $('.ss_label').on('click', function() {
                 success: function(data) {
                   
                     main_display.html(data);
+
+                    //trumbowyg
+                    $('#txt_area').trumbowyg({
+                        autogrow: true,
+                        btnsDef: {
+                            // Create a new dropdown
+                            image: {
+                                dropdown: ['insertImage', 'upload'],
+                                ico: 'insertImage'
+                            }
+                        },
+                        // Redefine the button pane
+                        btns: [
+                            ['viewHTML'],
+                            ['formatting'],
+                            ['strong', 'em', 'del'],
+                            ['superscript', 'subscript'],
+                            ['link'],
+                            ['image'], // Our fresh created dropdown
+                            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                            ['unorderedList', 'orderedList'],
+                            ['horizontalRule'],
+                            ['removeformat'],
+                            ['fullscreen']
+                        ],
+                        plugins: {
+                            // Add imagur parameters to upload plugin for demo purposes
+                            upload: {
+                                serverPath: '/admin/image_upload',
+                                fileFieldName: 'image',
+                            }
+                        }
+                    });
                     
                 }
             });
@@ -249,8 +282,6 @@ $(".ss_button_drop_down").click(function() {
    
 });
 
-//trumbowyg
-$('#txt_area').trumbowyg();
 
 //add content
 

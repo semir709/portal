@@ -1,6 +1,13 @@
 const express = require('express');
 const route = express.Router();
 
+const custom = require('../config/custom');
+const multer = require('multer');
+
+const storage = custom.image_destination();
+
+const upload = multer({storage:storage});
+
 const main = require('../controllers/main');
 const admin = require('../controllers/admin');
 
@@ -26,6 +33,8 @@ route.get('/admin/all_content_data:category', admin.all_content_data);
 route.get('/admin/all_content_data/getArticle:id', admin.getArticle)
 
 route.get('/admin/add_new',admin.add_new);
+route.post('/admin/image_upload', upload.single('image'), admin.upload_image);
+
 route.get('/admin/category',admin.category);
 route.get('/admin/inbox',admin.inbox);
 route.get('/admin/media',admin.media);
