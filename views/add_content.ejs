@@ -120,7 +120,7 @@
     <div class="row px-lg-3 mt-lg-4">
 
         <div class="col-lg-9 order-2 order-lg-1 ">
-            <input class="ss_input ss_input_category_name" value="" type="text">
+            <input class="ss_input ss_input_category_name" id="input_title" value="" type="text">
     
             <div class="ss_link d-sm-flex">
     
@@ -148,7 +148,7 @@
                     <div class="ss_line"></div>
         
                     <div class="mb-3">
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select class="form-select" id="inputGroup_publish" >
                             <option value="" disabled selected value></option>
                             <option value="1">Publish</option>
                             <option value="2">Draft</option>
@@ -165,7 +165,7 @@
                     <div class="ss_line"></div>
         
                     <div class="mb-3">
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select class="form-select" id="inputGroup_post">
                             <option value="" disabled selected value></option>
                             <option value="1">Main article</option>
                             <option value="2">Article</option>
@@ -180,24 +180,41 @@
         
                     <p>Category</p>
                     <div class="ss_line"></div>
-        
+
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control ss_input" aria-label="Text input with dropdown button">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
-                          <li><hr class="dropdown-divider"></li>
-                          <li><a class="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
+                        <input type="text" class="ss_input_tag ">
+                        <button class="btn" id="btn_tag">Click</button>
+                    </div>
+
+                    <div class="ss_tags_container" id="inputGroup_category">
+                        
+            
                     </div>
         
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <div class="ss_img_holder">
+                            <img id="img_content" src="/img/ss.jpg" alt="">
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+
+                        <p class="">name.jpg</p>
+
+                    </div>
+
                 </div>
     
                 <div class="ss_button_post">
     
-                    <button>Post</button>
+                    <button id="post_content_btn">Post</button>
+                    <!-- <button type="submit">Post</button> -->
                     <button>Preview</button>
     
                 </div>
@@ -207,6 +224,7 @@
         </div>
     
     </div>
+
 
 <% } %>
 

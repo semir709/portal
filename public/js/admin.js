@@ -164,6 +164,20 @@ $('.ss_label').on('click', function() {
 
         break;
 
+        case 'Log out':
+
+            $.ajax({
+                type:'POST',
+                url:"/admin/logout",
+                success: function(data) {
+
+                    window.location = data;   
+                    
+                }
+            });
+
+        break;
+
     }
 });
 
@@ -326,6 +340,43 @@ $(document).on('keypress', function(e) {
     }
 });
 
+$('#main_display').on('click','#post_content_btn', function() {
+
+    let input_title = $('#input_title').val();
+    let txt_area = $('#txt_area').val();
+    let inputGroup_publish = $('#inputGroup_publish option:selected').text();
+    let inputGroup_post = $('#inputGroup_post option:selected').text()
+    let inputGroup_category = $('#inputGroup_category');
+    let img_content = $('#img_content').attr('src');
+
+    let category_ch = [];
+
+    for(let i = 0; i < inputGroup_category.children().length; i++) { 
+        category_ch[i] = $(inputGroup_category.children()[i]).children().text();
+    }
+
+    const data = {
+
+        input_title: input_title,
+        txt_area: txt_area,
+        inputGroup_publish: inputGroup_publish,
+        inputGroup_post: inputGroup_post,
+        img_content: img_content,
+        category_ch: category_ch
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/add_new/post',
+        data: data,
+        success: function(res) {
+            console.log('success');
+        }
+    });
+    
+});
+
+
 /* Edit modal */
 
 $('#main_display').on('click', '#category_edit', function() {
@@ -375,4 +426,138 @@ $('#main_display').on('click', '#view_user', function() {
         }
     });
     
+});
+
+//singin
+
+$('#main_text_area').trumbowyg();
+
+
+$('#btn_send').on('click', function() {
+
+    const queryString = window.location.search;
+    const urlParam = new URLSearchParams(queryString);
+
+    const name = $('#singin_name').text();
+    const img = $('#img_singin').attr('src');
+    const email = $('#email_singin').val();
+    const num = $('#num_singin').val();
+    const facebook = $('#facebook_singin').val();
+    const instagram = $('#instagram_singin').val();
+    const twitter = $('#twitter_singin').val();
+    const password = $('#custom_password_singin').val();
+    const txt_area = $('#main_text_area_singin').text();
+    const role = $('#role').text();
+
+    const id = urlParam.get('id');
+    const url_name = urlParam.get('name');
+    const url_role = urlParam.get('role');
+    const url_mail = urlParam.get('email');
+
+    let new_name_arr = url_name.split('_');
+    let new_name = '';
+
+    for(let i = 0; i < new_name_arr.length; i++) {
+        new_name += new_name_arr[i];
+        new_name += ' '; 
+    }
+
+    console.log('Send');
+
+
+    const data = {
+        name,
+        img,
+        email,
+        num,
+        facebook,
+        instagram,
+        twitter,
+        password,
+        txt_area,
+        role,
+        id,
+        url_role,
+        url_mail,
+        new_name
+    }
+
+    $.ajax({
+        type:'POST',
+        url:'/singin/send_request',
+        data:data,
+        success: function(res) {
+
+        }
+    });
+
+});
+
+//Add user 
+
+$('#main_display').on('click','#send_mail', function() {
+
+    const name = $('#add_user_name').val();
+    const email = $('#add_user_email').val();
+
+    const super_admin = document.getElementById('super_admin_check');
+    const admin = document.getElementById('admin_check');
+    const editor = document.getElementById('editor_check');
+    const author = document.getElementById('author_check');
+    const contributor = document.getElementById('contributor_check');
+    const supporter = document.getElementById('supporter_check');
+
+    let checkbox = 0;
+
+    /*
+    super admin 1
+    admin 2
+    editor 3
+    author 4
+    contributor 5
+    supporter 6
+
+    */
+
+    if(super_admin.checked) {
+        checkbox = 1;
+    }
+
+    if(admin.checked) {
+        checkbox = 2;
+    }
+
+    if(editor.checked) {
+        checkbox = 3;
+    }
+
+    if(author.checked) {
+        checkbox = 4;
+    }
+
+    if(contributor.checked) {
+        checkbox = 5;
+    }
+
+    if(supporter.checked) {
+        checkbox = 6;
+    }
+
+    const data = {
+        name,
+        email,
+        checkbox
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/add_new_user',
+        data: data,
+        success: function(res) {
+
+        }
+    });
+
+
+
 });

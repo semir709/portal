@@ -1,4 +1,6 @@
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
 
 
 require('dotenv').config();
@@ -7,8 +9,21 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+app.use(session({
+
+    secret: process.env.SECRET01,
+    resave: true, 
+    saveUninitialized: true
+
+}));
+
+require('./config/passport')(passport);
+
+app.use(passport.authenticate('session'));
 
 app.use('/css', express.static('public/css'));
 app.use('/js', express.static('public/js'));

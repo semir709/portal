@@ -1,21 +1,114 @@
 const db = require('../config/database')
+const mail = require('../config/email');
+
+const bcrypt = require('bcrypt');
 
 module.exports = {
+
+    isAuthenticated: function(req, res, next) {
+
+        if (req.isAuthenticated()) {
+            return next()
+        }
+
+        else {
+            res.redirect('/login');
+        }
+    },
 
     login: function(req, res) {
         res.render('login.ejs');
     },
 
+    logout: function(req, res) {
+
+        req.logout();
+        res.send('/login');
+    },
+
+    login_verify: {
+
+        successRedirect: '/admin',
+        failureRedirect: '/login'   
+
+    },
+
     home: async function(req, res) {
+
+        req.session.cookie.maxAge = 3600000;
 
         res.render('admin.ejs')
     },
 
+    /*
+    super admin 1
+    admin 2
+    editor 3
+    author 4
+    contributor 5
+    supporter 6
+
+    */
+
     singin: function(req, res) {
-        res.render('singin.ejs');
+
+        let data = req.query;
+
+        let convert_role;
+
+        if(data.role === '0') {
+            convert_role = 'not added'
+        }
+
+        if(data.role === '1') {
+            convert_role = 'super admin'
+        }
+
+        if(data.role === '2') {
+            convert_role = 'admin'
+        }
+
+        if(data.role === '3') {
+            convert_role = 'editor'
+        }
+
+        if(data.role === '4') {
+            convert_role = 'author'
+        }
+
+        if(data.role === '5') {
+            convert_role = 'contributor'
+        }
+
+        if(data.role === '6') {
+            convert_role = 'supporter'
+        }
+        
+        data.convert_role = convert_role;
+
+        res.render('singin.ejs', data);
+    },
+
+    send_request: function(req, res) {
+
+        const data = req.body;
+        const con = db.getCon();
+
+
+        bcrypt.hash(data.password, 10, async function(err, hash) {
+            if(err) throw err;
+
+          await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
+            ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
+            ,[data.name, data.role, data.email, data.num, hash, data.txt_area, data.img, data.facebook, data.instagram, data.twitter, data.id]);
+
+        });
+        
+        
     },
 
     admin_home: function(req, res) {
+
         res.render('admin_home.ejs', {name: 'Niko Nikic', header_name: 'Home'});
     },
 
@@ -58,6 +151,114 @@ module.exports = {
 
     add_new: function(req, res) {
         res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new'});
+    },
+
+    add_new_user: async function(req, res) {
+
+        const data = req.body;
+        const con = db.getCon();
+
+        const user = await con.promise().query(`INSERT INTO users (full_name, user_role, e_mail) VALUES (?, ?, ?)`,
+        [data.name, data.checkbox, data.email]);
+
+        const user_id = user[0].insertId;
+
+        const user_info = await con.promise().query(`SELECT full_name, user_role, e_mail FROM users WHERE id_user = ?`, [user_id]);
+
+        const name = user_info[0][0].full_name;
+        const role = user_info[0][0].user_role;
+        const user_mail = user_info[0][0].e_mail;
+
+        const name_array = name.split('');
+
+        let newName = '';
+
+        for(let i = 0; i < name_array.length - 1; i++) {
+
+            if(name_array[i].indexOf(' ') >= 0) {
+                name_array[i] = '_';
+            }
+
+                newName += name_array[i];
+
+        }
+
+        const transporter = mail.getTransport();    
+
+
+        let info = await transporter.sendMail({
+            from: '"Fred Foo 👻" <foo@example.com>',
+            to: "semirselman321@gmail.com", 
+            subject: "Hello ✔", 
+            text: "Hello world?", 
+            html: '<p>Click <a href="http://127.0.0.1:3000/singin?id=' + user_id + '&name='+ newName + '&role='+ role + '&email='+ user_mail +'">here</a> to singin</p>', 
+        });
+
+
+    },
+
+    add_new_post: async function(req, res) {
+
+        const id = req.user.id;
+        const data = req.body;
+
+        const con = db.getCon();
+
+        let content;
+        let category = [];
+
+
+        content = await con.promise().query(`INSERT INTO content (title, article, image, publish, post_place, id_user) 
+        VALUES (?, ?, ?, ?, ?, ?)`, [data.input_title, data.txt_area, data.img_content, data.inputGroup_publish, data.inputGroup_post, id]);
+
+        const cg = data.category_ch;
+
+        const all_category = await con.promise().query(`SELECT category_name FROM category`);
+        const array_categroy = [];
+
+        for(let i = 0; i < all_category[0].length; i++) {
+            array_categroy.push(all_category[0][i].category_name);
+        }
+
+        const final_cg = [];
+        const old_cg = [];
+
+        for(let i = 0; i < cg.length; i++) {
+
+            if(array_categroy.indexOf(cg[i]) === -1 ) {
+                final_cg.push(cg[i]);
+            }
+
+            else {
+                old_cg.push(cg[i]);
+            }
+
+        }
+
+
+        for(let i = 0; i < final_cg.length; i++) {
+           category[i] = await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [final_cg[i]]);
+        }
+
+
+        for(let i = 0; i < category.length; i++) {
+            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [content[0].insertId, category[i][0].insertId]);
+        }
+
+        const old_id = [];
+        let old_catg_id;
+
+        for(let i = 0; i < old_cg.length; i++) {
+            old_catg_id = await con.promise().query(`SELECT id_category FROM category WHERE category_name = ?`, [old_cg[i]]);
+
+            old_id.push(old_catg_id[0][0].id_category);
+        }
+
+
+        for(let i = 0; i < old_id.length; i++) {
+            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [content[0].insertId, old_id[i]]);
+        }
+
     },
 
     upload_image: function(req, res) {
