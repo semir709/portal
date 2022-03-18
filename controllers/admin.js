@@ -1,7 +1,12 @@
 const db = require('../config/database')
 const mail = require('../config/email');
 
+const fs = require('fs')
+const { promisify } = require('util')
+const unlinkAsync = promisify(fs.unlink)
+
 const bcrypt = require('bcrypt');
+const custom = require('../config/custom');
 
 module.exports = {
 
@@ -89,22 +94,52 @@ module.exports = {
         res.render('singin.ejs', data);
     },
 
-    send_request: function(req, res) {
+    send_request: async function(req, res) {
 
         const data = req.body;
         const con = db.getCon();
+        const file = req.file;
+        let isEmpty;
 
+        if(typeof file !== 'undefined') {
+            isEmpty = custom.isEmpty(data.name, data.role, data.email, data.num, data.txt_area, data.facebook, data.instagram, data.twitter);
 
-        bcrypt.hash(data.password, 10, async function(err, hash) {
-            if(err) throw err;
+            if(isEmpty) {
+                await unlinkAsync(req.file.path);
+                res.send(false);
+            }
+    
+            else {
 
-          await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
-            ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
-            ,[data.name, data.role, data.email, data.num, hash, data.txt_area, data.img, data.facebook, data.instagram, data.twitter, data.id]);
+                const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ?, num = ?`, [data.e_mail, data.num]);
+    
+                console.log(user);
+                
+                bcrypt.hash(data.password, 10, async function(err, hash) {
+                    if(err) throw err;
+        
+                  await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
+                    ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
+                    ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
+        
+                });
+        
+                res.send('/singin/thanks');
+    
+            }
 
-        });
+        }
+
+        else {
+            res.send(false);
+        }
         
         
+    },
+
+    singin_thanks: function(req, res) {
+
+        res.render('thanks_singin.ejs');
     },
 
     admin_home: function(req, res) {

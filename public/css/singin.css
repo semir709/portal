@@ -65,6 +65,10 @@ input {
     margin-top: 50px;
 }
 
+.ss_input_singin_img {
+    display: none;
+}
+
 @media (max-width:1200px) {
 
     .ss_password {

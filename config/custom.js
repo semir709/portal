@@ -19,6 +19,16 @@ module.exports = {
         return storage;
 
 
+    },
+
+    isEmpty: function(...inputs) {
+
+      for(let i = 0; i < inputs.length; i++) {
+        if(inputs[i] === '' || typeof inputs[i] === 'undefined') {
+          return true;
+        }
+      }
+
     }
 
 }

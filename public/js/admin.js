@@ -1,4 +1,76 @@
 
+
+const plugin = {
+    autogrow: true,
+    btnsDef: {
+        // Create a new dropdown
+        image: {
+            dropdown: ['insertImage', 'upload'],
+            ico: 'insertImage'
+        }
+    },
+    // Redefine the button pane
+    btns: [
+        ['viewHTML'],
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['superscript', 'subscript'],
+        ['link'],
+        ['image'], // Our fresh created dropdown
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen']
+    ],
+    plugins: {
+        // Add imagur parameters to upload plugin for demo purposes
+        upload: {
+            serverPath: '/admin/image_upload',
+            fileFieldName: 'image',
+        }
+    }
+}
+
+/*Custom function*/
+
+/*
+    super admin 1
+    admin 2
+    editor 3
+    author 4
+    contributor 5
+    supporter 6
+
+    */
+
+function convertRole (role) {
+    if(role === 'super admin') {
+        return 1;
+    } 
+
+    if(role === 'admin') {
+        return 2;
+    } 
+
+    if(role === 'editor') {
+        return 3;
+    } 
+
+    if(role === 'author') {
+        return 4;
+    } 
+
+    if(role === 'contributor') {
+        return 5;
+    } 
+
+    if(role === 'supporter') {
+        return 6;
+    } 
+}
+
+
 //navigation
 
 $('.ss_label').on('click', function() {
@@ -43,37 +115,7 @@ $('.ss_label').on('click', function() {
                     main_display.html(data);
 
                     //trumbowyg
-                    $('#txt_area').trumbowyg({
-                        autogrow: true,
-                        btnsDef: {
-                            // Create a new dropdown
-                            image: {
-                                dropdown: ['insertImage', 'upload'],
-                                ico: 'insertImage'
-                            }
-                        },
-                        // Redefine the button pane
-                        btns: [
-                            ['viewHTML'],
-                            ['formatting'],
-                            ['strong', 'em', 'del'],
-                            ['superscript', 'subscript'],
-                            ['link'],
-                            ['image'], // Our fresh created dropdown
-                            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-                            ['unorderedList', 'orderedList'],
-                            ['horizontalRule'],
-                            ['removeformat'],
-                            ['fullscreen']
-                        ],
-                        plugins: {
-                            // Add imagur parameters to upload plugin for demo purposes
-                            upload: {
-                                serverPath: '/admin/image_upload',
-                                fileFieldName: 'image',
-                            }
-                        }
-                    });
+                    $('#txt_area').trumbowyg(plugin);
                     
                 }
             });
@@ -430,7 +472,7 @@ $('#main_display').on('click', '#view_user', function() {
 
 //singin
 
-$('#main_text_area').trumbowyg();
+$('#main_text_area_singin').trumbowyg(plugin);
 
 
 $('#btn_send').on('click', function() {
@@ -438,7 +480,9 @@ $('#btn_send').on('click', function() {
     const queryString = window.location.search;
     const urlParam = new URLSearchParams(queryString);
 
-    const name = $('#singin_name').text();
+    const formData = new FormData();
+
+    const name = $('#singin_name').val();
     const img = $('#img_singin').attr('src');
     const email = $('#email_singin').val();
     const num = $('#num_singin').val();
@@ -446,8 +490,10 @@ $('#btn_send').on('click', function() {
     const instagram = $('#instagram_singin').val();
     const twitter = $('#twitter_singin').val();
     const password = $('#custom_password_singin').val();
-    const txt_area = $('#main_text_area_singin').text();
+    const txt_area = $('#main_text_area_singin').val();
     const role = $('#role').text();
+
+    let convertedRole = convertRole(role);
 
     const id = urlParam.get('id');
     const url_name = urlParam.get('name');
@@ -462,36 +508,110 @@ $('#btn_send').on('click', function() {
         new_name += ' '; 
     }
 
-    console.log('Send');
+    const upload = document.getElementById('upload');
 
-
-    const data = {
-        name,
-        img,
-        email,
-        num,
-        facebook,
-        instagram,
-        twitter,
-        password,
-        txt_area,
-        role,
-        id,
-        url_role,
-        url_mail,
-        new_name
-    }
+    formData.append('name',name);
+    // formData.append('img',img);
+    formData.append('file', upload.files[0]);
+    formData.append('email',email);
+    formData.append('num',num);
+    formData.append('facebook',facebook);
+    formData.append('instagram',instagram);
+    formData.append('twitter',twitter);
+    formData.append('password',password);
+    formData.append('txt_area',txt_area);
+    formData.append('role',convertedRole);
+    formData.append('id',id);
+    formData.append('url_role',url_role);
+    formData.append('url_mail',url_mail);
+    formData.append('new_name',new_name);
 
     $.ajax({
         type:'POST',
         url:'/singin/send_request',
-        data:data,
+        data:formData,
+        contentType: false,
+        processData: false,
         success: function(res) {
+
+            if(res === false) {
+                
+                if(name === '') {
+                    $('#singin_name').css('border', '1px solid red');
+                }
+
+                if(email ==='') {
+                    $('#email_singin').css('border', '1px solid red');
+                }
+
+                if(num ==='') {
+                    $('#num_singin').css('border', '1px solid red');
+                }
+
+                if(facebook ==='') {
+                    $('#facebook_singin').css('border', '1px solid red');
+                }
+
+                if(instagram ==='') {
+                    $('#instagram_singin').css('border', '1px solid red');
+                }
+
+                if(twitter ==='') {
+                    $('#twitter_singin').css('border', '1px solid red');
+                }
+
+                if(password ==='') {
+                    $('#custom_password_singin').css('border', '1px solid red');
+                }
+               
+                if(txt_area ==='') {
+
+                    $('.trumbowyg-box').css('border', '1px solid red');
+                }
+
+                if(img === '') {
+                    $('#img_singin').css('border', '1px solid red')
+                }
+                
+            }
+
+            else {
+
+                window.location.href = res;
+
+            }
 
         }
     });
 
 });
+
+$('#img_singin').on('click', function() {
+
+    $('#upload').trigger('click');
+
+});
+
+function previewFile() {
+
+    var preview = document.querySelector('#img_singin');
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
+
+    // let img = $('#img_singin');
+    // img.attr('title', file.name);
+  
+    reader.onloadend = function () {
+      preview.src = reader.result;
+    
+    }
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = "";
+    }
+  }
 
 //Add user 
 
