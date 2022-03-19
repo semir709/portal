@@ -575,6 +575,15 @@ $('#btn_send').on('click', function() {
                 
             }
 
+            else if (res === 'user') {
+                alert('User already exists in database');
+            }
+
+            else if(res === 'not valid') {
+                alert('E-mail is not valid');
+                $('#email_singin').css('border', '1px solid red');
+            }
+
             else {
 
                 window.location.href = res;
@@ -616,6 +625,17 @@ function previewFile() {
 //Add user 
 
 $('#main_display').on('click','#send_mail', function() {
+
+    const div_spinner = $('<div>', {
+        class: 'spinner-border',
+        role: 'status'
+    });
+
+    const span_spinner = $('<span>', {class: 'visually-hidden'});
+
+    div_spinner.html(span_spinner);
+
+    $('#send_mail').html(div_spinner);
 
     const name = $('#add_user_name').val();
     const email = $('#add_user_email').val();
@@ -674,6 +694,69 @@ $('#main_display').on('click','#send_mail', function() {
         url: '/admin/add_new_user',
         data: data,
         success: function(res) {
+
+            if(res === false) {
+
+                $('#send_mail').html('Send');
+
+                if(name === '') {
+                    
+                    $('#add_user_name').css('border', '1px solid red');
+                }
+
+                if(email ==='') {
+                    
+                    $('#add_user_email').css('border', '1px solid red');
+                }
+
+                if(checkbox === 0) {
+                    $('#super_admin_check').css('border', '1px solid red');
+                    $('#admin_check').css('border', '1px solid red');
+                    $('#editor_check').css('border', '1px solid red');
+                    $('#author_check').css('border', '1px solid red');
+                    $('#contributor_check').css('border', '1px solid red');
+                    $('#supporter_check').css('border', '1px solid red'); 
+                }
+
+            }
+
+            else if(res === 'not valid') {
+                alert('E-mail is not valid');
+                $('#add_user_email').css('border', '1px solid red');
+                $('#send_mail').html('Send');
+            }
+
+            else {
+
+                $('#send_mail').html('Send');
+
+                if(res === 'done') {
+
+                    $('#add_user_name').val('');
+                    $('#add_user_email').val('');
+                    $('#super_admin_check').prop('checked', false);
+                    $('#admin_check').prop('checked', false);;
+                    $('#editor_check').prop('checked', false);
+                    $('#author_check').prop('checked', false);
+                    $('#contributor_check').prop('checked', false);
+                    $('#supporter_check').prop('checked', false);
+
+                    const div_msg = $('<div>', {
+                        class: 'alert alert-success',
+                        role: 'alert'
+                    }).text('A simple success alert—check it out!');
+
+                    const button_x = $('<button>', {
+                        class: 'btn-close'
+                    }).attr('data-bs-dismiss', 'alert');
+
+                    div_msg.append(button_x);
+
+                    $('#row_add_user').prepend(div_msg);
+
+                }
+
+            }
 
         }
     });

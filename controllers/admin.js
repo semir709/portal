@@ -111,20 +111,35 @@ module.exports = {
     
             else {
 
-                const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ?, num = ?`, [data.e_mail, data.num]);
-    
-                console.log(user);
+                if(custom.validateEmail(data.email) === false) {
+                    res.send('not valid');
+                }
+
+                else {
+
+                    const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ? AND num = ?`, [data.email, data.num]);
+
+                    if(user[0].length <= 0) {
+
+                        bcrypt.hash(data.password, 10, async function(err, hash) {
+                            if(err) throw err;
                 
-                bcrypt.hash(data.password, 10, async function(err, hash) {
-                    if(err) throw err;
-        
-                  await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
-                    ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
-                    ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
-        
-                });
-        
-                res.send('/singin/thanks');
+                        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
+                            ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
+                            ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
+                
+                        });
+
+                        res.send('/singin/thanks');
+
+                    }
+
+                    else {
+                        res.send('user');
+                    }
+
+
+                }    
     
             }
 
@@ -193,42 +208,62 @@ module.exports = {
         const data = req.body;
         const con = db.getCon();
 
-        const user = await con.promise().query(`INSERT INTO users (full_name, user_role, e_mail) VALUES (?, ?, ?)`,
-        [data.name, data.checkbox, data.email]);
 
-        const user_id = user[0].insertId;
+        if(custom.isEmpty(data.name, data.checkbox, data.email)) {
 
-        const user_info = await con.promise().query(`SELECT full_name, user_role, e_mail FROM users WHERE id_user = ?`, [user_id]);
-
-        const name = user_info[0][0].full_name;
-        const role = user_info[0][0].user_role;
-        const user_mail = user_info[0][0].e_mail;
-
-        const name_array = name.split('');
-
-        let newName = '';
-
-        for(let i = 0; i < name_array.length - 1; i++) {
-
-            if(name_array[i].indexOf(' ') >= 0) {
-                name_array[i] = '_';
-            }
-
-                newName += name_array[i];
+            res.send(false);
 
         }
 
-        const transporter = mail.getTransport();    
+        else {
+
+            if(custom.validateEmail(data.email) === false) {
+                res.send('not valid');
+            }
+
+            else {
+
+                const user = await con.promise().query(`INSERT INTO users (full_name, user_role, e_mail) VALUES (?, ?, ?)`,
+            [data.name, data.checkbox, data.email]);
+
+            const user_id = user[0].insertId;
+
+            const user_info = await con.promise().query(`SELECT full_name, user_role, e_mail FROM users WHERE id_user = ?`, [user_id]);
+
+            const name = user_info[0][0].full_name;
+            const role = user_info[0][0].user_role;
+            const user_mail = user_info[0][0].e_mail;
+
+            const name_array = name.split('');
+
+            let newName = '';
+
+            for(let i = 0; i < name_array.length - 1; i++) {
+
+                if(name_array[i].indexOf(' ') >= 0) {
+                    name_array[i] = '_';
+                }
+
+                newName += name_array[i];
+
+            }
+
+            const transporter = mail.getTransport();    
 
 
-        let info = await transporter.sendMail({
-            from: '"Fred Foo 👻" <foo@example.com>',
-            to: "semirselman321@gmail.com", 
-            subject: "Hello ✔", 
-            text: "Hello world?", 
-            html: '<p>Click <a href="http://127.0.0.1:3000/singin?id=' + user_id + '&name='+ newName + '&role='+ role + '&email='+ user_mail +'">here</a> to singin</p>', 
-        });
+            let info = await transporter.sendMail({
+                from: '"Fred Foo 👻" <foo@example.com>',
+                to: "semirselman321@gmail.com", 
+                subject: "Hello ✔", 
+                text: "Hello world?", 
+                html: '<p>Click <a href="http://127.0.0.1:3000/singin?id=' + user_id + '&name='+ newName + '&role='+ role + '&email='+ user_mail +'">here</a> to singin</p>', 
+            });
 
+            res.send('done');
+
+            }
+
+        }
 
     },
 

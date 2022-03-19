@@ -24,11 +24,27 @@ module.exports = {
     isEmpty: function(...inputs) {
 
       for(let i = 0; i < inputs.length; i++) {
-        if(inputs[i] === '' || typeof inputs[i] === 'undefined') {
+        if(inputs[i] === '' || typeof inputs[i] === 'undefined' || inputs[i] === '0') {
           return true;
         }
+        
       }
 
+    },
+
+    validateEmail: function(email) {
+
+      const char =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if(email.match(char)) {
+
+        return true;
+
+      }
+
+      else {
+
+        return false;
+      }
     }
 
 }
