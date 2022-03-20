@@ -460,6 +460,8 @@ $('#main_display').on('click', '#button_edit_user', function() {
 
             const option = $('.ss_role_option');
 
+            $('#img_edit_user').attr('title', res.image);
+
             $('#cont_edit_user').attr('data-id', res.id_user);
             $('#input_user_name').val(res.full_name);
             $('#input_user_email').val(res.e_mail);
@@ -498,6 +500,8 @@ $('#main_display').on('click', '#user_update_btn', function() {
     const img_src = $('#img_edit_user').attr('src');
     const file = $('#file_edit_user');
     const file_final = file[0].files[0];
+
+    form.append('old_image', $('#img_edit_user').attr('title'));
 
     if(typeof file_final === 'undefined') {
         

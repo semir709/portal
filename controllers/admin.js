@@ -227,6 +227,10 @@ module.exports = {
 
         let img;
 
+        console.log(req.file);
+
+        // await unlinkAsync(req.file.path);
+
         if(typeof file === 'undefined') {
             img = data.src.split('/img/')[1];
             
@@ -234,6 +238,9 @@ module.exports = {
 
         else if(typeof file !== 'undefined') {
             img = file.filename;
+            let path = './public';
+            await unlinkAsync(path +  data.old_image);
+            
         }
 
         else {
