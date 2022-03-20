@@ -45,6 +45,60 @@ module.exports = {
 
         return false;
       }
+    },
+
+    convertRole: function(role) {
+
+      if(role == 1) {
+        return 'super admin'
+    } 
+
+    if(role == 2) {
+        return 'admin';
+    } 
+
+    if(role == 3) {
+        return 'editor';
+    } 
+
+    if(role == 4) {
+        return 'author';
+    } 
+
+    if(role == 5) {
+        return 'contributor';
+    } 
+
+    if(role == 6) {
+        return 'supporter';
     }
+
+  },
+
+  // convertRoletoDb: function(role) {
+  //   if(role === 'super admin') {
+  //     return 1;
+  //   } 
+
+  //   if(role === 'admin') {
+  //     return 2;
+  //   } 
+
+  //   if(role === 'editor') {
+  //     return 3;
+  //   } 
+
+  //   if(role === 'author') {
+  //     return 4;
+  //   } 
+
+  //   if(role === 'contributor') {
+  //     return 5;
+  //   } 
+
+  //   if(role === 'supporter') {
+  //     return 6;
+  //   } 
+  // }
 
 }

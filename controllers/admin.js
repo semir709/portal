@@ -203,6 +203,51 @@ module.exports = {
         res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new'});
     },
 
+    edit_user: async function(req, res) {
+
+        const con = db.getCon();
+        const id = req.query.id;
+
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, about, image, facebook
+        , instagram, twitter FROM users WHERE id_user = ?`, [id]);
+
+        // const newRole = custom.convertRole(data[0][0].user_role);
+
+        // data[0][0].user_role = newRole;
+
+        res.send(data[0][0]);
+
+    },
+
+    update_user: async function(req, res, next) {
+        
+        const data = req.body;
+        const file = req.file;
+        const con = db.getCon();
+
+        let img;
+
+        if(typeof file === 'undefined') {
+            img = data.src.split('/img/')[1];
+            
+        }
+
+        else if(typeof file !== 'undefined') {
+            img = file.filename;
+        }
+
+        else {
+            
+            res.send('not valid image');
+            return;
+        }
+
+        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, image = ?
+        ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
+        ,[data.name, data.role, data.email, data.num, '/img/'+ img, data.facebook, data.instagram, data.twitter, data.id]);
+
+    },
+
     add_new_user: async function(req, res) {
 
         const data = req.body;
@@ -363,8 +408,9 @@ module.exports = {
 
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users`);
 
+        const newRole = custom.convertRole(data.role);
 
-        res.render('all_users.ejs', {name: 'Niko Nikic', header_name: 'User', data: data[0]});
+        res.render('all_users.ejs', {name: 'Niko Nikic', header_name: 'User', data: data[0], newRole: newRole});
     },
 
     user_view: async function(req, res) {

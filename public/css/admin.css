@@ -378,6 +378,10 @@ body {
 
 /*all users*/
 
+.ss_input_file {
+    display: none;
+}
+
 .ss_list_all_users {
     margin-top: 10px;
 }

@@ -5,63 +5,80 @@
           <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <form action="/update_user" method="post" id="form_edit_user" enctype="multipart/form-data">
+
+       
         <div class="modal-body">
 
-            <div class="d-flex ss_main_info_user">
+                <div class="d-flex ss_main_info_user" id="cont_edit_user">
 
-                <div class="ss_inputs_modal ">
-
-                    <input type="text" id="input_user_name" class="form-control">
-                    <input type="text" id="input_user_email" class="form-control">
-                    <input type="text" id="input_user_num" class="form-control">
-                    <input type="text" id="input_user_role" class="form-control">
-        
-                </div>
-
-            </div>
-
-            <div class="ss_password_info">
-
-                <label for="">New Password</label>
-
-                <div class="d-flex ss_password_div">
-
-                    <input type="text" class="form-control" >
-                    <button>Generate</button>
-
-                </div>
-
-            </div>
-
-
-            <div class="ss_social_edit_user">
-
-                <div class="d-flex">
-                    <span><i class="fab fa-facebook-square"></i></span>
-                    <input type="text" id="input_user_facebook" class="form-control" >
-                </div>
+                    <div class="ss_inputs_modal ">
     
-                <div class="d-flex">
-                    <span><i class="fab fa-twitter-square"></i></span>
-                    <input type="text" id="input_user_twitter" class="form-control" >
-                </div>
-    
-                <div class="d-flex">
-                    <span><i class="fab fa-instagram-square"></i></span>
-                    <input type="text" id="input_user_instagram" class="form-control" >
-                </div>
-
-            </div>
+                        <input type="text" id="input_user_name" name="name" class="form-control">
+                        <input type="text" id="input_user_email" name="email" class="form-control">
+                        <input type="text" id="input_user_num" name="num" class="form-control">
+                        
             
-        </div>
+                    </div>
+
+                    <div class="ss_img_holder">
+                        <img src="" alt="" id="img_edit_user">
+                        <input type="file" id="file_edit_user" name="image" class="ss_input_file" onchange="previewFile2(this)"  accept="image/png, image/gif, image/jpeg">
+                    </div>
+    
+                </div>
+    
+                <div class="ss_role_info">
+    
+                    <label for="">Role</label>
+
+                    <select class="form-select" id="input_user_role" name="role">
+                        <option class="ss_role_option" value="" disabled selected value></option>
+                        <option class="ss_role_option" value="1">Super Admin</option>
+                        <option class="ss_role_option" value="2">Admin</option>
+                        <option class="ss_role_option" value="3">Editor</option>
+                        <option class="ss_role_option" value="4">Author</option>
+                        <option class="ss_role_option" value="5">Contributor</option>
+                        <option class="ss_role_option" value="6">Supporter</option>
+                    </select>
+    
+                    <!-- <div class="d-flex ss_role_div">
+                        <input type="text" name="role" class="form-control" >
+                    </div> -->
+    
+                </div>
+    
+    
+                <div class="ss_social_edit_user">
+    
+                    <div class="d-flex">
+                        <span><i class="fab fa-facebook-square"></i></span>
+                        <input type="text" id="input_user_facebook" name="facebook" class="form-control" >
+                    </div>
+        
+                    <div class="d-flex">
+                        <span><i class="fab fa-twitter-square"></i></span>
+                        <input type="text" id="input_user_twitter" name="twitter" class="form-control" >
+                    </div>
+        
+                    <div class="d-flex">
+                        <span><i class="fab fa-instagram-square"></i></span>
+                        <input type="text" id="input_user_instagram" name="instagram" class="form-control" >
+                    </div>
+    
+                </div>
+                
+            </div>
 
 
         <div class="modal-footer justify-content-start ss_modal_footer">
 
-          <button type="button" class="btn btn-primary ss_button">Send</button>
-          <button type="button" class="btn btn-primary ss_button">Trashe</button>
+          <button type="button" class="btn btn-primary ss_button" id="user_update_btn">Update</button>
+          <button type="button" class="btn btn-primary ss_button" id="user_trash_btn">Trashe</button>
 
         </div>
+
+    </form>
       </div>
     </div>
   </div>

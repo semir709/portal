@@ -70,6 +70,24 @@ function convertRole (role) {
     } 
 }
 
+function previewFile2(file) {
+
+    const image = $(file).parent().find('img');
+    const f = $(file)[0].files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = function () {
+        image.attr('src', reader.result);
+    
+    }
+  
+    if (f) {
+      reader.readAsDataURL(f);
+    } else {
+        image.attr('src', '');
+    }
+
+}
 
 //navigation
 
@@ -431,22 +449,78 @@ $('#main_display').on('click', '#category_edit', function() {
 
 $('#main_display').on('click', '#button_edit_user', function() {
 
-    let card = $(this).parents()[1];
+    const card = $(this).parents()[1];
+    const id = $(card).attr('data-id');
 
-    let name = $(card).find('.user_name').text();
-    let role = $(card).find('.user_role').text();
-    let email = $(card).find('.user_email').text();
-    let num = $(card).find('.user_num').text();
 
-    $('#input_user_name').val(name);
-    $('#input_user_email').val(email);
-    $('#input_user_num').val(num);
-    $('#input_user_role').val(role);
+    $.ajax({
+        type: 'GET',
+        url:'/edit_user?id='+ id,
+        success: function(res) {
 
-    $('#input_user_facebook').val(this.getAttribute('data-facebook'));
-    $('#input_user_twitter').val(this.getAttribute('data-twitter'));
-    $('#input_user_instagram').val(this.getAttribute('data-instagram'));
+            const option = $('.ss_role_option');
+
+            $('#cont_edit_user').attr('data-id', res.id_user);
+            $('#input_user_name').val(res.full_name);
+            $('#input_user_email').val(res.e_mail);
+            $('#input_user_num').val(res.num);
+            $('#img_edit_user').attr('src', res.image);
+            $('#input_user_facebook').val(res.facebook);
+            $('#input_user_twitter').val(res.twitter);
+            $('#input_user_instagram').val(res.instagram);
+
+            const role = res.user_role;
+
+            for(let i = 0; i < option.length; i++) {
+                if(role == $(option[i]).attr('value')) {
+
+                    $(option[i]).prop('selected', true);
+                }
+            }
+
+        }
+    });
     
+});
+
+$('#main_display').on('click', '#img_edit_user', function() {
+
+    $('#file_edit_user').trigger('click');
+
+});
+
+$('#main_display').on('click', '#user_update_btn', function() {
+
+    const id = $('#cont_edit_user').attr('data-id');
+
+    const f = document.getElementById('form_edit_user');
+    const form = new FormData(f);
+    const img_src = $('#img_edit_user').attr('src');
+    const file = $('#file_edit_user');
+    const file_final = file[0].files[0];
+
+    if(typeof file_final === 'undefined') {
+        
+        form.append('src',img_src);
+    }
+
+    else {
+        form.append('image',file_final.name);
+    }
+
+    form.append('id', id);
+    
+    $.ajax({
+        type: 'POST',
+        url:'/update_user',
+        contentType: false,
+        processData: false,
+        data: form,
+        success: function(res) {
+
+        }
+    });
+
 });
 
 /*View User*/
@@ -601,26 +675,6 @@ $('#img_singin').on('click', function() {
 
 });
 
-function previewFile() {
-
-    var preview = document.querySelector('#img_singin');
-    var file = document.querySelector('input[type=file]').files[0];
-    var reader = new FileReader();
-
-    // let img = $('#img_singin');
-    // img.attr('title', file.name);
-  
-    reader.onloadend = function () {
-      preview.src = reader.result;
-    
-    }
-  
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = "";
-    }
-  }
 
 //Add user 
 
