@@ -45,113 +45,6 @@ module.exports = {
         res.render('admin.ejs')
     },
 
-    /*
-    super admin 1
-    admin 2
-    editor 3
-    author 4
-    contributor 5
-    supporter 6
-
-    */
-
-    singin: function(req, res) {
-
-        let data = req.query;
-
-        let convert_role;
-
-        if(data.role === '0') {
-            convert_role = 'not added'
-        }
-
-        if(data.role === '1') {
-            convert_role = 'super admin'
-        }
-
-        if(data.role === '2') {
-            convert_role = 'admin'
-        }
-
-        if(data.role === '3') {
-            convert_role = 'editor'
-        }
-
-        if(data.role === '4') {
-            convert_role = 'author'
-        }
-
-        if(data.role === '5') {
-            convert_role = 'contributor'
-        }
-
-        if(data.role === '6') {
-            convert_role = 'supporter'
-        }
-        
-        data.convert_role = convert_role;
-
-        res.render('singin.ejs', data);
-    },
-
-    send_request: async function(req, res) {
-
-        const data = req.body;
-        const con = db.getCon();
-        const file = req.file;
-        let isEmpty;
-
-        if(typeof file !== 'undefined') {
-            isEmpty = custom.isEmpty(data.name, data.role, data.email, data.num, data.txt_area, data.facebook, data.instagram, data.twitter);
-
-            if(isEmpty) {
-                await unlinkAsync(req.file.path);
-                res.send(false);
-            }
-    
-            else {
-
-                if(custom.validateEmail(data.email) === false) {
-                    res.send('not valid');
-                }
-
-                else {
-
-                    const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ? AND num = ?`, [data.email, data.num]);
-
-                    if(user[0].length <= 0) {
-
-                        bcrypt.hash(data.password, 10, async function(err, hash) {
-                            if(err) throw err;
-                
-                        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
-                            ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
-                            ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
-                
-                        });
-
-                        res.send('/singin/thanks');
-
-                    }
-
-                    else {
-                        res.send('user');
-                    }
-
-
-                }    
-    
-            }
-
-        }
-
-        else {
-            res.send(false);
-        }
-        
-        
-    },
-
     singin_thanks: function(req, res) {
 
         res.render('thanks_singin.ejs');
@@ -370,7 +263,7 @@ module.exports = {
                 to: "semirselman321@gmail.com", 
                 subject: "Hello ✔", 
                 text: "Hello world?", 
-                html: '<p>Click <a href="http://127.0.0.1:3000/singin?id=' + user_id + '&name='+ newName + '&role='+ role + '&email='+ user_mail +'">here</a> to singin</p>', 
+                html: '<p>Click <a href="http://127.0.0.1:3000/singin?id=' + user_id + '">here</a> to singin</p>', 
             });
 
             res.send('done');
@@ -379,6 +272,78 @@ module.exports = {
 
         }
 
+    },
+
+    singin: async function(req, res) {
+
+        let id = req.query.id;
+        const con = db.getCon();
+        
+        const data = await con.promise().query(`SELECT full_name AS name, user_role AS role, e_mail FROM users WHERE id_user = ?`, [id]);
+
+        const final_data = data[0][0];
+
+        final_data.role = custom.convertRole(final_data.role);
+
+        res.render('singin.ejs', final_data);
+    },
+
+    send_request: async function(req, res) {
+
+        const data = req.body;
+        const con = db.getCon();
+        const file = req.file;
+        let isEmpty;
+
+        if(typeof file !== 'undefined') {
+            isEmpty = custom.isEmpty(data.name, data.role, data.email, data.num, data.txt_area, data.facebook, data.instagram, data.twitter);
+
+            if(isEmpty) {
+                await unlinkAsync(req.file.path);
+                res.send(false);
+            }
+    
+            else {
+
+                if(custom.validateEmail(data.email) === false) {
+                    res.send('not valid');
+                }
+
+                else {
+
+                    const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ? AND num = ?`, [data.email, data.num]);
+
+                    if(user[0].length <= 0) {
+
+                        bcrypt.hash(data.password, 10, async function(err, hash) {
+                            if(err) throw err;
+                
+                        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
+                            ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
+                            ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
+                
+                        });
+
+                        res.send('/singin/thanks');
+
+                    }
+
+                    else {
+                        res.send('user');
+                    }
+
+
+                }    
+    
+            }
+
+        }
+
+        else {
+            res.send(false);
+        }
+        
+        
     },
 
     add_new_post: async function(req, res) {

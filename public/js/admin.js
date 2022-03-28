@@ -587,22 +587,10 @@ $('#btn_send').on('click', function() {
     let convertedRole = convertRole(role);
 
     const id = urlParam.get('id');
-    const url_name = urlParam.get('name');
-    const url_role = urlParam.get('role');
-    const url_mail = urlParam.get('email');
-
-    let new_name_arr = url_name.split('_');
-    let new_name = '';
-
-    for(let i = 0; i < new_name_arr.length; i++) {
-        new_name += new_name_arr[i];
-        new_name += ' '; 
-    }
 
     const upload = document.getElementById('upload');
 
     formData.append('name',name);
-    // formData.append('img',img);
     formData.append('file', upload.files[0]);
     formData.append('email',email);
     formData.append('num',num);
@@ -613,9 +601,6 @@ $('#btn_send').on('click', function() {
     formData.append('txt_area',txt_area);
     formData.append('role',convertedRole);
     formData.append('id',id);
-    formData.append('url_role',url_role);
-    formData.append('url_mail',url_mail);
-    formData.append('new_name',new_name);
 
     $.ajax({
         type:'POST',
