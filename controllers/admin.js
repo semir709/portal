@@ -433,9 +433,9 @@ module.exports = {
         const con = db.getCon();
         
 
-        const data = await con.promise().query(`SELECT category.id_category AS id, category_name, count(category_name) AS count FROM category
-        INNER JOIN content_category ON content_category.id_category = category.id_category
-        group by category_name`); 
+        const data = await con.promise().query(`SELECT c.category_name, cg.id_category, count(cg.id_category) AS count FROM category c
+        LEFT JOIN content_category cg ON c.id_category = cg.id_category
+        group by c.category_name`); 
 
         res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category', data: data[0]});
     },
