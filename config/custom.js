@@ -75,30 +75,30 @@ module.exports = {
 
   },
 
-  // convertRoletoDb: function(role) {
-  //   if(role === 'super admin') {
-  //     return 1;
-  //   } 
+  convertRoletoNum: function(role) {
+    if(role === 'super admin') {
+      return 1;
+    } 
 
-  //   if(role === 'admin') {
-  //     return 2;
-  //   } 
+    if(role === 'admin') {
+      return 2;
+    } 
 
-  //   if(role === 'editor') {
-  //     return 3;
-  //   } 
+    if(role === 'editor') {
+      return 3;
+    } 
 
-  //   if(role === 'author') {
-  //     return 4;
-  //   } 
+    if(role === 'author') {
+      return 4;
+    } 
 
-  //   if(role === 'contributor') {
-  //     return 5;
-  //   } 
+    if(role === 'contributor') {
+      return 5;
+    } 
 
-  //   if(role === 'supporter') {
-  //     return 6;
-  //   } 
-  // }
+    if(role === 'supporter') {
+      return 6;
+    } 
+  }
 
 }

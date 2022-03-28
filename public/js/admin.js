@@ -391,6 +391,20 @@ $('#main_display').on('click', '#confirmed_user', function() {
 
 });
 
+$('#main_display').on('input', '#input_search_users', function () {
+
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/user_search'+ $(this).val(),
+        success: function(res) {
+            $('#row_users').html(res);
+        }
+
+    });
+
+});
+
 
 
 //add content

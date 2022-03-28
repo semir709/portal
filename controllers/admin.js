@@ -490,6 +490,20 @@ module.exports = {
 
     },
 
+    user_search: async function(req, res) {
+
+        const input = req.params.input;
+        const con = db.getCon();
+
+        const role = custom.convertRoletoNum(input.toLowerCase());
+
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+        WHERE user_role = ? OR full_name = ? `, [role, input]);
+
+        res.render('partials/user_card.ejs', {data: data[0]});
+
+    },
+
     user_view: async function(req, res) {
 
         const id = req.params.id;
