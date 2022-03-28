@@ -452,11 +452,42 @@ module.exports = {
 
         const con = db.getCon();
 
-        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users`);
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
         const newRole = custom.convertRole(data.role);
 
         res.render('all_users.ejs', {name: 'Niko Nikic', header_name: 'User', data: data[0], newRole: newRole});
+    },
+
+    not_confirmed: async function(req, res) {
+
+        const con = db.getCon();
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+        WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
+
+        res.render('partials/user_card.ejs', {data: data[0]});
+
+    },
+
+    confirmed: async function(req, res) {
+
+        const con = db.getCon();
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+        WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        res.render('partials/user_card.ejs', {data: data[0]});
+
+    },
+
+    trashed: async function(req, res) {
+
+        const con = db.getCon();
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+        WHERE user_trashed = ?`, [1]);
+
+        res.render('partials/user_card.ejs', {data: data[0]});
+
     },
 
     user_view: async function(req, res) {

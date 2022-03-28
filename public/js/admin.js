@@ -339,13 +339,12 @@ $("#main_display").on("click", "#edit_category_list" ,function() {
 
 //all users
 
-$(".ss_list_all_users li").click(function() {
+$('#main_display').on('click', ".ss_list_all_users li", function(){
 
     $(".ss_list_all_users li ").css("border-bottom", "none");
+    
+    $(this).css("border-bottom", "1px solid black");
 
-    
-    
-    $(this).css("border-bottom", "1px solid black")
 });
 
 
@@ -355,6 +354,43 @@ $(".ss_button_drop_down").click(function() {
     list.classList.toggle("drop_down_list");
    
 });
+
+$('#main_display').on('click', '#not_confirmed_user', function() {
+
+   $.ajax({
+       type:'GET',
+       url:'/admin/not_confirmed',
+       success: function(res) {
+           $('#row_users').html(res);
+       }
+   });
+
+});
+
+$('#main_display').on('click', '#trashed_user', function() {
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/trashed',
+        success: function(res) {
+            $('#row_users').html(res);
+        }
+    });
+
+});
+
+$('#main_display').on('click', '#confirmed_user', function() {
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/confirmed',
+        success: function(res) {
+            $('#row_users').html(res);
+        }
+    });
+
+});
+
 
 
 //add content

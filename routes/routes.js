@@ -49,6 +49,9 @@ route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
 route.get('/admin/media', admin.isAuthenticated, admin.media);
 
 route.get('/admin/user', admin.isAuthenticated, admin.user);
+route.get('/admin/not_confirmed', admin.not_confirmed);
+route.get('/admin/confirmed', admin.confirmed);
+route.get('/admin/trashed', admin.trashed);
 route.get('/admin/view_user:id', admin.isAuthenticated, admin.user_view);
 route.get('/edit_user', admin.edit_user);
 route.post('/update_user',upload.single('image'), admin.update_user);

@@ -378,6 +378,10 @@ body {
 
 /*all users*/
 
+/* .ss_list_users {
+    color: black;
+} */
+
 .ss_input_file {
     display: none;
 }
@@ -387,7 +391,7 @@ body {
 }
 
 .ss_list_all_users li{
-    display: inline-block;
+    display: inline-block !important;
     margin-left: 20px;
     color: black;
     opacity: 0.8;
