@@ -522,6 +522,19 @@ $('#main_display').on('click', '#user_update_btn', function() {
         data: form,
         success: function(res) {
 
+            console.log(res);
+
+            if(res === true) {
+                $('#editModalUsers').modal('hide');
+            }
+            else if(res === 'image missing') {
+                alert('Image missing');
+            }
+
+            else {
+                alert('Something goes wrong!!!');
+            }
+
         }
     });
 
@@ -818,7 +831,5 @@ $('#main_display').on('click','#send_mail', function() {
 
         }
     });
-
-
 
 });

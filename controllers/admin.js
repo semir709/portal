@@ -227,25 +227,25 @@ module.exports = {
 
         let img;
 
-        console.log(req.file);
-
-        // await unlinkAsync(req.file.path);
-
-        if(typeof file === 'undefined') {
-            img = data.src.split('/img/')[1];
-            
+        if((typeof  data.src === 'undefined' || data.src == '') && typeof file === 'undefined') {
+            res.send('image missing');
+            return;
         }
 
-        else if(typeof file !== 'undefined') {
-            img = file.filename;
+        else if((typeof  data.src !== 'undefined' || data.src != '') && typeof file === 'undefined') {
+            let old_img = data.src.split('/img/')[1];
+            img = old_img;
+        }
+
+        else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
             let path = './public';
             await unlinkAsync(path +  data.old_image);
-            
+
+            img = file.filename;
         }
 
         else {
-            
-            res.send('not valid image');
+            res.send(false);
             return;
         }
 
@@ -253,6 +253,68 @@ module.exports = {
         ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
         ,[data.name, data.role, data.email, data.num, '/img/'+ img, data.facebook, data.instagram, data.twitter, data.id]);
 
+        const transporter = mail.getTransport();    
+
+
+        let info = await transporter.sendMail({
+            from: '"Fred Foo 👻" <foo@example.com>',
+            to: "semirselman321@gmail.com", 
+            subject: "Update data ✔", 
+            text: "Some information about you on our website is changed, if you want to change you password click link below: ", 
+            html: '<p>Click <a href="http://127.0.0.1:3000/changePassword?id=' + data.id +'">here</a> to singin</p>', 
+        });
+
+
+        res.send(true);
+
+    },
+
+    changePassword: async function(req, res) {
+
+        const con = db.getCon();
+        const id = req.query.id;
+
+        const data = await con.promise().query(`SELECT full_name AS name FROM users WHERE id_user = ?`, [id]);
+
+        res.render('changePassword.ejs', data[0][0]);
+
+    },
+
+    user_changePassword: async function(req, res) {
+
+        const con = db.getCon();
+        const data = req.body;
+
+        //need hasing 
+        console.log(data);
+
+        let isEmpty = custom.isEmpty(data.password, data.newPassword, data.newPassword2);
+
+        if(isEmpty) {
+            res.send('0');
+            return;
+        }
+
+        const user = await con.promise().query(`SELECT full_name AS name FROM users WHERE user_password = ?`, [data.password]);
+
+        if(user[0].length < 1) {
+            res.send('1');
+            return;
+        } 
+
+        if(data.newPassword == data.newPassword2) {
+            await con.promise().query(`UPDATE users SET user_password = ? WHERE id_user = ?` , [data.newPassword, data.id]);
+            res.send('/password_isChanged');
+        }
+        else {
+            res.send('3');
+        }
+
+    },
+
+    password_isChanged: function(req, res) {
+
+        res.render('password_isChanged.ejs');
     },
 
     add_new_user: async function(req, res) {

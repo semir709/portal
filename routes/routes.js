@@ -52,6 +52,9 @@ route.get('/admin/user', admin.isAuthenticated, admin.user);
 route.get('/admin/view_user:id', admin.isAuthenticated, admin.user_view);
 route.get('/edit_user', admin.edit_user);
 route.post('/update_user',upload.single('image'), admin.update_user);
+route.get('/changePassword', admin.changePassword);
+route.post('/user_changePassword', admin.user_changePassword);
+route.get('/password_isChanged',admin.password_isChanged)
 
 route.get('/admin/new_user', admin.isAuthenticated, admin.new_user);
 route.post('/admin/add_new_user', admin.add_new_user);
