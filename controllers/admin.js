@@ -346,6 +346,18 @@ module.exports = {
         
     },
 
+    delete_user: async function(req, res) {
+
+        const id = req.params.id;
+
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE users SET user_active = ? WHERE id_user = ?`, [0, id]);
+
+        res.send(true);
+
+    },
+
     add_new_post: async function(req, res) {
 
         const id = req.user.id;

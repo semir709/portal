@@ -58,6 +58,7 @@ route.get('/password_isChanged',admin.password_isChanged)
 
 route.get('/admin/new_user', admin.isAuthenticated, admin.new_user);
 route.post('/admin/add_new_user', admin.add_new_user);
+route.get('/delete/user:id', admin.delete_user);
 
 route.get('/admin/settings', admin.isAuthenticated, admin.settings);
 

@@ -540,6 +540,26 @@ $('#main_display').on('click', '#user_update_btn', function() {
 
 });
 
+$('#main_display').on('click', '#user_trash_btn', function() {
+
+    const id = $('#cont_edit_user').attr('data-id');
+
+    $.ajax({
+        type: 'get',
+        url: '/delete/user' + id,
+        success: function(res) {
+            if(res) {
+                $('#editModalUsers').modal('hide');
+            }
+            else {
+                alert('Some things goes wrong1!!');
+            }
+        }
+
+    });
+
+});
+
 /*View User*/
 
 
