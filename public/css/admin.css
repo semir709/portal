@@ -386,11 +386,11 @@ body {
     display: none;
 }
 
-.ss_list_all_users {
+.ss_list_all {
     margin-top: 10px;
 }
 
-.ss_list_all_users li{
+.ss_list_all li{
     display: inline-block !important;
     margin-left: 20px;
     color: black;
@@ -399,7 +399,7 @@ body {
     display: none;
 }
 
-.ss_list_all_users li:hover {
+.ss_list_all li:hover {
     cursor: pointer;
     border-bottom: 1px solid black;
 }

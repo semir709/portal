@@ -46,6 +46,8 @@ route.post('/admin/image_upload', admin.isAuthenticated , upload.single('image')
 
 route.get('/admin/category', admin.isAuthenticated ,admin.category);
 route.post('/admin/category_update', admin.category_update);
+route.get('/admin/category_use', admin.category_use);
+route.get('/admin/category_trashed', admin.category_trashed);
 
 route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
 route.get('/admin/media', admin.isAuthenticated, admin.media);

@@ -336,17 +336,18 @@ $("#main_display").on("click", "#edit_category_list" ,function() {
 
 });
 
+//is used in more diffren pages
 
-//all users
+$('#main_display').on('click', ".ss_list_all li", function(){
 
-$('#main_display').on('click', ".ss_list_all_users li", function(){
-
-    $(".ss_list_all_users li ").css("border-bottom", "none");
+    $(".ss_list_all li ").css("border-bottom", "none");
     
     $(this).css("border-bottom", "1px solid black");
 
 });
 
+
+//all users
 
 $(".ss_button_drop_down").click(function() {
     let list = document.getElementsByClassName("ss_list_all_users")[0];
@@ -515,8 +516,32 @@ $('#main_display').on('click', '#update_category', function() {
                 $('#main_display').html(res);
             }
             else {
-                alert('Can\' update this category');
+                alert('Can\'t update this category');
             }
+        }
+    });
+
+});
+
+$('#main_display').on('click', '#category_use', function() {
+    
+    $.ajax({
+        type:'GET',
+        url: '/admin/category_use',
+        success: function(res) {
+            $('#category_display').html(res);
+        }
+    });
+
+});
+
+$('#main_display').on('click', '#category_trashed', function() {
+
+    $.ajax({
+        type:'GET',
+        url: '/admin/category_trashed',
+        success: function(res) {
+            $('#category_display').html(res);
         }
     });
 

@@ -455,6 +455,28 @@ module.exports = {
 
     },
 
+    category_use: async function(req, res) {
+
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id FROM category
+        WHERE in_use = ?`, [1]);
+        
+        res.render('partials/category_list.ejs', {data: data[0]});
+
+        
+    },
+
+    category_trashed: async function(req, res) {
+
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id FROM category
+        WHERE in_use = ?`, [0]);
+        
+        res.render('partials/category_list.ejs', {data: data[0]});
+},
+
     inbox: function(req, res) {
         res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
     },

@@ -6,7 +6,7 @@
     <%- include('partials/popup_delete.ejs') %>
     <%- include('partials/popup_edit.ejs') %>
 
-    <div class="col-lg-6 col-md-8 col-sm-12 ">
+    <div class="col-lg-4 col-md-8 col-sm-12 ">
 
         <div class="input-group mb-3 ss_input_group_search"> 
 
@@ -14,27 +14,29 @@
             <input type="text" class="form-control" id="search" placeholder="Search">
 
         </div>
-
-        <% for(let i = 0; i < data.length; i++) { %>
-
-          <div class="input-group ss_input_group_list mt-2">
-            <input type="text" class="form-control" value="<%= data[i].category%>" aria-label="Text input with segmented dropdown button">
-            <button type="button" class="btn btn-outline-secondary ss_num"><span><%=data[i].count%></span></button>
-            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split ss_drop_down" data-bs-toggle="dropdown" aria-expanded="false">
-              <span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" id="category_edit" data-bs-target="#editModal" data-bs-toggle="modal" data-id="<%=data[i].id%>">Edit</a></li>
-              <li><a class="dropdown-item" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete</a></li>
-              <li><a class="dropdown-item" href="#">View posts</a></li>
-        
-            </ul>
-          </div>
-
-        <% } %>
         
     </div>
 
+    <div class="col-md-8 col-sm-12 col-3">
 
+      <button class="ss_button_drop_down"><i class="fas fa-chevron-down"></i></button>
+
+      <ul class="ss_list_all">
+          <li class="ss_list_category" id="category_use">In use</li>
+          <li class="ss_list_category" id="category_trashed">Trashed</li>
+      </ul>
+
+  </div>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-12" id="category_display">
+
+      <%- include('partials/category_list.ejs') %>
+
+    </div>
+  
 </div>
 
