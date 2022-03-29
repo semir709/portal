@@ -49,6 +49,7 @@ route.post('/admin/category_update', admin.category_update);
 route.get('/admin/category_use', admin.category_use);
 route.get('/admin/category_trashed', admin.category_trashed);
 route.post('/admin/category/edit_trashed', admin.edit_trashed);
+route.post('/admin/category/category_recover', admin.category_recover);
 
 route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
 route.get('/admin/media', admin.isAuthenticated, admin.media);

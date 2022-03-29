@@ -576,6 +576,28 @@ $('#main_display').on('click', '#category_trashe', function() {
 
 });
 
+$('#main_display').on('click', '#category_recover', function() {
+
+    const data =  {
+        id: $('#category_recover').attr('data-id')
+    }
+
+    $.ajax({
+        type:'POST',
+        url:'/admin/category/category_recover',
+        data: data,
+        success: function(res) {
+            if(res.length > 0) {
+                $('#category_display').html(res);
+            }
+            else {
+                alert('Can\'t update this category');
+            }
+        }
+    });
+
+});
+
 /* Edit user*/
 
 $('#main_display').on('click', '#button_edit_user', function() {

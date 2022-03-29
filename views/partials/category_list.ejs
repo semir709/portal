@@ -8,7 +8,12 @@
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item" id="category_edit" data-bs-target="#editModal" data-bs-toggle="modal" data-id="<%=data[i].id%>">Edit</a></li>
-        <li><a class="dropdown-item" id="category_delete" data-bs-target="#deleteModal" data-bs-toggle="modal" data-id="<%=data[i].id%>">Delete</a></li>
+
+        <% if(data[i].in_use == 1) { %>
+            <li><a class="dropdown-item" id="category_delete" data-bs-target="#deleteModal" data-bs-toggle="modal" data-id="<%=data[i].id%>">Delete</a></li>
+        <% } else { %>
+            <li><a class="dropdown-item" id="category_recover" data-id="<%=data[i].id%>">Recover</a></li>
+        <% } %>
         <li><a class="dropdown-item" href="#">View posts</a></li>
   
       </ul>

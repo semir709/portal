@@ -433,7 +433,7 @@ module.exports = {
         const con = db.getCon();
         
 
-        const data = await con.promise().query(`SELECT c.category_name AS category, c.id_category AS id, count(cg.id_category) AS count FROM category c
+        const data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
         group by c.category_name`, [1]); 
 
@@ -447,7 +447,7 @@ module.exports = {
 
         await con.promise().query(`UPDATE category SET category_name = ? WHERE id_category = ?`, [data.input, data.id]);
 
-        const new_data = await con.promise().query(`SELECT c.category_name AS category, c.id_category AS id, count(cg.id_category) AS count FROM category c
+        const new_data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category
         group by c.category_name`); 
 
@@ -459,7 +459,7 @@ module.exports = {
 
         const con = db.getCon();
 
-        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id FROM category
+        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
         WHERE in_use = ?`, [1]);
         
         res.render('partials/category_list.ejs', {data: data[0]});
@@ -471,7 +471,7 @@ module.exports = {
 
         const con = db.getCon();
 
-        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id FROM category
+        const data = await con.promise().query(`SELECT category_name AS category, in_use, id_category AS id FROM category
         WHERE in_use = ?`, [0]);
         
         res.render('partials/category_list.ejs', {data: data[0]});
@@ -484,8 +484,22 @@ module.exports = {
 
         await con.promise().query(`UPDATE category SET in_use = ? WHERE id_category = ?`, [0, data.id]);
 
-        const new_data = await con.promise().query(`SELECT category_name AS category, id_category AS id FROM category
+        const new_data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
         WHERE in_use = ?`, [1]);
+
+        res.render('partials/category_list.ejs', {data:new_data[0]});
+
+    },
+    
+    category_recover: async function(req, res) {
+
+        const data = req.body;
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE category SET in_use = ? WHERE id_category = ?`, [1, data.id]);
+
+        const new_data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
+        WHERE in_use = ?`, [0]);
 
         res.render('partials/category_list.ejs', {data:new_data[0]});
 
