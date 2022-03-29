@@ -18,7 +18,7 @@
         <% for(let i = 0; i < data.length; i++) { %>
 
           <div class="input-group ss_input_group_list mt-2">
-            <input type="text" class="form-control" value="<%= data[i].category_name%>" aria-label="Text input with segmented dropdown button">
+            <input type="text" class="form-control" value="<%= data[i].category%>" aria-label="Text input with segmented dropdown button">
             <button type="button" class="btn btn-outline-secondary ss_num"><span><%=data[i].count%></span></button>
             <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split ss_drop_down" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="visually-hidden">Toggle Dropdown</span>

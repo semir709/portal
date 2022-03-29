@@ -433,11 +433,26 @@ module.exports = {
         const con = db.getCon();
         
 
-        const data = await con.promise().query(`SELECT c.category_name, cg.id_category, count(cg.id_category) AS count FROM category c
+        const data = await con.promise().query(`SELECT c.category_name AS category, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category
         group by c.category_name`); 
 
         res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category', data: data[0]});
+    },
+
+    category_update: async function(req, res) {
+
+        const con = db.getCon();
+        const data = req.body;
+
+        await con.promise().query(`UPDATE category SET category_name = ? WHERE id_category = ?`, [data.input, data.id]);
+
+        const new_data = await con.promise().query(`SELECT c.category_name AS category, c.id_category AS id, count(cg.id_category) AS count FROM category c
+        LEFT JOIN content_category cg ON c.id_category = cg.id_category
+        group by c.category_name`); 
+
+        res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category',data:new_data[0]});
+
     },
 
     inbox: function(req, res) {

@@ -487,11 +487,38 @@ $('#main_display').on('click','#post_content_btn', function() {
 });
 
 
-/* Edit modal */
+/* Edit category */
 
 $('#main_display').on('click', '#category_edit', function() {
 
     $('#editModal').attr('data-id', this.getAttribute('data-id'));
+
+});
+
+$('#main_display').on('click', '#update_category', function() {
+
+    const input = $('#input_edit_category').val();
+    const id = $('#editModal').attr('data-id');
+
+    const data = {
+        input,
+        id
+    }
+
+    $.ajax({
+        type:'POST',
+        url:'/admin/category_update',
+        data: data,
+        success: function(res) {
+            if(res.length > 0) {
+                $('#editModal').modal('hide');
+                $('#main_display').html(res);
+            }
+            else {
+                alert('Can\' update this category');
+            }
+        }
+    });
 
 });
 
