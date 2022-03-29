@@ -48,6 +48,7 @@ route.get('/admin/category', admin.isAuthenticated ,admin.category);
 route.post('/admin/category_update', admin.category_update);
 route.get('/admin/category_use', admin.category_use);
 route.get('/admin/category_trashed', admin.category_trashed);
+route.post('/admin/category/edit_trashed', admin.edit_trashed);
 
 route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
 route.get('/admin/media', admin.isAuthenticated, admin.media);

@@ -547,6 +547,35 @@ $('#main_display').on('click', '#category_trashed', function() {
 
 });
 
+$('#main_display').on('click', '#category_delete', function() {
+
+    $('#deleteModal').attr('data-id', this.getAttribute('data-id'));
+
+});
+
+$('#main_display').on('click', '#category_trashe', function() {
+
+    const data =  {
+        id: $('#deleteModal').attr('data-id')
+    }
+
+    $.ajax({
+        type:'POST',
+        url:'/admin/category/edit_trashed',
+        data: data,
+        success: function(res) {
+            if(res.length > 0) {
+                $('#deleteModal').modal('hide');
+                $('#category_display').html(res);
+            }
+            else {
+                alert('Can\'t update this category');
+            }
+        }
+    });
+
+});
+
 /* Edit user*/
 
 $('#main_display').on('click', '#button_edit_user', function() {

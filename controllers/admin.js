@@ -434,8 +434,8 @@ module.exports = {
         
 
         const data = await con.promise().query(`SELECT c.category_name AS category, c.id_category AS id, count(cg.id_category) AS count FROM category c
-        LEFT JOIN content_category cg ON c.id_category = cg.id_category
-        group by c.category_name`); 
+        LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
+        group by c.category_name`, [1]); 
 
         res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category', data: data[0]});
     },
@@ -475,7 +475,21 @@ module.exports = {
         WHERE in_use = ?`, [0]);
         
         res.render('partials/category_list.ejs', {data: data[0]});
-},
+    },
+
+    edit_trashed: async function(req, res) {
+
+        const data = req.body;
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE category SET in_use = ? WHERE id_category = ?`, [0, data.id]);
+
+        const new_data = await con.promise().query(`SELECT category_name AS category, id_category AS id FROM category
+        WHERE in_use = ?`, [1]);
+
+        res.render('partials/category_list.ejs', {data:new_data[0]});
+
+    },
 
     inbox: function(req, res) {
         res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
