@@ -598,6 +598,22 @@ $('#main_display').on('click', '#category_recover', function() {
 
 });
 
+$('#main_display').on('input', '#search_category', function() {
+
+    const input = $(this).val();
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/category_input' + input,
+        success: function(res) {
+
+            $('#category_display').html(res);
+
+        }
+    });
+
+});
+
 /* Edit user*/
 
 $('#main_display').on('click', '#button_edit_user', function() {

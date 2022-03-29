@@ -505,6 +505,18 @@ module.exports = {
 
     },
 
+    category_input: async function(req, res) {
+
+        const input = req.params.input;
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
+        WHERE category_name = ?`,[input]);
+
+        res.render('partials/category_list.ejs', {data: data[0]});
+
+    },
+
     inbox: function(req, res) {
         res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
     },
