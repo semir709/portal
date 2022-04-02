@@ -275,7 +275,6 @@ $(".ss_list ").on('click',function() {
 });
 
 
-
 // all contents
 
 $('#main_display').on('click', '.ss_nav_a', function(){
@@ -459,6 +458,7 @@ $('#main_display').on('click','#post_content_btn', function() {
     let inputGroup_post = $('#inputGroup_post option:selected').text()
     let inputGroup_category = $('#inputGroup_category');
     let img_content = $('#img_content').attr('src');
+    let upload = document.getElementById('upload');
 
     let category_ch = [];
 
@@ -466,25 +466,54 @@ $('#main_display').on('click','#post_content_btn', function() {
         category_ch[i] = $(inputGroup_category.children()[i]).children().text();
     }
 
-    const data = {
+    const formData = new FormData();
 
-        input_title: input_title,
-        txt_area: txt_area,
-        inputGroup_publish: inputGroup_publish,
-        inputGroup_post: inputGroup_post,
-        img_content: img_content,
-        category_ch: category_ch
-    }
+    formData.append('input_title',input_title);
+    formData.append('txt_area', txt_area);
+    formData.append('inputGroup_publish', inputGroup_publish);
+    formData.append('inputGroup_post', inputGroup_post);
+    formData.append('img_content', img_content);
+    formData.append('category_ch', category_ch);
+    formData.append('file', upload.files[0]);
+    
+    // for (var value of formData.values()) {
+    //     console.log(value);
+    //  }
 
     $.ajax({
         type: 'POST',
         url: '/admin/add_new/post',
-        data: data,
+        data: formData,
+        contentType: false,
+        processData: false,
         success: function(res) {
-            console.log('success');
+
+            
+            if(res == 'IsEmpty') {
+                alert('Something is empty');
+            }
+
+            else if(res == 'done'){
+
+                $('#input_title').val('');
+                $('.trumbowyg-editor').text('');
+                $('#inputGroup_publish option:selected').text('');
+                $('#inputGroup_post option:selected').text('')
+                $('#inputGroup_category').val('');
+                $('#img_content').attr('src', '');
+
+                $('.ss_tags_container').empty();
+
+            }
         }
     });
     
+});
+
+$('#main_display').on('click', '#img_content', function() {
+
+    $('#upload').trigger('click');
+
 });
 
 

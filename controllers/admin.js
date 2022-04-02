@@ -7,6 +7,7 @@ const unlinkAsync = promisify(fs.unlink)
 
 const bcrypt = require('bcrypt');
 const custom = require('../config/custom');
+const { type } = require('express/lib/response');
 
 module.exports = {
 
@@ -59,11 +60,11 @@ module.exports = {
 
         const con = db.getCon();
 
-
-        const content = await con.promise().query('SELECT id_content, title, content.image, full_name FROM content INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? '
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data: content[0]});
+        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
     },
 
     all_content_data: async function (req, res) {
@@ -72,7 +73,8 @@ module.exports = {
 
         const category = req.params.category;
 
-        const content = await con.promise().query('SELECT id_content, title, image, full_name FROM content INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?'
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?`
         , [category]);
 
         res.render('partials/all_content_data.ejs', {data: content[0]});
@@ -362,15 +364,29 @@ module.exports = {
 
         const id = req.user.id;
         const data = req.body;
+        const file = req.file;
 
         const con = db.getCon();
 
         let content;
         let category = [];
 
+        if(typeof file === 'undefined') {
+            res.send('IsEmpty');
+            return;
+        }
+
+        const imgLocation = file.path.split('\\public')[1];
+
+
+        if(custom.isEmpty(data.input_title, data.txt_area, data.img_content, data.inputGroup_publish, data.inputGroup_post)) {
+            res.send('IsEmpty');
+            return;
+        }
+
 
         content = await con.promise().query(`INSERT INTO content (title, article, image, publish, post_place, id_user) 
-        VALUES (?, ?, ?, ?, ?, ?)`, [data.input_title, data.txt_area, data.img_content, data.inputGroup_publish, data.inputGroup_post, id]);
+        VALUES (?, ?, ?, ?, ?, ?)`, [data.input_title, data.txt_area, imgLocation, custom.publishConvert(data.inputGroup_publish),custom.postConvert(data.inputGroup_post), id]);
 
         const cg = data.category_ch;
 
@@ -419,6 +435,8 @@ module.exports = {
         for(let i = 0; i < old_id.length; i++) {
             con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [content[0].insertId, old_id[i]]);
         }
+
+        res.send('done');
 
     },
 

@@ -23,8 +23,10 @@ module.exports = {
 
     isEmpty: function(...inputs) {
 
-      for(let i = 0; i < inputs.length; i++) {
+      for(let i = 0; i < inputs.length ; i++) {
+        
         if(inputs[i] === '' || typeof inputs[i] === 'undefined' || inputs[i] === '0') {
+          
           return true;
         }
         
@@ -99,6 +101,42 @@ module.exports = {
     if(role === 'supporter') {
       return 6;
     } 
+  },
+
+  publishConvert: function(p) {
+
+    if(p == 'Publish') {
+      return 1
+    } 
+
+    if(p == 'Draft') {
+        return 2;
+    }  
+
+    if(p == 'Schedule') {
+        return 3;
+    } 
+
+    if(p == 'Trashe') {
+        return 4;
+    } 
+
+  },
+
+  postConvert: function(p) {
+
+    if(p == 'Main article') {
+      return 1
+    } 
+
+    if(p == 'Article') {
+        return 2;
+    }  
+
+    if(p == 'Author choise') {
+        return 3;
+    } 
+
   }
 
 }
