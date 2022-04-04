@@ -2,10 +2,10 @@
 
 <% if(typeof data != 'undefined') { %>
 
-    <div class="row px-lg-3 mt-lg-4">
+    <div class="row px-lg-3 mt-lg-4" data-id="<%= data[0].id_content %>" id="main_form">
 
         <div class="col-lg-9 order-2 order-lg-1 ">
-            <input class="ss_input ss_input_category_name" value="<%=data[0].title %>" type="text">
+            <input class="ss_input ss_input_category_name" id="input_title" value="<%=data[0].title %>" type="text">
     
             <div class="ss_link d-sm-flex">
     
@@ -34,7 +34,7 @@
 
                     <div class="mb-3">
 
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select class="form-select" id="inputGroup_publish">
 
                             <% let options_id = ['1','2','3','4']; %>
                             <% let options = ['', 'Publish','Draft','Schedule','Trashe']; %>
@@ -59,7 +59,7 @@
                     
 
                     <div class="mb-3">
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select class="form-select" id="inputGroup_post">
 
                             <% let post_place_id = ['1','2','3']; %>
                             <% let post_place_options = ['', 'Main article','Article','Author choise']; %>
@@ -86,7 +86,7 @@
                         <button class="btn" id="btn_tag">Click</button>
                     </div>
 
-                    <div class="ss_tags_container">
+                    <div class="ss_tags_container" id="inputGroup_category">
                         
                         <% data.forEach( e => { %>
 
@@ -101,11 +101,23 @@
                     
         
                 </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <div class="ss_img_holder">
+                            <img id="img_content" src="<%= data[0].image %>" data-old="<%= data[0].image%>" alt="">
+                            <input type="file" id="upload" class="ss_input_singin_img" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                        </div>
+
+                    </div>
+
+                </div>
     
                 <div class="ss_button_post">
     
-                    <button>Post</button>
-                    <button>Preview</button>
+                    <button id="update_content">Update</button>
     
                 </div>
         

@@ -73,11 +73,54 @@ module.exports = {
 
         const category = req.params.category;
 
-        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+        const content = await con.promise().query(`SELECT id_content , title, content.image, full_name FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?`
         , [category]);
 
         res.render('partials/all_content_data.ejs', {data: content[0]});
+
+    },
+
+    content_update: async function(req, res) {
+
+        const data = req.body;
+        const file = req.file;
+        const con = db.getCon();
+        let img;
+        
+
+        if((typeof  data.img_content === 'undefined' || data.img_content == '') && typeof file === 'undefined') {
+            res.send('1');
+            return;
+        }
+
+        else if((typeof  data.img_content !== 'undefined' || data.img_content != '') && typeof file === 'undefined') {
+            let old_img = data.img_content.split('/img/')[1];
+            img = old_img;
+        }
+
+        else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
+            let path = './public';
+            await unlinkAsync(path +  data.old_image);
+
+            img = file.filename;
+        }
+
+        else {
+            res.send(false);
+            return;
+        }
+
+        await con.promise().query(`UPDATE content SET title = ?, article = ?, image = ?, publish = ?, post_place = ?
+        ,id_user = ? WHERE id_content = ?`
+        ,[data.input_title, data.txt_area, '/img/'+ img, custom.publishConvert(data.inputGroup_publish.trim())
+        , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
+
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+        ,['1']);
+
+        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
 
     },
 
@@ -86,10 +129,11 @@ module.exports = {
         const con = db.getCon();
         const id = req.params.id;
 
-        const data = await con.promise().query(`SELECT content.id_content, title, article, publish, post_place, category_name FROM content
+        const data = await con.promise().query(`SELECT content.id_content, title, article, publish, post_place, category_name, content.image FROM content
         INNER JOIN content_category ON content.id_content = content_category.id_content 
         INNER JOIN category ON category.id_category = content_category.id_category WHERE content.id_content = ? `, [id]);
 
+        console.log(data[0]);
 
         res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new', data: data[0]});
     },

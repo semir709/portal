@@ -34,6 +34,40 @@ const plugin = {
 
 /*Custom function*/
 
+function contentValues() {
+
+    let input_title = $('#input_title').val();
+    let txt_area = $('#txt_area').val();
+    let inputGroup_publish = $('#inputGroup_publish option:selected').text();
+    let inputGroup_post = $('#inputGroup_post option:selected').text()
+    let inputGroup_category = $('#inputGroup_category');
+    let img_content = $('#img_content').attr('src');
+    let upload = document.getElementById('upload');
+    let old_image = $('#img_content').attr('data-old');
+    let content_id = $('#main_form').attr('data-id');
+
+    let category_ch = [];
+
+    for(let i = 0; i < inputGroup_category.children().length; i++) { 
+        category_ch[i] = $(inputGroup_category.children()[i]).children().text();
+    }
+
+    const formData = new FormData();
+
+    formData.append('input_title',input_title);
+    formData.append('txt_area', txt_area);
+    formData.append('inputGroup_publish', inputGroup_publish);
+    formData.append('inputGroup_post', inputGroup_post);
+    formData.append('img_content', img_content);
+    formData.append('category_ch', category_ch);
+    formData.append('file', upload.files[0]);
+    formData.append('old_image', old_image);
+    formData.append('id_content', content_id);
+
+    return formData;
+
+}
+
 /*
     super admin 1
     admin 2
@@ -335,6 +369,35 @@ $("#main_display").on("click", "#edit_category_list" ,function() {
 
 });
 
+$('#main_display').on('click', '#update_content', function() {
+
+    const formData = contentValues();
+
+    $.ajax({
+        type:'POST',
+        url:'/admin/content/update',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(res) {
+            if(res.length > 0) {
+
+                $('#main_display').html(res);
+
+            }
+
+            else if(res == '1') {
+                alert(' the image is missing');
+            }
+            else {
+                alert('somethin goes wrong');
+            }
+         }
+    });
+
+
+});
+
 //is used in more diffren pages
 
 $('#main_display').on('click', ".ss_list_all li", function(){
@@ -452,33 +515,7 @@ $(document).on('keypress', function(e) {
 
 $('#main_display').on('click','#post_content_btn', function() {
 
-    let input_title = $('#input_title').val();
-    let txt_area = $('#txt_area').val();
-    let inputGroup_publish = $('#inputGroup_publish option:selected').text();
-    let inputGroup_post = $('#inputGroup_post option:selected').text()
-    let inputGroup_category = $('#inputGroup_category');
-    let img_content = $('#img_content').attr('src');
-    let upload = document.getElementById('upload');
-
-    let category_ch = [];
-
-    for(let i = 0; i < inputGroup_category.children().length; i++) { 
-        category_ch[i] = $(inputGroup_category.children()[i]).children().text();
-    }
-
-    const formData = new FormData();
-
-    formData.append('input_title',input_title);
-    formData.append('txt_area', txt_area);
-    formData.append('inputGroup_publish', inputGroup_publish);
-    formData.append('inputGroup_post', inputGroup_post);
-    formData.append('img_content', img_content);
-    formData.append('category_ch', category_ch);
-    formData.append('file', upload.files[0]);
-    
-    // for (var value of formData.values()) {
-    //     console.log(value);
-    //  }
+    const formData = contentValues();
 
     $.ajax({
         type: 'POST',

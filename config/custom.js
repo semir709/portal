@@ -105,28 +105,32 @@ module.exports = {
 
   publishConvert: function(p) {
 
+    let value;
+
     if(p == 'Publish') {
-      return 1
+      value = '1';
     } 
 
     if(p == 'Draft') {
-        return 2;
+      value =  2;
     }  
 
     if(p == 'Schedule') {
-        return 3;
+      value = 3;
     } 
 
     if(p == 'Trashe') {
-        return 4;
+      value =  4;
     } 
+
+    return value;
 
   },
 
   postConvert: function(p) {
 
     if(p == 'Main article') {
-      return 1
+      return 1;
     } 
 
     if(p == 'Article') {
