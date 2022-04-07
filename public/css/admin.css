@@ -369,6 +369,25 @@ body {
     
 }
 
+.ss_list_stack_list  {
+
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    max-height: 0px;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 300ms ease;   
+
+} 
+
+.ss_show_lists {
+
+    max-height: inherit;
+    opacity: 1;
+    margin-left: 10%;
+}
+
 .ss_header_content h2 {
     font-weight: 400;
     font-size: 27px;

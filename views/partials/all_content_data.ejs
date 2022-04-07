@@ -20,12 +20,41 @@
     
             <span id="dropdownMenuButton1" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
     
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" id="edit_category_list" >Edit</a></li>
-              <li><a class="dropdown-item" >Trash</a></li>
+
+              <% if(data[i].publish < 4) { %>
+                <li><a class="dropdown-item" id="trash_category_list">Trash</a></li>
+              <% } else { %>
+                <li><a class="dropdown-item" id="publish_category_list">Publish</a></li>
+              <% } %>
+
               <li><a class="dropdown-item" >Veiw post</a></li>
               <li><a class="dropdown-item" >Copy link</a></li>
+            </ul> -->
+
+            <ul class="dropdown-menu" id="main_dropDown">
+
+              <li><a class="dropdown-item" id="edit_category_list" >Edit</a></li>
+
+              <li class="ss_list_stack">
+
+                <a class="dropdown-item" >Set status</a>
+
+                <ul class="ss_list_stack_list">
+                  <li><a class="dropdown-item" id="set_public">Public</a></li>
+                  <li><a class="dropdown-item" id="set_draft">Draft</a></li>
+                  <li><a class="dropdown-item" id="set_schedule">Schedule</a></li>
+                  <li><a class="dropdown-item" id="set_trash">Trash</a></li>
+                </ul>
+
+              </li>
+
+              <li><a class="dropdown-item" >Veiw post</a></li>
+              <li><a class="dropdown-item" >Copy link</a></li>
+
             </ul>
+
           </div>
     
         </div>

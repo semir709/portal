@@ -60,7 +60,7 @@ module.exports = {
 
         const con = db.getCon();
 
-        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
@@ -73,9 +73,11 @@ module.exports = {
 
         const category = req.params.category;
 
-        const content = await con.promise().query(`SELECT id_content , title, content.image, full_name FROM content
+        const content = await con.promise().query(`SELECT id_content , title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?`
         , [category]);
+
+        console.log(content[0]);
 
         res.render('partials/all_content_data.ejs', {data: content[0]});
 
@@ -117,6 +119,68 @@ module.exports = {
         , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
 
         const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+        ,['1']);
+
+        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+
+    },
+
+    content_trash: async function(req, res) {
+
+        const id = req.params.id;
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['4', id]);
+
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+        ,['1']);
+
+        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+
+
+    },
+
+    content_publish: async function(req, res) {
+
+        const id = req.params.id;
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['1', id]);
+
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+        ,['1']);
+
+        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+
+    },
+
+    content_draft: async function(req, res) {
+
+        const id = req.params.id;
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['2', id]);
+
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+        ,['1']);
+
+        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+
+
+    },
+
+    content_schedule: async function(req, res) {
+
+        const id = req.params.id;
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['3', id]);
+
+        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 

@@ -369,6 +369,131 @@ $("#main_display").on("click", "#edit_category_list" ,function() {
 
 });
 
+$('#main_display').on('click', '.ss_list_stack', function(e) {
+
+    e.stopPropagation();
+
+    if ($('.ss_list_stack_list').hasClass("ss_show_lists")) {
+        $(".ss_list_stack_list").removeClass("ss_show_lists");
+    }
+      
+    else {
+        $(".ss_list_stack_list").removeClass("ss_show_lists");
+        $('.ss_list_stack_list').addClass("ss_show_lists");
+    }
+
+});
+
+$('#main_display').on('click', '#set_trash', function(e) {
+
+    e.stopPropagation();
+
+    const id = $(this).closest('.ss_contents_holder ').attr('data-id');
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/content/trash' + id,
+        success: function(res) {
+
+            if(res.length > 0) {
+
+                $('#main_display').html(res);
+
+            }
+
+            else {
+                alert('somethin goes wrong');
+            }
+           
+         }
+    });
+
+
+});
+
+$('#main_display').on('click', '#set_draft', function(e) {
+    
+    e.stopPropagation();
+
+    const id = $(this).closest('.ss_contents_holder ').attr('data-id');
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/content/draft' + id,
+        success: function(res) {
+
+            if(res.length > 0) {
+
+                $('#main_display').html(res);
+
+            }
+
+            else {
+                alert('somethin goes wrong');
+            }
+           
+         }
+    });
+
+
+});
+
+$('#main_display').on('click', '#set_schedule', function(e) {
+
+    e.stopPropagation();
+
+    const id = $(this).closest('.ss_contents_holder ').attr('data-id');
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/content/schedule' + id,
+        success: function(res) {
+
+            if(res.length > 0) {
+
+                $('#main_display').html(res);
+
+            }
+
+            else {
+                alert('somethin goes wrong');
+            }
+           
+         }
+    });
+
+
+});
+
+$('#main_display').on('click', '#set_public', function(e) {
+
+    e.stopPropagation();
+
+    const id = $(this).closest('.ss_contents_holder ').attr('data-id');
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/content/public' + id,
+        success: function(res) {
+
+            if(res.length > 0) {
+
+                $('#main_display').html(res);
+
+            }
+            
+            else {
+                alert('somethin goes wrong');
+            }
+           
+         }
+    });
+
+
+});
+
+
+/* Is used in the add_content.ejs but it is part of all content*/
 $('#main_display').on('click', '#update_content', function() {
 
     const formData = contentValues();
@@ -397,6 +522,7 @@ $('#main_display').on('click', '#update_content', function() {
 
 
 });
+
 
 //is used in more diffren pages
 
