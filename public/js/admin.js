@@ -354,6 +354,19 @@ $("#main_display").on('click','#label_search',function() {
     input_search.classList.toggle("ss_input_streach");
 });
 
+//search content
+$('#main_display').on('input', '#content_search', function() {
+
+    $.ajax({
+        type:'GET',
+        url:'/admin/content/search' + $(this).val(),
+        success: function(res) {
+            $('#all_content').html(res);
+        }
+    });
+
+});
+
 $("#main_display").on("click", "#edit_category_list" ,function() {
     const main_display = $('#main_display');
 

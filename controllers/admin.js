@@ -77,8 +77,6 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?`
         , [category]);
 
-        console.log(content[0]);
-
         res.render('partials/all_content_data.ejs', {data: content[0]});
 
     },
@@ -185,6 +183,19 @@ module.exports = {
         ,['1']);
 
         res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+
+    },
+
+    content_search: async function(req, res) {
+
+        const input = req.params.input;
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+        INNER JOIN users ON content.id_user = users.id_user WHERE title = ? OR full_name = ?`, [input, input]);
+
+        res.render('partials/all_content_data.ejs', {data: data[0]});
+
 
     },
 

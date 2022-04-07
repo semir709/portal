@@ -45,6 +45,7 @@ route.get('/admin/content/trash:id', admin.content_trash);
 route.get('/admin/content/public:id', admin.content_publish);
 route.get('/admin/content/schedule:id', admin.content_schedule);
 route.get('/admin/content/draft:id', admin.content_draft);
+route.get('/admin/content/search:input', admin.content_search);
 
 route.get('/admin/add_new', admin.isAuthenticated ,admin.add_new);
 route.post('/admin/add_new/post', admin.isAuthenticated , upload.single('file') , admin.add_new_post);
