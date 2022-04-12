@@ -896,7 +896,6 @@ $('#main_display').on('click', '#user_update_btn', function() {
         data: form,
         success: function(res) {
 
-            console.log(res);
 
             if(res === true) {
                 $('#editModalUsers').modal('hide');
@@ -1211,4 +1210,58 @@ $('#main_display').on('click','#send_mail', function() {
         }
     });
 
+});
+
+//SETINGS
+
+$('#main_display').on('click', '#btn_save_settings', function(){
+
+    const logo = $('#input_file_settings_logo')[0].files[0];
+    const icon = $('#input_file_settings_icon')[0].files[0];
+
+    const img_logo = $('#img_logo').attr('data-oldLogo');
+    const img_icon = $('#img_icon').attr('data-oldIcon');
+
+    const title = $('#site_title').val();
+    const tagline = $('#site_tagline').val();
+    const post_page = $('#post_per_page').val();
+    const pag_count = $('#pag_count').val();
+
+    const form = new FormData();
+
+    form.append('logo', logo);
+    form.append('icon', icon);
+    form.append('title', title);
+    form.append('tagline', tagline);
+    form.append('post_page', post_page);
+    form.append('pag_count', pag_count);
+    form.append('oldLogo', img_logo);
+    form.append('oldIcon', img_icon);
+
+    $.ajax({
+        type:'POST',
+        url:'/admin/settings/update',
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function(res) {
+            console.log(res);
+        }
+    });
+
+});
+
+$('#main_display').on('click', '#img_icon', function() {
+
+    $('#input_file_settings_icon').trigger('click');
+
+    
+});
+
+
+$('#main_display').on('click', '#img_logo', function() {
+
+    $('#input_file_settings_logo').trigger('click');
+
+    
 });

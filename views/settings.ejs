@@ -10,7 +10,8 @@
 
             <div class="ss_img_holder">
 
-                <img src="<%= data[0].icon %>" alt="">
+                <img src="<%= data[0].icon %>" alt="" id="img_icon" data-oldIcon="<%= data[0].icon %>" >
+                <input type="file" class="ss_input_singin_img" id="input_file_settings_icon" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
 
             </div>
 
@@ -23,14 +24,15 @@
                 <div class="">
 
                     <label for="">Site title</label>
-                    <input type="text" value="<%= data[0].site_title %>">
+                    <input type="text" value="<%= data[0].site_title %>" id="site_title">
 
                 </div>
 
                 <div class="">
 
                     <label for="">Site tagline</label>
-                    <input type="text" value="<%= data[0].site_tagline %>">
+                    <input type="text" value="<%= data[0].site_tagline %>" id="site_tagline">
+                    
 
                 </div>
 
@@ -49,7 +51,8 @@
 
             <div class="ss_img_holder">
 
-                <img src="<%= data[0].logo %>" alt="">
+                <img src="<%= data[0].logo %>" alt="" id="img_logo" data-oldLogo="<%= data[0].logo %>">
+                <input type="file" class="ss_input_singin_img" id="input_file_settings_logo" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
 
             </div>
 
@@ -61,12 +64,12 @@
 
                 <div class="">
                     <label for="">Post per page</label>
-                    <input type="text" value="<%= data[0].post_per_page %>">
+                    <input type="text" value="<%= data[0].post_per_page %>" id="post_per_page">
                 </div>
 
                 <div class="">
                     <label for="">Pagination count</label>
-                    <input type="text" value="<%= data[0].pagination_count %>">
+                    <input type="text" value="<%= data[0].pagination_count %>" id="pag_count">
                 </div>
 
             </div>
@@ -75,7 +78,7 @@
 
     </div>
 
-    <button class="ss_settings_save_button">Save</button>
+    <button class="ss_settings_save_button" id="btn_save_settings">Save</button>
 
 
 </div>

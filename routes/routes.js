@@ -79,6 +79,7 @@ route.post('/admin/add_new_user', admin.add_new_user);
 route.get('/delete/user:id', admin.delete_user);
 
 route.get('/admin/settings', admin.isAuthenticated, admin.settings);
+route.post('/admin/settings/update', upload.fields([{name: 'icon', maxCount: 1}, {name: 'logo', maxCount: 1}]) ,admin.settings_update);
 
 
 module.exports = route;

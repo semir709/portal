@@ -88,7 +88,7 @@ module.exports = {
         const con = db.getCon();
         let img;
         
-
+//-------------------------------------------------------------------------------------------------------------------------
         if((typeof  data.img_content === 'undefined' || data.img_content == '') && typeof file === 'undefined') {
             res.send('1');
             return;
@@ -240,7 +240,7 @@ module.exports = {
         const con = db.getCon();
 
         let img;
-
+//..---------------------------------------------------------------------------------------------------------------------------
         if((typeof  data.src === 'undefined' || data.src == '') && typeof file === 'undefined') {
             res.send('image missing');
             return;
@@ -739,6 +739,9 @@ module.exports = {
         res.render('new_user.ejs', {name: 'Niko Nikic', header_name: 'New user'});
     },
 
+
+    /* SETTINGS*/
+
     settings: async function(req, res) {
 
         const con = db.getCon();
@@ -746,9 +749,37 @@ module.exports = {
         const data = await con.promise().query(`SELECT site_icon AS icon, site_logo AS logo, site_title, 
         site_tagline, post_per_page, pagination_count FROM settings`);
 
-        console.log(data[0]);
-
         res.render('settings.ejs', {name: 'Niko Nikic', header_name: 'Settings', data: data[0]});
     },
+    
+    settings_update: async function(req, res) {
 
+        const data = req.body;
+        const logo = req.files.logo;
+        const icon = req.files.icon;
+
+        const con = db.getCon();
+
+        let logo_res = await custom.contorlingImage(data.oldLogo, logo);
+
+        let icon_res = await custom.contorlingImage(data.oldIcon, icon);
+
+
+        if(logo_res == '1' || icon_res == '1') {
+            res.send('1');
+        }
+        else if(logo_res == false || icon_res == false) {
+            res.send(false);
+        }
+        else {
+
+            await con.promise().query(`UPDATE settings SET site_icon = ?, site_logo = ?,
+            site_title = ?, site_tagline = ?, post_per_page = ?, pagination_count = ?
+            WHERE id_settings = ?`, ['/img/'+ icon_res, '/img/'+ logo_res, data.title, data.tagline,
+            data.post_page,data.pag_count, '1']);
+
+
+        }
+
+    }
 }
