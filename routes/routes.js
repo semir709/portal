@@ -13,6 +13,8 @@ const admin = require('../controllers/admin');
 
 const passport = require('passport');
 
+
+//MAIN PAGE
 route.get('/', main.home);
 route.get('/home', main.home);
 
@@ -23,6 +25,8 @@ route.get('/content:name', main.content)
 
 route.get('/about', main.about);
 
+
+//LOGIN
 route.get('/login', admin.login);
 route.post('/login/verify', passport.authenticate('local', admin.login_verify));
 
@@ -32,6 +36,8 @@ route.get('/singin', admin.singin);
 route.post('/singin/send_request', upload.single('file'), admin.send_request);
 route.get('/singin/thanks', admin.singin_thanks);
 
+
+//ADMIN
 route.get('/admin', admin.isAuthenticated,  admin.home);
 
 route.get('/admin/admin_home', admin.isAuthenticated ,admin.admin_home);

@@ -5,3 +5,7 @@ $('.ss_article').on('click', function() {
    
     //ajax
 });
+
+// const date = "<%data[0].date%>";
+
+// console.log(date);

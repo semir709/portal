@@ -3,29 +3,38 @@
 <h3 class="ss_author_choice_header">Author choice</h3>
 <div class="line"></div>
 
-<div class="row mt-4">
 
-    <div class="col-xl-12 col-lg-5  order-2 order-lg-1 mb-sm-3">
+<% for(let i = 0; i < data.length; i++) { %>
 
-        <div class="ss_img_content_holder ">
-            <img src="/img/sk.jpg" alt="">
-        </div>
-    
-    </div>
-    
-    <div class="col-xl-12 col-lg-7 order-lg-2 mb-sm-4 mb-1">
-    
-        <h3 class="fs-4 ss_content_header">What is CPU and GPU and whay is important for gaming</h3>
-    
-        <div class="d-flex align-items-center d-xl-none d-lg-flex">
-            <div class="ss_img_author_holder">
-                <img src="/img/su.jpg" alt="">
+   <% if(data[i].publish == '1' && data[i].post_place == '2') { %>
+
+        <div class="row mt-4" data-id="<%= data[i].id_content %>">
+
+            <div class="col-xl-12 col-lg-5  order-2 order-lg-1 mb-sm-3">
+        
+                <div class="ss_img_content_holder ">
+                    <img src="<%= data[i].content_image %>" alt="">
+                </div>
+            
             </div>
-            <p class="mb-0 ms-2">Semir Selman 08/01/2022</p>
+            
+            <div class="col-xl-12 col-lg-7 order-lg-2 mb-sm-4 mb-1">
+            
+                <h3 class="fs-4 ss_content_header"><%= data[i].title %></h3>
+            
+                <div class="d-flex align-items-center d-xl-none d-lg-flex">
+                    <div class="ss_img_author_holder">
+                        <img src="<%= data[i].user_image %>" alt="">
+                    </div>
+                    <p class="mb-0 ms-2"><%= data[i].full_name %> 08/01/2022</p>
+                </div>
+            
+            </div>
+        
         </div>
-    
-    </div>
 
-</div>
+   <% } %>
+
+<% } %>
 
 
