@@ -22,13 +22,13 @@
 
             <!-- <div  class="col-1"></div> -->
 
-            <div class="col-7 ss_main_articles_size d-none d-lg-block ss_article">
+            <!-- <div class="col-7 ss_main_articles_size d-none d-lg-block ss_article">
 
-                <div class="ss_main_article">
+                <div class="ss_main_article" data-id="<%= main_content[0].id_content %>">
 
                     <div class="ss_img_holder">
 
-                        <img src="/img/sa.jpg" alt="">
+                        <img src="<%= main_content[0].user_image %>" alt="">
                         <div class="ss_dark_filter"></div>
 
                     </div>
@@ -36,19 +36,21 @@
                     <div class="ss_article_info_main">
 
                         <div class="ss_header_holder d-flex align-items-end">
-                            <h1 class="ss_main_header">Best phones in this moment</h1>
+                            <h1 class="ss_main_header"><%= main_content[0].title %></h1>
                         </div>
 
                         <div class="d-flex align-items-center">
 
                             <div class="ss_img_author_holder">
 
-                                <img src="/img/ss.jpg" alt="">
+                                <img src="<%= main_content[0].user_image %>" alt="">
                                 <div class="ss_dark_filter rounded-circle"></div>
 
                             </div>
 
-                            <p class="ss_paragraphs">Semir Selman, 01/08/2022</p>
+                            <p class="ss_paragraphs"><%= main_content[0].full_name %></p>
+                            <p class="ss_paragraphs"><%= main_content[0].date.toUTCString().slice(0, -13) %></p>
+                            <p class="ss_paragraphs"><%= main_content[0].time %></p>
 
                         </div>
                     </div>
@@ -59,11 +61,11 @@
 
             <div class="col-5 ss_main_articles_size d-none d-lg-block">
 
-                <div class="ss_main_right_content ss_article">
+                <div class="ss_main_right_content ss_article" data-id="<%= main_content[1].id_content %>">
 
                     <div class="ss_img_holder">
 
-                        <img src="img/si.jpg" alt="">
+                        <img src="<%= main_content[1].content_image %>" alt="">
                         <div class="ss_dark_filter"></div>
 
                     </div>
@@ -71,26 +73,28 @@
                     <div class="ss_article_info_right">
 
                         <div class="ss_header_holder d-flex align-items-end">
-                            <h2 class="fs-4">Best GPU right now</h2>
+                            <h2 class="fs-4"><%= main_content[1].title %></h2>
                         </div>
 
                         <div class="d-flex align-items-center">
 
                             <div class="ss_img_author_holder">
 
-                                <img src="/img/sc.jpg" alt="">
+                                <img src="<%= main_content[1].user_image %>" alt="">
                                 <div class="ss_dark_filter rounded-circle"></div>
 
                             </div>
 
-                            <p class="ss_paragraphs">Semir Selman, 01/08/2022</p>
+                            <p class="ss_paragraphs"><%= main_content[1].full_name %></p>
+                            <p class="ss_paragraphs"><%= main_content[1].date.toUTCString().slice(0, -13) %></p>
+                            <p class="ss_paragraphs"><%= main_content[1].time %></p>
 
                         </div>
                     </div>
 
                 </div>
 
-                <div class="ss_main_right_content d-none d-lg-block ss_article">
+                <div class="ss_main_right_content ss_article">
 
                     <div class="ss_img_holder">
 
@@ -120,7 +124,7 @@
                     </div>
                 </div>    
                
-            </div>
+            </div> -->
 
 
 

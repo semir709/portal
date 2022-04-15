@@ -18,10 +18,10 @@ const passport = require('passport');
 route.get('/', main.home);
 route.get('/home', main.home);
 
+route.get('/content/:con', main.content);
+
 route.get('/page:num', main.next);
 route.get('/home/page:page', main.next);
-
-route.get('/content:name', main.content)
 
 route.get('/about', main.about);
 
