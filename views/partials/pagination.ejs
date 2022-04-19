@@ -8,7 +8,13 @@
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href="">1</a></li>
+
+              <% for(let i = 0; i < pag.length; i++) { %>
+
+                <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href=""><%= pag[i] %></a></li>
+
+              <% } %>
+
               <li class="page-item">
                 <a class="page-link ss_page_link px-4" href="#" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>

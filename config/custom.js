@@ -176,6 +176,65 @@ module.exports = {
         return false;
     }
 
+  },
+
+  pagination: function(row_per_page, page, data, limit_pagination) {
+
+    // const row_per_page = 5;
+    // let page = 4; //this is 
+
+    let start = row_per_page * (page - 1);
+    let end = start + row_per_page;
+
+    let itemsList = data.slice(start, end);
+
+    const page_count = Math.ceil(data.length / row_per_page);
+    // const limit_pag = 10;
+
+    let count_limit = 1;
+
+    const pagination = [];
+
+    for(let i = page - 4; i <= page_count ; i++) {
+
+        if(i < 1) {
+            i = 1;
+        }
+
+        pagination.push(i);
+
+        if(count_limit == limit_pagination) {
+            break;
+        }
+
+        count_limit++;
+    }
+
+    return  {
+
+      itemsList,
+      pagination
+
+    }
+
+  },
+
+  filter_data: function(data, publish, post_place) {
+
+    const arr_data = [];
+
+    for(let i = 0; i < data.length; i++) {
+
+      if(data[i].publish == publish && data[i].post_place == post_place) {
+
+        arr_data.push(data[i]);
+
+      }
+
+    }
+
+    return arr_data;
+
   }
 
 }
