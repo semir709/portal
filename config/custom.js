@@ -1,7 +1,8 @@
 const multer = require('multer');
 
 const fs = require('fs')
-const { promisify } = require('util')
+const { promisify } = require('util');
+// const { content } = require('../controllers/main');
 const unlinkAsync = promisify(fs.unlink)
 
 module.exports = {
@@ -219,21 +220,41 @@ module.exports = {
 
   },
 
-  filter_data: function(data, publish, post_place) {
+  filter_data: function(data, publish, post_place, category) {
+
+    const cg = category || false;
 
     const arr_data = [];
+    const arr_data_filter = [];
 
     for(let i = 0; i < data.length; i++) {
 
-      if(data[i].publish == publish && data[i].post_place == post_place) {
+      if(data[i].publish == publish && data[i].post_place == post_place && cg != false && cg.toLowerCase() == data[i].category.toLowerCase()) {
+        arr_data_filter.push(data[i]);
+
+      }
+
+      else if(data[i].publish == publish && data[i].post_place == post_place && cg == false ) {
 
         arr_data.push(data[i]);
-
       }
 
     }
 
-    return arr_data;
+    return { arr_data, arr_data_filter};
+
+  },
+
+  reduceSidedata: function(data) {
+
+    const new_side_data = Array.from(new Set(data.map(e => e.id_content)))
+    .map(e => {
+
+      return data.find((d => d.id_content == e)); 
+
+    })
+
+    return new_side_data;
 
   }
 
