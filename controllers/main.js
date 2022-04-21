@@ -28,9 +28,9 @@ module.exports = {
 
         res.render('home.ejs', {data: itemsList, main_content:main_data, side_data: side_data, settings: sett_data[0], pag: pagination, all_content: true});
     },
-    next: function(req, res) {
-        res.render('category_page.ejs')
-    },
+    // next: function(req, res) {
+    //     res.render('category_page.ejs') not in use this ejs file
+    // },
 
     content: async function(req, res) {
 
@@ -59,7 +59,7 @@ module.exports = {
 
         const new_side_data = custom.reduceSidedata(side_data);
         
-        res.render('category_page.ejs', {data: itemsList, main_content: [], side_data: new_side_data , settings: sett_data[0], pag: pagination, all_content: false, category: category});
+        res.render('home.ejs', {data: itemsList, main_content: [], side_data: new_side_data , settings: sett_data[0], pag: pagination, all_content: false, category: category});
     },
 
     page: async function(req, res) {
@@ -84,7 +84,7 @@ module.exports = {
 
         
 
-        res.render('category_page.ejs', {data: itemsList, main_content:[], side_data: side_data, settings: sett_data[0], pag: pagination, all_content: true});
+        res.render('home.ejs', {data: itemsList, main_content:[], side_data: side_data, settings: sett_data[0], pag: pagination, all_content: true});
         
 
     },

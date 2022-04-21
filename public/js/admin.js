@@ -28,6 +28,11 @@ const plugin = {
         upload: {
             serverPath: '/admin/image_upload',
             fileFieldName: 'image',
+        },
+
+        resizimg: {
+            minSize: 64,
+            step: 16,
         }
     }
 }

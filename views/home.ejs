@@ -20,7 +20,9 @@
 
         <div class="row ss_main_articles ">
 
-            <!-- <div  class="col-1"></div> -->
+            <% if(main_content.length > 0) { %>
+
+                <!-- <div  class="col-1"></div> -->
 
             <!-- <div class="col-7 ss_main_articles_size d-none d-lg-block ss_article">
 
@@ -125,6 +127,8 @@
                 </div>    
                
             </div> -->
+ 
+            <% } %> 
 
 
 
@@ -240,10 +244,10 @@
               </div>
         </div>
 
-        <div class="row mt-5 mb-5 ss_content_size">
+        <div class="row mt-5 mb-5 ss_content_size" id="content_holder">
 
     
-            <div class="col-xl-9 ps-0 mb-md-5" id="content_holder">
+            <div class="col-xl-9 ps-0 mb-md-5" >
                 <%- include('partials/all_contents.ejs')%>
             </div>
 
