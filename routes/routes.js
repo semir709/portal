@@ -20,12 +20,13 @@ const { Route } = require('express');
 route.get('/', main.home);
 route.get('/home', main.home);
 
+//naviagtion
 route.get('/category/:cg', main.content);
 route.get('/page/:pg', main.page);
 route.get('/category/:cg/page/:pg', main.content);
 
-// route.get('/page:num', main.next);
-// route.get('/home/page:page', main.next);
+// content
+route.get('/content/:id', main.getContent);
 
 route.get('/about', main.about);
 

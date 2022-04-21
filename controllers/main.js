@@ -88,6 +88,29 @@ module.exports = {
         
 
     },
+
+    getContent: async function(req, res) {
+
+        const id = req.params.id;
+        const con = db.getCon();
+
+        const data = await con.promise().query(`SELECT c.title, c.article, c.image AS content_image, DATE(c.publish_time) AS date,
+        TIME(c.publish_time) AS time, u.full_name as name, u.image AS author_image  FROM content c INNER JOIN users u ON u.id_user = c.id_user
+        WHERE c.id_content = ?`, [id]);
+
+        const all_data = await con.promise().query(`SELECT c.id_content, c.title, c.article, c.image AS content_image,
+        DATE(c.publish_time) AS date, TIME(c.publish_time) AS time,
+        c.publish, c.post_place, u.id_user, u.full_name, u.image AS user_image FROM content c 
+        INNER JOIN  users u ON c.id_user = u.id_user ORDER BY publish_time DESC`);
+
+        const side_data = custom.filter_data(all_data[0], '1', '2').arr_data;
+
+        res.render('content.ejs', {data: data[0][0], side_data: side_data})
+
+        
+
+    },
+
     about: function(req, res) {
         res.render('about.ejs');
     }
