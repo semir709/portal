@@ -9,9 +9,21 @@
                 </a>
               </li>
 
-              <% for(let i = 0; i < pag.length; i++) { %>
+              <% if(all_content == true) { %> 
 
-                <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href=""><%= pag[i] %></a></li>
+                <% for(let i = 0; i < pag.length; i++) { %>
+
+                  <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href="/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
+  
+                <% } %>
+
+              <% } else { %>
+
+                <% for(let i = 0; i < pag.length; i++) { %>
+
+                  <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href="/category/<%= category %>/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
+  
+                <% } %>
 
               <% } %>
 

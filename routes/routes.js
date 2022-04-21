@@ -12,16 +12,20 @@ const main = require('../controllers/main');
 const admin = require('../controllers/admin');
 
 const passport = require('passport');
+const { Router } = require('express');
+const { Route } = require('express');
 
 
 //MAIN PAGE
 route.get('/', main.home);
 route.get('/home', main.home);
 
-route.get('/content/:con', main.content);
+route.get('/category/:cg', main.content);
+route.get('/page/:pg', main.page);
+route.get('/category/:cg/page/:pg', main.content);
 
-route.get('/page:num', main.next);
-route.get('/home/page:page', main.next);
+// route.get('/page:num', main.next);
+// route.get('/home/page:page', main.next);
 
 route.get('/about', main.about);
 

@@ -179,18 +179,18 @@ module.exports = {
 
   },
 
-  pagination: function(row_per_page, page, data, limit_pagination) {
-
-    // const row_per_page = 5;
-    // let page = 4; //this is 
+  pagination: function(row_per_page, page, data, limit_pagination) { 
 
     let start = row_per_page * (page - 1);
     let end = start + row_per_page;
 
     let itemsList = data.slice(start, end);
 
+    // console.log(start, 'start');
+    // console.log(end, 'end');
+    // console.log(itemsList);
+
     const page_count = Math.ceil(data.length / row_per_page);
-    // const limit_pag = 10;
 
     let count_limit = 1;
 
@@ -227,9 +227,10 @@ module.exports = {
     const arr_data = [];
     const arr_data_filter = [];
 
+
     for(let i = 0; i < data.length; i++) {
 
-      if(data[i].publish == publish && data[i].post_place == post_place && cg != false && cg.toLowerCase() == data[i].category.toLowerCase()) {
+      if( cg != false && cg.toLowerCase() == data[i].category.toLowerCase()) {
         arr_data_filter.push(data[i]);
 
       }
