@@ -19,6 +19,10 @@ body {
    
 }
 
+.ss_carousel_full {
+    display: none;
+}
+
 .ss_main_content {
 
     padding: 0px;
@@ -35,6 +39,13 @@ body {
     position: relative;
 }
 
+.ss_carousel {
+
+    height: 300px;
+
+}
+
+/*-------------------------------------------*/
 
 .ss_nav_width {
     width: 100%;
@@ -117,6 +128,12 @@ body {
     margin: 5% 0%;
 }
 
+.ss_content_text img {
+
+    width: 100%;
+
+}
+
 .ss_dark_filter {
     position: absolute;
     background: black;
@@ -172,6 +189,10 @@ body {
     left: 10px;
     width: 95%;
     height: 55%;
+}
+
+.ss_article_info_main_side p, h1 {
+    color: #fff;
 }
 
 .ss_article_info_right {
@@ -356,6 +377,17 @@ body {
 
 @media (max-width: 768px) {
 
+    /*main content*/
+    .ss_main_content_size {
+        display: none;
+    }
+
+    .ss_carousel_full {
+        display: block;
+    }
+
+    /**/
+
     .ss_container {
         padding: 0% 5%;
     }
@@ -404,7 +436,31 @@ body {
 
 }
 
+@media (max-width: 420px) {
+
+
+    /*paggination*/
+    .ss_page_link {
+
+        padding: 10px 20px !important;
+
+    }
+    /**/
+    
+
+}
+
 @media (max-width: 330px) {
+
+    /*pagination*/
+
+    .ss_page_link {
+
+        padding: 5px 10px !important;
+
+    }
+
+    /**/
 
     .ss_carousel {
         height: 200px;
