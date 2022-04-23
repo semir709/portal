@@ -232,6 +232,31 @@ body {
     background: #fff;
 }
 
+/*List selector*/
+
+/* .ss_select_filter {
+
+}
+
+.ss_list_select li {
+    display: inline-block;
+    
+}
+
+.ss_list_select {
+
+    border: 1px solid black;
+
+}
+
+.ss_input_search_holder {
+
+    width: 60%;
+
+} */
+
+/*-------------*/
+
 .ss_drop_down:hover {
     background: #008cff;
 }
@@ -271,6 +296,11 @@ body {
 
 .ss_navbar_search_con {
     padding: 0;
+    position: static !important;
+}
+
+.ss_navbar_search {
+    min-width: 100% !important;
 }
 
 
@@ -280,13 +310,20 @@ body {
 
 
 .ss_nav_all_content {
-    border: 1px solid #C0C0C0;
+    /* border: 1px solid #C0C0C0;
     border-radius: 30px;
     padding-left: 40px;
     padding-right: 40px;
-    background: #fff;
+    background: #fff; */
     height: auto;
+    float: right;
     
+}
+
+.ss_nav_all_content li {
+    display: inline-block !important;
+    color: black;
+    margin-left: 7px;
 }
 
 .ss_info_content_holder {
@@ -297,7 +334,6 @@ body {
 
 .ss_nav_a {
     color: black !important;
-    opacity: 0.9;
     padding: 6px 5px 8px 5px;
 }
 
@@ -391,6 +427,7 @@ body {
     align-items: center;
     border: 1px solid #C0C0C0;
     background-color: #fff;
+    margin: 16px 0px !important;
 }
 
 .ss_header_content {
@@ -823,6 +860,16 @@ body {
 
 @media (max-width:992px) {
 
+    .ss_nav_all_content {
+        float: none;
+        
+    }
+
+    .ss_nav_all_content {
+        padding-left: 0px !important;
+        margin-top: 10px;
+    }
+
     /* .ss_main {
         display: grid !important;
         grid-template-columns: 10% 90%; 
@@ -874,14 +921,14 @@ body {
         position: relative;
     }
 
-    .ss_input_search {
+    /* .ss_input_search {
         position: absolute;
         display: inline-block;
         left: 80%;
         height: 100%;
         transition: 1s;
         
-    }
+    } */
 
     .ss_button_nav_all_category  {
         position: absolute;
@@ -898,9 +945,9 @@ body {
         transition: 1s;
     }
 
-    .ss_search_content {
+    /* .ss_search_content {
         display: none;
-    }
+    } */
 
     .ss_header_content {
         min-height: 50%;
@@ -1130,5 +1177,14 @@ body {
     /*add content*/
 
     
+
+}
+
+@media (max-width:400px) {
+
+    .ss_nav_all_content li {
+        display: block !important;
+        
+    }
 
 }

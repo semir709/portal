@@ -1,68 +1,21 @@
-<%-include('partials/top_header_admin.ejs') %>
-<div class="row mt-5 justify-content-between  px-5">
-
-    <div class="col-lg-9 col-md-8 col-md-7 col-sm-9 p-0">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light ss_navbar_search_con">
-          <div class="container-fluid ss_bg_con p-0">
-
-            
-
-            <div class="input-group mb-3 d-sm-block d-lg-none ss_input_navbar_input align-items-center">
-              <button class="navbar-toggler ss_button_nav_all_category" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-chevron-down"></i>
-              </button>
-              
-              <input type="text" class="form-control ss_input ss_input_search" id="search_input" placeholder="Author or category..." >
-              <label for="search_input" id="label_search"><i class="fas fa-search"></i></label>
-            </div>
-
-       
-
-            <div class="collapse navbar-collapse ss_navbar_search" id="navbarNav">
-
-              <ul class="navbar-nav ss_nav_all_content justify-content-between">
-
-                <li class="nav-item">
-                  <a class="nav-link ss_nav_a "  >Published</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link ss_nav_a" >Drafts</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link ss_nav_a" >Scheduled</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link ss_nav_a">Trashed</a>
-                </li>
-                
-              </ul>
-
-            </div>
-            
-          </div>
-
-        </nav>
-
-    </div>
-
-    <div class="col-lg-3 col-md-4 col-md-4 p-0">
-
-        
-        <input type="text" class="form-control ss_input ss_search_content" id="content_search" placeholder="Author or category..." >
-         
-
-    </div>
 
 
-</div>
+<div class="container ps-5 ps-sm-4">
 
-<%- include('partials/popup_delete.ejs') %>
-<%- include('partials/popup_edit.ejs') %>
+  <%-include('partials/top_header_admin.ejs') %>
 
-<div id="all_content"> 
 
-  <%- include('partials/all_content_data.ejs') %>
+  <%- include('partials/filter_nav_admin.ejs') %>
+
+
+  <%- include('partials/popup_delete.ejs') %>
+  <%- include('partials/popup_edit.ejs') %>
+
+  <div id="all_content"> 
+
+    <%- include('partials/all_content_data.ejs') %>
+
+  </div>
 
 </div>
 
