@@ -7,7 +7,7 @@ module.exports = function (passport) {
 
     passport.use(new LocalStrategy( {usernameField: 'email'}, async (email, password, cb)  => {
 
-        const con = db.getCon();        
+        const con = db.getCon();    
 
         const user = await con.promise().query(`SELECT id_user AS id FROM users WHERE e_mail = ? AND user_password = ?`,
         [email, password])
@@ -15,21 +15,22 @@ module.exports = function (passport) {
 
             const id = res[0][0];
 
-            if(typeof id === 'undefined') {
-                cb(null, false, { message: 'Incorrect username or password.' })
+            if(res[0].length > 0) {
+
+                return cb(null, res[0][0]);;
+
+            } else {
+
+                return cb(null, false, { message: 'Incorrect username or password.' });
+
             }
 
-           return res;
 
         })
-        .catch((err) => {console.log(err); cb(err)});
+        .catch((err) => {console.log(err);  cb(err)});
 
            //check password
            //---------------------------------------------------------------------
-
-        cb(null, user[0][0]);
-
-
         
 
     }));

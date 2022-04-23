@@ -1,6 +1,61 @@
 <% for(let i = 0; i < data.length; i++) { %>
 
-    <div class="ss_contents_holder mt-3 p-2 mx-5" data-id="<%= data[i].id_content%>">
+
+  <div class="ss_contents_holder mt-3 p-2 mx-5" data-id="<%= data[i].id_content%>">
+  
+    <div class="p-0 ss_col_img">
+  
+      <div class="ss_img_holder ss_img_holder_content">
+        <img src="<%=data[i].image %>" alt="">
+      </div>
+  
+    </div>
+  
+    <div class="p-0 ps-2 ss_info_content_holder">
+  
+      <div class="d-flex ss_header_content justify-content-between">
+        
+  
+        <h2><%= data[i].title%></h2>
+  
+        <div class="dropdown">
+  
+          <span id="dropdownMenuButton1" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
+
+          <ul class="dropdown-menu" id="main_dropDown">
+
+            <li><a class="dropdown-item" id="edit_category_list" >Edit</a></li>
+
+            <li class="ss_list_stack">
+
+              <a class="dropdown-item" >Set status</a>
+
+              <ul class="ss_list_stack_list">
+                <li><a class="dropdown-item" id="set_public">Public</a></li>
+                <li><a class="dropdown-item" id="set_draft">Draft</a></li>
+                <li><a class="dropdown-item" id="set_schedule">Schedule</a></li>
+                <li><a class="dropdown-item" id="set_trash">Trash</a></li>
+              </ul>
+
+            </li>
+
+            <li><a class="dropdown-item" >Veiw post</a></li>
+            <li><a class="dropdown-item" >Copy link</a></li>
+
+          </ul>
+
+        </div>
+  
+      </div>
+      
+      <p><%= data[i].full_name%></p>
+  
+  
+    </div>
+  
+  </div>
+
+    <!-- <div class="ss_contents_holder mt-3 p-2 mx-5" data-id="<%= data[i].id_content%>">
   
       <div class="p-0 ss_col_img">
     
@@ -51,7 +106,7 @@
     
       </div>
     
-    </div>
+    </div> -->
     
   
   <% } %>
