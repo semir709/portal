@@ -197,10 +197,16 @@ body {
     background: #fff;
 }
 
+.ss_input_group_list  {
+    position: static !important;
+}
+
 
 .ss_input_group_list input {
     pointer-events: none;
     border-right: none;
+    position: static !important;
+    
 }
 
 .ss_input_group_list input:focus {
