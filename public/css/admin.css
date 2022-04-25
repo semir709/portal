@@ -60,17 +60,37 @@ body {
     width: 50px;
     transition: 2s;
 }
+ 
+.ss_list label {
+    white-space: nowrap;
+}
 
 .ss_label {
-    opacity: 1;
-    transition: 2s;
+    animation: move_label_outside 2s;
+    
 }
 
 .label_switch {
-    opacity: 0;
-    transition: 1s;
+    animation: move_label_inside 1s forwards;
+}
+
+@keyframes move_label_inside {
+    
+    0% {overflow: visible; opacity: 1;}
+    50% {opacity:0;}
+    100% {opacity:0; overflow: hidden;}
+
     
 }
+
+@keyframes move_label_outside {
+
+    0% {overflow: hidden; opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 1; overflow: visible;}
+    
+}
+
 
 .clicked_list {
     color: #fff !important;
@@ -112,10 +132,10 @@ body {
     height: 100%;
 }
 
-.ss_ul li {
+/* .ss_ul li {
     
     min-width: 200px;
-}
+} */
 
 .ss_ul li:hover label {
     color: #fff;
@@ -934,6 +954,24 @@ body {
     
     }
 
+    .ss_label {
+        /* opacity: 1;
+        transition: 2s; */
+        /* animation: move_label_outside 2s; */
+        /* display: block; 
+        animation: move_label_outside 2s; */
+        animation: move_label_inside 1s forwards;
+        
+    }
+    
+    .label_switch {
+        animation: move_label_outside 2s;
+        /* opacity: 0;
+        transition: 1s; */
+        /* animation:move_label_inside 1s forwards;
+        width: 1px; */
+    }
+
     .ss_btn_nav {
         left: 35px;
         transition: 2s;
@@ -945,10 +983,10 @@ body {
 
     }
 
-    .ss_ul li {
+    /* .ss_ul li {
     
         min-width: 120px;
-    }
+    } */
 
     /*all content*/
 

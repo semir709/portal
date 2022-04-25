@@ -130,10 +130,14 @@ function previewFile2(file) {
 
 //navigation
 
-$('.ss_label').on('click', function() {
+$('.ss_list').on('click', function() {
     const main_display = $('#main_display');
 
-    switch(this.innerHTML) {
+    const list = $(this);
+
+    const label = $(list.find('.ss_label'));
+
+    switch(label.attr('data-val')) {
         case 'Home':
 
             $.ajax({
@@ -300,6 +304,10 @@ function myFunction() {
     for(let i = 0; i < label.length; i++) {
         label[i].classList.toggle("label_switch");
     }
+
+    // for(let i = 0; i < label.length; i++) {
+    //     label[i].innerHTML = '';
+    // }
 
 }
 
