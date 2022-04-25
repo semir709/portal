@@ -645,7 +645,8 @@ function tag_category() {
 
 }
 
-$('#main_display').on('click','#btn_tag', function() {
+$('#main_display').on('click','#btn_tag', function(e) {
+    e.preventDefault();
     tag_category();
 });
 
@@ -653,6 +654,7 @@ $('#main_display').on('click','#btn_tag', function() {
 $(document).on('keypress', function(e) {  
 
     if(e.code === 'Enter' || e.code === 'Space') {
+        e.preventDefault();
         tag_category();
     }
 });
@@ -1077,6 +1079,12 @@ $('#img_singin').on('click', function() {
 
 
 //Add user 
+
+$('#main_display').on('click', '#btn_right_block', function() {
+
+    
+
+});
 
 $('#main_display').on('click','#send_mail', function() {
 

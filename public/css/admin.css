@@ -20,7 +20,7 @@ body {
 }
 
 .ss_left_side {
-
+    z-index: 999;
     position: fixed;
     width: 15%;
     transition: 1s;
@@ -28,7 +28,12 @@ body {
  
 }
 
+.trumbowyg-box {
+    z-index: 1;
+}
+
 .ss_admin_nav {
+   
     display: inline-block;
     background: #21292F;
     position: relative;
@@ -196,6 +201,18 @@ body {
 .ss_input_group_search label {
     background: #fff;
 }
+
+/* .trumbowyg-button-pane {
+    position: absolute !important;
+}
+
+.trumbowyg-box {
+    position: absolute !important;
+}
+
+/* .trumbowyg-button-group  button {
+    position: absolute !important;
+} */ 
 
 .ss_input_group_list  {
     position: static !important;
@@ -865,6 +882,18 @@ body {
 }
 
 @media (max-width:992px) {
+
+    /* .trumbowyg-button-pane {
+        position: relative !important;
+    }
+    
+    .trumbowyg-box {
+        position: relative !important;
+    }
+    
+    .trumbowyg-button-group  button {
+        position: relative !important;
+    } */
 
     .ss_nav_all_content {
         float: none;

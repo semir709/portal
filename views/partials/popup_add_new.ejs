@@ -1,0 +1,100 @@
+<div class="modal fade " id="addNewModal" tabindex="-1">
+    <div class="modal-dialog ">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Publish user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/update_user" method="post" id="form_edit_user" enctype="multipart/form-data">
+
+       
+        <div class="modal-body">
+            
+            <div class="ss_inputs_block">
+    
+                <p>Publish</p>
+                <div class="ss_line"></div>
+    
+                <div class="mb-3">
+                    <select class="form-select" id="inputGroup_publish" >
+                        <option value="" disabled selected value></option>
+                        <option value="1">Publish</option>
+                        <option value="2">Draft</option>
+                        <option value="3">Schedule</option>
+                        <option value="3">Trashe</option>
+                    </select>
+                </div>
+    
+            </div>
+    
+            <div class="ss_inputs_block">
+    
+                <p>Post</p>
+                <div class="ss_line"></div>
+    
+                <div class="mb-3">
+                    <select class="form-select" id="inputGroup_post">
+                        <option value="" disabled selected value></option>
+                        <option value="1">Main article</option>
+                        <option value="2">Article</option>
+                        <option value="3">Author choise</option>
+                    </select>
+                </div>
+    
+            </div>
+    
+    
+            <div class="ss_inputs_block">
+    
+                <p>Category</p>
+                <div class="ss_line"></div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="ss_input_tag ">
+                    <button class="btn" id="btn_tag" type="button">Click</button>
+                </div>
+
+                <div class="ss_tags_container" id="inputGroup_category">
+                    
+        
+                </div>
+    
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+
+                    <div class="ss_img_holder">
+                        <img id="img_content" src="" alt="">
+                        <input type="file" id="upload" class="ss_input_singin_img" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="ss_button_post">
+
+                <button id="post_content_btn">Post</button>
+                <!-- <button type="submit">Post</button> -->
+                <button>Preview</button>
+
+            </div>
+        
+               
+                
+        </div>
+
+
+        <div class="modal-footer justify-content-start ss_modal_footer">
+
+          <button type="button" class="btn btn-primary ss_button" id="publish_content">Update</button>
+          <button type="button" class="btn btn-primary ss_button" id="cancle_content">Cancle</button>
+
+        </div>
+
+    </form>
+      </div>
+    </div>
+  </div>
