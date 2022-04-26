@@ -64,7 +64,39 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+        filter = [
+
+            {
+                id: '1',
+                name: 'Published'
+            },
+            {
+                id: '2',
+                name: 'Draft'
+            },
+            {
+                id: '3',
+                name: 'Scheduled'
+            },
+            {
+                id: '4',
+                name: 'Trashed'
+            }
+
+        ];
+
+        obj = {
+
+            name: 'Niko Nikic', 
+            header_name: 'All content',
+            data:content[0],
+            filter: filter,
+            filter_class_name: 'ss_content_filter',
+
+
+        }
+
+        res.render('all_content_admin.ejs', obj);
     },
 
     all_content_data: async function (req, res) {
@@ -191,12 +223,13 @@ module.exports = {
         const input = req.params.input;
         const con = db.getCon();
 
+
         const data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE title = ? OR full_name = ?`, [input, input]);
 
         res.render('partials/all_content_data.ejs', {data: data[0]});
 
-
+        
     },
 
     getArticle: async function(req, res) {
@@ -565,6 +598,8 @@ module.exports = {
 
     },
 
+    //category
+
     category: async function(req, res) {
 
         const con = db.getCon();
@@ -572,9 +607,50 @@ module.exports = {
 
         const data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
-        group by c.category_name`, [1]); 
+        group by c.category_name`, [1]);
+        
+        filter = [
 
-        res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category', data: data[0]});
+            {
+                id: '1',
+                name: 'In Use'
+            },
+            {
+                id: '0',
+                name: 'Not Use'
+            },
+
+        ];
+
+        obj = {
+
+            name: 'Niko Nikic', 
+            header_name: 'Category',
+            data:data[0],
+            filter: filter,
+            filter_class_name: 'ss_category_filter',
+
+
+        }
+
+
+
+        res.render('category.ejs', obj);
+    },
+
+    category_filter: async function(req, res) {
+
+        const use = req.params.use;
+        const con = db.getCon();
+
+        console
+
+        const data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
+        LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
+        group by c.category_name`, [use]);
+
+        res.render('partials/category_list.ejs', {name: 'Niko Nikic', header_name: 'All content', data:data[0]});
+
     },
 
     category_update: async function(req, res) {
@@ -592,27 +668,27 @@ module.exports = {
 
     },
 
-    category_use: async function(req, res) {
+    // category_use: async function(req, res) {
 
-        const con = db.getCon();
+    //     const con = db.getCon();
 
-        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
-        WHERE in_use = ?`, [1]);
+    //     const data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
+    //     WHERE in_use = ?`, [1]);
         
-        res.render('partials/category_list.ejs', {data: data[0]});
+    //     res.render('partials/category_list.ejs', {data: data[0]});
 
         
-    },
+    // },
 
-    category_trashed: async function(req, res) {
+    // category_trashed: async function(req, res) {
 
-        const con = db.getCon();
+    //     const con = db.getCon();
 
-        const data = await con.promise().query(`SELECT category_name AS category, in_use, id_category AS id FROM category
-        WHERE in_use = ?`, [0]);
+    //     const data = await con.promise().query(`SELECT category_name AS category, in_use, id_category AS id FROM category
+    //     WHERE in_use = ?`, [0]);
         
-        res.render('partials/category_list.ejs', {data: data[0]});
-    },
+    //     res.render('partials/category_list.ejs', {data: data[0]});
+    // },
 
     edit_trashed: async function(req, res) {
 
@@ -654,6 +730,10 @@ module.exports = {
 
     },
 
+
+
+    //
+
     inbox: function(req, res) {
         res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
     },
@@ -671,7 +751,57 @@ module.exports = {
 
         const newRole = custom.convertRole(data.role);
 
-        res.render('all_users.ejs', {name: 'Niko Nikic', header_name: 'User', data: data[0], newRole: newRole});
+        filter = [
+
+            {
+                id: '1',
+                name: 'Confirmed'
+            },
+            {
+                id: '0',
+                name: 'Not Confirmed'
+            },
+            {
+                id: '2',
+                name: 'Trashed'
+            }
+
+        ];
+
+        obj = {
+
+            name: 'Niko Nikic', 
+            header_name: 'Users',
+            data:data[0],
+            filter: filter,
+            filter_class_name: 'ss_users_filter',
+
+
+        }
+
+        res.render('all_users.ejs', obj);
+    },
+
+    user_filter: async function(req, res) {
+
+        let use = req.params.cf;
+        const con = db.getCon();
+
+        let data;
+
+        if(use == '2') {
+
+            data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+            WHERE user_trashed = ?`, [1]);
+
+        } else {
+
+            data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+            WHERE user_confirmed = ? AND user_trashed = ?`, [use, 0]);
+        }
+
+        res.render('partials/user_card.ejs', {name: 'Niko Nikic', header_name: 'All content', data:data[0]});
+
     },
 
     not_confirmed: async function(req, res) {

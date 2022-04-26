@@ -62,17 +62,22 @@ route.get('/admin/add_new', admin.isAuthenticated ,admin.add_new);
 route.post('/admin/add_new/post', admin.isAuthenticated , upload.single('file') , admin.add_new_post);
 route.post('/admin/image_upload', admin.isAuthenticated , upload.single('image'), admin.upload_image);
 
+
+//category
 route.get('/admin/category', admin.isAuthenticated ,admin.category);
 route.post('/admin/category_update', admin.category_update);
-route.get('/admin/category_use', admin.category_use);
-route.get('/admin/category_trashed', admin.category_trashed);
+// route.get('/admin/category_use', admin.category_use);
+// route.get('/admin/category_trashed', admin.category_trashed);
 route.post('/admin/category/edit_trashed', admin.edit_trashed);
 route.post('/admin/category/category_recover', admin.category_recover);
 route.get('/admin/category_input:input', admin.category_input);
+route.get('/admin/category/filter:use', admin.category_filter);
 
 route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
 route.get('/admin/media', admin.isAuthenticated, admin.media);
 
+
+route.get('/admin/users/filter:cf', admin.user_filter);
 route.get('/admin/user', admin.isAuthenticated, admin.user);
 route.get('/admin/not_confirmed', admin.not_confirmed);
 route.get('/admin/confirmed', admin.confirmed);

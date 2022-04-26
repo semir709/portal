@@ -324,48 +324,28 @@ $(".ss_list ").on('click',function() {
 
 // all contents
 
-$('#main_display').on('click', '.ss_nav_a', function(){
+//filter all content
 
-    $(".ss_nav_a ").css("border-bottom", "none");
+$('#main_display').on('click', '.ss_content_filter', function(){
 
-    $(this).css("border-bottom", "2px solid #000000");
-
-    const all_conetnt_holder = $('#all_content');
-    const data = this.innerHTML;
-
-    let catg;
-
-    if(data == $('.ss_nav_a')[0].innerHTML) {
-        catg = '1'
-    }
-
-    if(data == $('.ss_nav_a')[1].innerHTML) {
-        catg = '2'
-    }
-
-    if(data == $('.ss_nav_a')[2].innerHTML) {
-        catg = '3'
-    }
-
-    if(data == $('.ss_nav_a')[3].innerHTML) {
-        catg = '4'
-    }
+    const catg = $(this).attr('data-id'); 
 
     $.ajax({
         type: 'GET',
         url: '/admin/all_content_data' + catg,
         success: function(res) {
-            all_conetnt_holder.html(res);
+            $('#all_content').html(res);
         }
     });
 
 });
 
-$("#main_display").on('click','#label_search',function() {
-    let input_search = document.getElementById('search_input');
+//????????????????
+// $("#main_display").on('click','#label_search',function() {
+//     let input_search = document.getElementById('search_input');
 
-    input_search.classList.toggle("ss_input_streach");
-});
+//     input_search.classList.toggle("ss_input_streach");
+// });
 
 //search content
 $('#main_display').on('input', '#content_search', function() {
@@ -379,6 +359,7 @@ $('#main_display').on('input', '#content_search', function() {
     });
 
 });
+
 
 $("#main_display").on("click", "#edit_category_list" ,function() {
     const main_display = $('#main_display');
@@ -708,7 +689,21 @@ $('#main_display').on('click', '#img_content', function() {
 });
 
 
-/* Edit category */
+/* Category */
+
+$('#main_display').on('click', '.ss_category_filter', function(){
+
+    const catg = $(this).attr('data-id'); 
+
+    $.ajax({
+        type: 'GET',
+        url: '/admin/category/filter' + catg,
+        success: function(res) {
+            $('#category_display').html(res);
+        }
+    });
+
+});
 
 $('#main_display').on('click', '#category_edit', function() {
 
@@ -834,8 +829,26 @@ $('#main_display').on('input', '#search_category', function() {
 
 });
 
-/* Edit user*/
+/* user*/
 
+
+//filter
+$('#main_display').on('click', '.ss_users_filter', function(){
+
+    const catg = $(this).attr('data-id'); 
+
+    $.ajax({
+        type: 'GET',
+        url: '/admin/users/filter' + catg,
+        success: function(res) {
+            $('#row_users').html(res);
+        }
+    });
+
+});
+
+
+//edit
 $('#main_display').on('click', '#button_edit_user', function() {
 
     const card = $(this).parents()[1];

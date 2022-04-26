@@ -1012,11 +1012,11 @@ body {
         left: 80%;
     }
 
-    .ss_input_streach {
+    /* .ss_input_streach {
         width: 80% !important;
         left: 0%;
         transition: 1s;
-    }
+    } */
 
     /* .ss_search_content {
         display: none;

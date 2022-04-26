@@ -11,19 +11,14 @@
       <div class=" ss_navbar_search" id="navbarNav">
   
         <ul class=" ss_nav_all_content justify-content-between">
-  
-          <li class="nav-item">
-            Published
-          </li>
-          <li class="nav-item">
-            Draft
-          </li>
-          <li class="nav-item">
-            Scheduled
-          </li>
-          <li class="nav-item">
-            Trashed
-          </li>
+
+          <% for(let i = 0; i < filter.length; i++) { %>
+
+              <li class="nav-item <%=filter_class_name%>" data-id="<%= filter[i].id %>">
+                <%= filter[i].name %>
+              </li>
+
+          <% } %>
           
         </ul>
   
