@@ -25,7 +25,7 @@
         
             <div class="col-lg-3 order-1 order-lg-2 mb-3 mb-lg-0 ss_right_block_holder ">
         
-                <button class="ss_btn_right_block" id="btn_right_block" type="button" >
+                <button class="ss_btn_right_block" id="btn_right_block" data-bs-target="#addNewModal" data-bs-toggle="modal" type="button" >
                     <span ><i class="fas fa-cog"></i></span>
                 </button>
         
@@ -85,8 +85,9 @@
                         <p>Category</p>
                         <div class="ss_line"></div>
 
+
                         <div class="input-group mb-3">
-                            <input type="text" class="ss_input_tag ">
+                            <input type="text" class="ss_input_tag"> 
                             <button class="btn" id="btn_tag">Click</button>
                         </div>
 
@@ -131,10 +132,11 @@
         
         </div>
 
+
     <% } else { %>
 
-
         <%- include('partials/popup_add_new.ejs') %>
+
 
         <div class="row px-lg-3 mt-lg-4">
 
@@ -149,7 +151,7 @@
                 </div>
         
                 <div class="ss_txt_area">
-                    <textarea id="txt_area" cols="30" rows="20"></textarea>
+                    <textarea id="txt_area" cols="30" rows="20">asd</textarea>
                 </div>
             </div>
         
@@ -201,7 +203,7 @@
                         <div class="ss_line"></div>
 
                         <div class="input-group mb-3">
-                            <input type="text" class="ss_input_tag ">
+                            <input type="text" class="ss_input_tag">
                             <button class="btn" id="btn_tag">Click</button>
                         </div>
 

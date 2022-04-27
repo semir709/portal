@@ -37,6 +37,8 @@ const plugin = {
     }
 }
 
+
+
 /*Custom function*/
 
 function contentValues() {
@@ -109,9 +111,19 @@ function convertRole (role) {
     } 
 }
 
+
+$('#main_display').on('click', '#img_content', function(e) {
+
+    const input = $(e.target).parent().find('input');
+
+    $(input).trigger('click');
+
+});
+
 function previewFile2(file) {
 
     const image = $(file).parent().find('img');
+   
     const f = $(file)[0].files[0];
     const reader = new FileReader();
   
@@ -371,6 +383,7 @@ $("#main_display").on("click", "#edit_category_list" ,function() {
         url: '/admin/all_content_data/getArticle' + id,
         success: function(res) {
             main_display.html(res);
+            $('#txt_area').trumbowyg();
         }
     });
 
@@ -605,24 +618,34 @@ $('#main_display').on('input', '#input_search_users', function () {
 
 //add content
 
+// $('#upload').on('click',function() {
+
+
+//     console.log('asdsad');
+
+// });
+
 $('#btn_right_block').on('click', function() {
     let right_block = document.getElementsByClassName('ss_right_block')[0];
 
     right_block.classList.toggle("ss_show_block");
 });
 
-function tag_category() {
+function tag_category(e) {
 
-    let input_text = $('.ss_input_tag').val();
+    const parent = $(e.target).parent();
 
-    if(input_text !== '') {
+    const input = $(parent).find('.ss_input_tag').val();
+
+    if(input != '') {
+
 
         let div = $('<div> </div>');
         let span = $('<span> </span>');
 
         div.addClass('tag_category');
 
-        span.text(input_text);
+        span.text(input);
 
         div.append(span);
         
@@ -635,8 +658,8 @@ function tag_category() {
 }
 
 $('#main_display').on('click','#btn_tag', function(e) {
-    e.preventDefault();
-    tag_category();
+    tag_category(e);
+    // e.preventDefault();
 });
 
 
@@ -644,7 +667,7 @@ $(document).on('keypress', function(e) {
 
     if(e.code === 'Enter' || e.code === 'Space') {
         e.preventDefault();
-        tag_category();
+        tag_category(e);
     }
 });
 
@@ -680,12 +703,6 @@ $('#main_display').on('click','#post_content_btn', function() {
         }
     });
     
-});
-
-$('#main_display').on('click', '#img_content', function() {
-
-    $('#upload').trigger('click');
-
 });
 
 

@@ -241,8 +241,6 @@ module.exports = {
         INNER JOIN content_category ON content.id_content = content_category.id_content 
         INNER JOIN category ON category.id_category = content_category.id_category WHERE content.id_content = ? `, [id]);
 
-        console.log(data[0]);
-
         res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new', data: data[0]});
     },
 
