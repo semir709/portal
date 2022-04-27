@@ -1,5 +1,6 @@
 
 
+
 const plugin = {
     autogrow: true,
     btnsDef: {
@@ -631,13 +632,34 @@ $('#btn_right_block').on('click', function() {
     right_block.classList.toggle("ss_show_block");
 });
 
+
+//remove category tag
+$('#main_display').on('click', '.tag_category' ,function(e) {
+
+    this.remove();
+
+});
+
+
+//add category tag
 function tag_category(e) {
 
+    let same = false;
     const parent = $(e.target).parent();
-
     const input = $(parent).find('.ss_input_tag').val();
+    const tags = $(parent).parent().find('.ss_tags_container').find('.tag_category');
 
-    if(input != '') {
+    tags.each(function(i, obj) {
+
+        let oldTags = $(obj).find('span').text();
+
+        if(oldTags == input) {
+            same = true;
+        } 
+
+    });
+
+    if(typeof input !== 'undefined' && input !== '' && same === false) {
 
 
         let div = $('<div> </div>');
@@ -651,7 +673,8 @@ function tag_category(e) {
         
         $('.ss_tags_container').append(div);
 
-    }
+    } 
+
 
     $('.ss_input_tag').val('');
 
@@ -659,14 +682,14 @@ function tag_category(e) {
 
 $('#main_display').on('click','#btn_tag', function(e) {
     tag_category(e);
-    // e.preventDefault();
+    
 });
 
 
 $(document).on('keypress', function(e) {  
 
     if(e.code === 'Enter' || e.code === 'Space') {
-        e.preventDefault();
+        
         tag_category(e);
     }
 });
