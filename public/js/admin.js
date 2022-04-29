@@ -42,17 +42,22 @@ const plugin = {
 
 /*Custom function*/
 
-function contentValues() {
+function contentValues(e) {
 
-    let input_title = $('#input_title').val();
+    const view = $(e.target).parent().attr('data-check');
+    let parent;
+
+    view == 'full' ? parent = $(e.target).parents().find('.ss_full_holder') :  parent = $(e.target).parents().find('.ss_full_holder_phone');
+
     let txt_area = $('#txt_area').val();
-    let inputGroup_publish = $('#inputGroup_publish option:selected').text();
-    let inputGroup_post = $('#inputGroup_post option:selected').text()
-    let inputGroup_category = $('#inputGroup_category');
-    let img_content = $('#img_content').attr('src');
-    let upload = document.getElementById('upload');
-    let old_image = $('#img_content').attr('data-old');
-    let content_id = $('#main_form').attr('data-id');
+    let input_title = $('#input_title').val(); 
+    let inputGroup_publish = parent.find('#inputGroup_publish option:selected').text();
+    let inputGroup_post = parent.find('#inputGroup_post option:selected').text()
+    let inputGroup_category = parent.find('#inputGroup_category');
+    let img_content = parent.find('#img_content').attr('src');
+    let upload = parent.find('#upload')[0];
+    let old_image = parent.find('#img_content').attr('data-old');
+    let content_id = parent.find('#main_form').attr('data-id');
 
     let category_ch = [];
 
@@ -67,10 +72,10 @@ function contentValues() {
     formData.append('inputGroup_publish', inputGroup_publish);
     formData.append('inputGroup_post', inputGroup_post);
     formData.append('img_content', img_content);
-    formData.append('category_ch', category_ch);
+    formData.append('category_ch', category_ch); 
     formData.append('file', upload.files[0]);
-    formData.append('old_image', old_image);
-    formData.append('id_content', content_id);
+    formData.append('old_image', old_image); 
+    formData.append('id_content', content_id); 
 
     return formData;
 
@@ -126,6 +131,7 @@ function previewFile2(file) {
     const image = $(file).parent().find('img');
    
     const f = $(file)[0].files[0];
+    console.log(f);
     const reader = new FileReader();
   
     reader.onloadend = function () {
@@ -694,18 +700,20 @@ $(document).on('keypress', function(e) {
     }
 });
 
-$('#main_display').on('click','#post_content_btn', function() {
-
-    const formData = contentValues();
+$('#main_display').on('click','#post_content_btn', function(e) {
+    
+    const form = contentValues(e);
+   
 
     $.ajax({
         type: 'POST',
         url: '/admin/add_new/post',
-        data: formData,
+        data: form,
         contentType: false,
         processData: false,
         success: function(res) {
-
+            const view = $(e.target).parent().attr('data-check');
+            view == 'full' ? parent = $(e.target).parents().find('.ss_full_holder') :  parent = $(e.target).parents().find('.ss_full_holder_phone');
             
             if(res == 'IsEmpty') {
                 alert('Something is empty');
@@ -715,12 +723,14 @@ $('#main_display').on('click','#post_content_btn', function() {
 
                 $('#input_title').val('');
                 $('.trumbowyg-editor').text('');
-                $('#inputGroup_publish option:selected').text('');
-                $('#inputGroup_post option:selected').text('')
+                parent.find('#inputGroup_publish option:selected').text('');
+                parent.find('#inputGroup_post option:selected').text('')
                 $('#inputGroup_category').val('');
-                $('#img_content').attr('src', '');
+                parent.find('#img_content').attr('src', '');
 
                 $('.ss_tags_container').empty();
+
+                $('#addNewModal').modal('hide');
 
             }
         }

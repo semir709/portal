@@ -138,108 +138,116 @@
         <%- include('partials/popup_add_new.ejs') %>
 
 
-        <div class="row px-lg-3 mt-lg-4">
+            <div class="row px-lg-3 mt-lg-4 ss_full_holder">
 
-            <div class="col-lg-9 order-2 order-lg-1 ">
-                <input class="ss_input ss_input_category_name" id="input_title" value="" type="text">
-        
-                <div class="ss_link d-sm-flex">
-        
-                    <p>https://www.siteName.com/content/some-header</p>
-                    <button>Edit</button>
-        
-                </div>
-        
-                <div class="ss_txt_area">
-                    <textarea id="txt_area" cols="30" rows="20"></textarea>
-                </div>
-            </div>
-        
-            <div class="col-lg-3 order-1 order-lg-2 mb-3 mb-lg-0 ss_right_block_holder ">
-        
-                <button class="ss_btn_right_block" id="btn_right_block" data-bs-target="#addNewModal" data-bs-toggle="modal" type="button" >
-                    <span ><i class="fas fa-cog"></i></span>
-                </button>
-        
-                <div class="ss_right_block">
+                <div class="col-lg-9 order-2 order-lg-1 ">
+                    <input class="ss_input ss_input_category_name" id="input_title" name="input_title" value="" type="text">
             
-                    <div class="ss_inputs_block">
+                    <div class="ss_link d-sm-flex">
             
-                        <p>Publish</p>
-                        <div class="ss_line"></div>
-            
-                        <div class="mb-3">
-                            <select class="form-select" id="inputGroup_publish" >
-                                <option value="" disabled selected value></option>
-                                <option value="1">Publish</option>
-                                <option value="2">Draft</option>
-                                <option value="3">Schedule</option>
-                                <option value="3">Trashe</option>
-                            </select>
-                        </div>
+                        <p>https://www.siteName.com/content/some-header</p>
+                        <button>Edit</button>
             
                     </div>
             
-                    <div class="ss_inputs_block">
-            
-                        <p>Post</p>
-                        <div class="ss_line"></div>
-            
-                        <div class="mb-3">
-                            <select class="form-select" id="inputGroup_post">
-                                <option value="" disabled selected value></option>
-                                <option value="1">Main article</option>
-                                <option value="2">Article</option>
-                                <option value="3">Author choise</option>
-                            </select>
-                        </div>
-            
+                    <div class="ss_txt_area">
+                        <textarea id="txt_area" cols="30" rows="20" name="txt_area"></textarea>
                     </div>
+                </div>
             
+                <div class="col-lg-3 order-1 order-lg-2 mb-3 mb-lg-0 ss_right_block_holder ">
             
-                    <div class="ss_inputs_block">
-            
-                        <p>Category</p>
-                        <div class="ss_line"></div>
+                    <button class="ss_btn_right_block" id="btn_right_block" data-bs-target="#addNewModal" data-bs-toggle="modal" type="button" >
+                        <span ><i class="fas fa-cog"></i></span>
+                    </button>
 
-                        <div class="input-group mb-3">
-                            <input type="text" class="ss_input_tag">
-                            <button class="btn" id="btn_tag">Click</button>
-                        </div>
+                    <!-- <form action="/admin/add_new/post"  method="post" id="form_data"> -->
 
-                        <div class="ss_tags_container" id="inputGroup_category">
-                            
+                        <div class="ss_right_block">
                 
-                        </div>
-            
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-lg-6">
-
-                            <div class="ss_img_holder">
-                                <img id="img_content" src="" alt="">
-                                <input type="file" id="upload" class="ss_input_singin_img" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                            <div class="ss_inputs_block">
+                    
+                                <p>Publish</p>
+                                <div class="ss_line"></div>
+                    
+                                <div class="mb-3">
+                                    <select class="form-select" name="inputGroup_publish" id="inputGroup_publish" >
+                                        <option value="" disabled selected value></option>
+                                        <option value="1">Publish</option>
+                                        <option value="2">Draft</option>
+                                        <option value="3">Schedule</option>
+                                        <option value="3">Trashe</option>
+                                    </select>
+                                </div>
+                    
                             </div>
-
+                    
+                            <div class="ss_inputs_block">
+                    
+                                <p>Post</p>
+                                <div class="ss_line"></div>
+                    
+                                <div class="mb-3">
+                                    <select class="form-select" name="inputGroup_post" id="inputGroup_post">
+                                        <option value="" disabled selected value></option>
+                                        <option value="1">Main article</option>
+                                        <option value="2">Article</option>
+                                        <option value="3">Author choise</option>
+                                    </select>
+                                </div>
+                    
+                            </div>
+                    
+                    
+                            <div class="ss_inputs_block">
+                    
+                                <p>Category</p>
+                                <div class="ss_line"></div>
+        
+                                <div class="input-group mb-3">
+                                    <input type="text" class="ss_input_tag">
+                                    <button class="btn" type="button" id="btn_tag">Click</button>
+                                </div>
+        
+                                <div class="ss_tags_container" id="inputGroup_category">
+                                    
+                        
+                                </div>
+                    
+                            </div>
+        
+                            <div class="row">
+        
+                                <div class="col-lg-6">
+        
+                                    <div class="ss_img_holder">
+                                        <img id="img_content" name="img_content" src="" alt="">
+                                        <input type="file" id="upload" name="file" class="ss_input_singin_img" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                                    </div>
+        
+                                </div>
+        
+                            </div>
+                
+                            <div class="ss_button_post" data-check="full">
+                
+                                <button id="post_content_btn" type="submit">Post</button>
+                                <!-- <button type="submit">Post</button> -->
+                                <button>Preview</button>
+                
+                            </div>
+                    
                         </div>
 
-                    </div>
+
+                    <!-- </form> -->
         
-                    <div class="ss_button_post">
-        
-                        <button id="post_content_btn">Post</button>
-                        <!-- <button type="submit">Post</button> -->
-                        <button>Preview</button>
-        
-                    </div>
             
                 </div>
-        
+            
             </div>
+
         
-        </div>
 
 
     <% } %>

@@ -535,10 +535,11 @@ module.exports = {
         }
 
 
-        content = await con.promise().query(`INSERT INTO content (title, article, image, publish, post_place, id_user) 
-        VALUES (?, ?, ?, ?, ?, ?)`, [data.input_title, data.txt_area, imgLocation, custom.publishConvert(data.inputGroup_publish),custom.postConvert(data.inputGroup_post), id]);
+        content = await con.promise().query(`INSERT INTO content (title, article, image, publish, post_place, id_user, publish_time) 
+        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())`, [data.input_title, data.txt_area, imgLocation, custom.publishConvert(data.inputGroup_publish),custom.postConvert(data.inputGroup_post), id]);
 
-        const cg = data.category_ch;
+        const cg = data.category_ch.split(',');
+
 
         const all_category = await con.promise().query(`SELECT category_name FROM category`);
         const array_categroy = [];
@@ -547,13 +548,14 @@ module.exports = {
             array_categroy.push(all_category[0][i].category_name);
         }
 
+
         const final_cg = [];
         const old_cg = [];
 
         for(let i = 0; i < cg.length; i++) {
 
-            if(array_categroy.indexOf(cg[i]) === -1 ) {
-                final_cg.push(cg[i]);
+            if(array_categroy.indexOf(cg[i].trim()) === -1 ) {
+                final_cg.push(cg[i].trim());
             }
 
             else {
@@ -561,7 +563,6 @@ module.exports = {
             }
 
         }
-
 
         for(let i = 0; i < final_cg.length; i++) {
            category[i] = await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [final_cg[i]]);
