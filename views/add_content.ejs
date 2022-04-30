@@ -6,7 +6,7 @@
 
         <%- include('partials/popup_add_new.ejs') %>
 
-        <div class="row px-lg-3 mt-lg-4" data-id="<%= data[0].id_content %>" id="main_form">
+        <div class="row px-lg-3 mt-lg-4 ss_full_holder" data-id="<%= data[0].id_content %>" id="main_form">
 
             <div class="col-lg-9 order-2 order-lg-1 ">
                 <input class="ss_input ss_input_category_name" id="input_title" value="<%=data[0].title %>" type="text">
@@ -120,7 +120,7 @@
 
                     </div>
         
-                    <div class="ss_button_post">
+                    <div class="ss_button_post" data-check="full">
         
                         <button id="update_content">Update</button>
         

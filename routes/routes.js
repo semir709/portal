@@ -73,8 +73,8 @@ route.post('/admin/category/category_recover', admin.category_recover);
 route.get('/admin/category_input:input', admin.category_input);
 route.get('/admin/category/filter:use', admin.category_filter);
 
-route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
-route.get('/admin/media', admin.isAuthenticated, admin.media);
+// route.get('/admin/inbox', admin.isAuthenticated ,admin.inbox);
+// route.get('/admin/media', admin.isAuthenticated, admin.media);
 
 
 route.get('/admin/users/filter:cf', admin.user_filter);

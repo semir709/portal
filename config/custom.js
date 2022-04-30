@@ -4,6 +4,7 @@ const fs = require('fs')
 const { promisify } = require('util');
 // const { content } = require('../controllers/main');
 const unlinkAsync = promisify(fs.unlink)
+const db = require('../config/database');
 
 module.exports = {
 
@@ -256,6 +257,16 @@ module.exports = {
     })
 
     return new_side_data;
+
+  },
+
+  getUser: async function(id) {
+
+    const con = db.getCon();
+
+    const user =  await con.promise().query(`SELECT full_name FROM users WHERE id_user = ?`, id);
+
+    return user[0][0].full_name;
 
   }
 

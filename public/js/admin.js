@@ -49,6 +49,8 @@ function contentValues(e) {
 
     view == 'full' ? parent = $(e.target).parents().find('.ss_full_holder') :  parent = $(e.target).parents().find('.ss_full_holder_phone');
 
+    console.log(view);
+
     let txt_area = $('#txt_area').val();
     let input_title = $('#input_title').val(); 
     let inputGroup_publish = parent.find('#inputGroup_publish option:selected').text();
@@ -57,7 +59,7 @@ function contentValues(e) {
     let img_content = parent.find('#img_content').attr('src');
     let upload = parent.find('#upload')[0];
     let old_image = parent.find('#img_content').attr('data-old');
-    let content_id = parent.find('#main_form').attr('data-id');
+    let content_id = parent.attr('data-id');
 
     let category_ch = [];
 
@@ -521,9 +523,15 @@ $('#main_display').on('click', '#set_public', function(e) {
 
 
 /* Is used in the add_content.ejs but it is part of all content*/
-$('#main_display').on('click', '#update_content', function() {
+$('#main_display').on('click', '#update_content', function(e) {
 
-    const formData = contentValues();
+    const formData = contentValues(e);
+
+    console.log(formData);
+
+    for(let [i, val] of formData) {
+        console.log(i, val);
+    }
 
     $.ajax({
         type:'POST',
@@ -863,9 +871,11 @@ $('#main_display').on('click', '#category_recover', function() {
 
 });
 
-$('#main_display').on('input', '#search_category', function() {
+$('#main_display').on('input', '#content_search', function() {
 
     const input = $(this).val();
+
+    console.log(input);
 
     $.ajax({
         type:'GET',

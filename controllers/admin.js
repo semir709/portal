@@ -51,9 +51,11 @@ module.exports = {
         res.render('thanks_singin.ejs');
     },
 
-    admin_home: function(req, res) {
+    admin_home: async function(req, res) {
 
-        res.render('admin_home.ejs', {name: 'Niko Nikic', header_name: 'Home'});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('admin_home.ejs', {name: user, header_name: 'Home'});
     },
 
     all_content: async function(req, res) {
@@ -85,9 +87,11 @@ module.exports = {
 
         ];
 
+        const user = await custom.getUser(req.user.id);
+
         obj = {
 
-            name: 'Niko Nikic', 
+            name: user, 
             header_name: 'All content',
             data:content[0],
             filter: filter,
@@ -95,6 +99,8 @@ module.exports = {
 
 
         }
+
+        console.log( req.user);
 
         res.render('all_content_admin.ejs', obj);
     },
@@ -119,8 +125,10 @@ module.exports = {
         const file = req.file;
         const con = db.getCon();
         let img;
+
+        // console.log(data);
+        // console.log(file);
         
-//-------------------------------------------------------------------------------------------------------------------------
         if((typeof  data.img_content === 'undefined' || data.img_content == '') && typeof file === 'undefined') {
             res.send('1');
             return;
@@ -143,16 +151,116 @@ module.exports = {
             return;
         }
 
-        await con.promise().query(`UPDATE content SET title = ?, article = ?, image = ?, publish = ?, post_place = ?
+        // const content = await con.promise().query(`UPDATE content SET title = ?, article = ?, image = ?, publish = ?, post_place = ?
+        // ,id_user = ? WHERE id_content = ?`
+        // ,[data.input_title, data.txt_area, '/img/'+ img, custom.publishConvert(data.inputGroup_publish.trim())
+        // , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
+
+        const content = await con.promise().query(`UPDATE content SET title = ?, article = ?, image = ?, publish = ?, post_place = ?
         ,id_user = ? WHERE id_content = ?`
         ,[data.input_title, data.txt_area, '/img/'+ img, custom.publishConvert(data.inputGroup_publish.trim())
         , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
+        
+        console.log(content);
 
-        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
+
+        let category = [];
+
+        const cg = data.category_ch.split(',');
+
+
+        const all_category = await con.promise().query(`SELECT category_name FROM category`);
+        const array_categroy = [];
+
+        for(let i = 0; i < all_category[0].length; i++) {
+            array_categroy.push(all_category[0][i].category_name);
+        }
+
+
+        const final_cg = [];
+        const old_cg = [];
+
+        for(let i = 0; i < cg.length; i++) {
+
+            if(array_categroy.indexOf(cg[i].trim()) === -1 ) {
+                final_cg.push(cg[i].trim());
+            }
+
+            else {
+                old_cg.push(cg[i]);
+            }
+
+        }
+
+
+        for(let i = 0; i < final_cg.length; i++) {
+           category[i] = await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [final_cg[i]]);
+        }
+
+
+        for(let i = 0; i < category.length; i++) {
+            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [data.id_content, category[i][0].insertId]);
+        }
+
+        const all_data = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+        //old category not working same for add new content
+
+        for(let i = 0; i < old_cg.length; i++) {
+
+            let id_old = await con.promise().query(`SELECT c.id_category FROM category c WHERE c.category_name = ?`,[old_cg[i]]);
+
+            let val = await con.promise().query(`SELECT cg.id_category FROM content_category cg INNER JOIN
+            content con ON con.id_content = cg.id_content  WHERE cg.id_category = ?`, [id_old[0].id_category]);
+
+            if(val[0] <= 0) {
+
+                await con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`,
+                [data.id_content, id_old[0].id_category]);
+
+            }
+
+            console.log(val[0]);
+
+        }
+
+        let filter = [
+
+            {
+                id: '1',
+                name: 'Published'
+            },
+            {
+                id: '2',
+                name: 'Draft'
+            },
+            {
+                id: '3',
+                name: 'Scheduled'
+            },
+            {
+                id: '4',
+                name: 'Trashed'
+            }
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'All content',
+            data:all_data[0],
+            filter: filter,
+            filter_class_name: 'ss_content_filter',
+
+
+        }
+
+        res.render('all_content_admin.ejs', obj);
 
     },
 
@@ -167,7 +275,9 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
 
 
     },
@@ -183,7 +293,9 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
 
     },
 
@@ -198,7 +310,9 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
 
 
     },
@@ -214,7 +328,9 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
-        res.render('all_content_admin.ejs', {name: 'Niko Nikic', header_name: 'All content', data:content[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
 
     },
 
@@ -241,11 +357,15 @@ module.exports = {
         INNER JOIN content_category ON content.id_content = content_category.id_content 
         INNER JOIN category ON category.id_category = content_category.id_category WHERE content.id_content = ? `, [id]);
 
-        res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new', data: data[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('add_content.ejs', {name: user, header_name: 'Add new', data: data[0]});
     },
 
-    add_new: function(req, res) {
-        res.render('add_content.ejs', {name: 'Niko Nikic', header_name: 'Add new'});
+    add_new: async function(req, res) {
+        const user = await custom.getUser(req.user.id);
+
+        res.render('add_content.ejs', {name: user, header_name: 'Add new'});
     },
 
     edit_user: async function(req, res) {
@@ -512,6 +632,8 @@ module.exports = {
 
     add_new_post: async function(req, res) {
 
+        //
+
         const id = req.user.id;
         const data = req.body;
         const file = req.file;
@@ -621,9 +743,11 @@ module.exports = {
 
         ];
 
+        const user = await custom.getUser(req.user.id);
+
         obj = {
 
-            name: 'Niko Nikic', 
+            name: user, 
             header_name: 'Category',
             data:data[0],
             filter: filter,
@@ -642,13 +766,13 @@ module.exports = {
         const use = req.params.use;
         const con = db.getCon();
 
-        console
-
         const data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
         group by c.category_name`, [use]);
 
-        res.render('partials/category_list.ejs', {name: 'Niko Nikic', header_name: 'All content', data:data[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('partials/category_list.ejs', {name: user, header_name: 'All content', data:data[0]});
 
     },
 
@@ -663,7 +787,33 @@ module.exports = {
         LEFT JOIN content_category cg ON c.id_category = cg.id_category
         group by c.category_name`); 
 
-        res.render('category.ejs', {name: 'Niko Nikic', header_name: 'Category',data:new_data[0]});
+        filter = [
+
+            {
+                id: '1',
+                name: 'In Use'
+            },
+            {
+                id: '0',
+                name: 'Not Use'
+            },
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'Category',
+            data:new_data[0],
+            filter: filter,
+            filter_class_name: 'ss_category_filter',
+
+
+        }
+
+        res.render('category.ejs', obj);
 
     },
 
@@ -733,13 +883,14 @@ module.exports = {
 
     //
 
-    inbox: function(req, res) {
-        res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
-    },
+    // inbox: function(req, res) {
+    //     const user = await custom.getUser(req.user.id);
+    //     res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
+    // },
 
-    media: function(req, res) {
-        res.render('media.ejs', {name: 'Niko Nikic', header_name: 'Media'});
-    },
+    // media: function(req, res) {
+    //     res.render('media.ejs', {name: 'Niko Nikic', header_name: 'Media'});
+    // },
 
     user: async function(req, res) {
 
@@ -767,9 +918,11 @@ module.exports = {
 
         ];
 
+        const user = await custom.getUser(req.user.id);
+
         obj = {
 
-            name: 'Niko Nikic', 
+            name: user, 
             header_name: 'Users',
             data:data[0],
             filter: filter,
@@ -799,7 +952,9 @@ module.exports = {
             WHERE user_confirmed = ? AND user_trashed = ?`, [use, 0]);
         }
 
-        res.render('partials/user_card.ejs', {name: 'Niko Nikic', header_name: 'All content', data:data[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('partials/user_card.ejs', {name: user, header_name: 'All content', data:data[0]});
 
     },
 
@@ -859,13 +1014,16 @@ module.exports = {
         const name = data[0][0].full_name;
         const role = data[0][0].user_role;
 
+        const user = await custom.getUser(req.user.id);
+
 
         res.render('user_view.ejs', {name: name, header_name: role, data: data[0]});
 
     },
 
-    new_user: function(req, res) {
-        res.render('new_user.ejs', {name: 'Niko Nikic', header_name: 'New user'});
+    new_user: async function(req, res) {
+        const user = await custom.getUser(req.user.id);
+        res.render('new_user.ejs', {name: user, header_name: 'New user'});
     },
 
 
@@ -878,7 +1036,9 @@ module.exports = {
         const data = await con.promise().query(`SELECT site_icon AS icon, site_logo AS logo, site_title, 
         site_tagline, post_per_page, pagination_count FROM settings`);
 
-        res.render('settings.ejs', {name: 'Niko Nikic', header_name: 'Settings', data: data[0]});
+        const user = await custom.getUser(req.user.id);
+
+        res.render('settings.ejs', {name: user, header_name: 'Settings', data: data[0]});
     },
     
     settings_update: async function(req, res) {
