@@ -100,8 +100,6 @@ module.exports = {
 
         }
 
-        console.log( req.user);
-
         res.render('all_content_admin.ejs', obj);
     },
 
@@ -391,7 +389,7 @@ module.exports = {
         const con = db.getCon();
 
         let img;
-//..---------------------------------------------------------------------------------------------------------------------------
+
         if((typeof  data.src === 'undefined' || data.src == '') && typeof file === 'undefined') {
             res.send('image missing');
             return;
@@ -404,7 +402,7 @@ module.exports = {
 
         else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
             let path = './public';
-            await unlinkAsync(path +  data.old_image);
+            await unlinkAsync(path +  data.old_image).catch(err => {if(err) console.log(err)});
 
             img = file.filename;
         }
@@ -429,8 +427,46 @@ module.exports = {
             html: '<p>Click <a href="http://127.0.0.1:3000/changePassword?id=' + data.id +'">here</a> to singin</p>', 
         });
 
+        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
-        res.send(true);
+        const newRole = custom.convertRole(data.role);
+
+        let filter = [
+
+            {
+                id: '1',
+                name: 'Confirmed'
+            },
+            {
+                id: '0',
+                name: 'Not Confirmed'
+            },
+            {
+                id: '2',
+                name: 'Trashed'
+            }
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'Users',
+            data:users[0],
+            filter: filter,
+            filter_class_name: 'ss_users_filter',
+            input_search_id: 'user_search'
+
+
+        }
+
+        res.render('partials/user_card.ejs', obj);
+
+
+        // res.send(true);
 
     },
 
@@ -624,9 +660,141 @@ module.exports = {
 
         const con = db.getCon();
 
-        await con.promise().query(`UPDATE users SET user_active = ? WHERE id_user = ?`, [0, id]);
+        await con.promise().query(`UPDATE users SET user_trashed = ? WHERE id_user = ?`, [1, id]);
 
-        res.send(true);
+        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        let filter = [
+
+            {
+                id: '1',
+                name: 'Confirmed'
+            },
+            {
+                id: '0',
+                name: 'Not Confirmed'
+            },
+            {
+                id: '2',
+                name: 'Trashed'
+            }
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'Users',
+            data:users[0],
+            filter: filter,
+            filter_class_name: 'ss_users_filter',
+            input_search_id: 'user_search'
+
+
+        }
+
+        res.render('partials/user_card.ejs', obj);
+
+        // res.send(true); 
+
+    },
+
+    recover_user: async function(req, res) {
+
+        const id = req.params.id;
+
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE users SET user_trashed = ? WHERE id_user = ?`, [0, id]);
+
+        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        let filter = [
+
+            {
+                id: '1',
+                name: 'Confirmed'
+            },
+            {
+                id: '0',
+                name: 'Not Confirmed'
+            },
+            {
+                id: '2',
+                name: 'Trashed'
+            }
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'Users',
+            data:users[0],
+            filter: filter,
+            filter_class_name: 'ss_users_filter',
+            input_search_id: 'user_search'
+
+
+        }
+
+        res.render('partials/user_card.ejs', obj);
+
+
+
+    },
+
+    //confirme user
+
+    confirmed_user: async function(req, res) {
+
+        const id = req.params.id;
+
+        const con = db.getCon();
+
+        await con.promise().query(`UPDATE users SET user_confirmed = ? WHERE id_user = ?`, [1, id]);
+
+        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        let filter = [
+
+            {
+                id: '1',
+                name: 'Confirmed'
+            },
+            {
+                id: '0',
+                name: 'Not Confirmed'
+            },
+            {
+                id: '2',
+                name: 'Trashed'
+            }
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'Users',
+            data:users[0],
+            filter: filter,
+            filter_class_name: 'ss_users_filter',
+            input_search_id: 'user_search'
+
+
+        }
+
+        res.render('partials/user_card.ejs', obj);
 
     },
 
@@ -752,6 +920,7 @@ module.exports = {
             data:data[0],
             filter: filter,
             filter_class_name: 'ss_category_filter',
+            input_search_id: 'content_search'
 
 
         }
@@ -809,6 +978,7 @@ module.exports = {
             data:new_data[0],
             filter: filter,
             filter_class_name: 'ss_category_filter',
+            input_search_id: 'content_search'
 
 
         }
@@ -927,6 +1097,7 @@ module.exports = {
             data:data[0],
             filter: filter,
             filter_class_name: 'ss_users_filter',
+            input_search_id: 'user_search'
 
 
         }
@@ -941,10 +1112,20 @@ module.exports = {
 
         let data;
 
+        let recoverInfo = {
+
+            isRecover: false,
+            revocerId: 'user_recover_btn'
+
+        }
+
         if(use == '2') {
 
             data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
             WHERE user_trashed = ?`, [1]);
+
+            recoverInfo.isRecover = true;
+            
 
         } else {
 
@@ -954,7 +1135,7 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('partials/user_card.ejs', {name: user, header_name: 'All content', data:data[0]});
+        res.render('partials/user_card.ejs', {name: user, header_name: 'All content', data:data[0], recoverInfo:recoverInfo});
 
     },
 

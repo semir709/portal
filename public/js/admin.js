@@ -591,7 +591,7 @@ $('#main_display').on('click', '#not_confirmed_user', function() {
 
 });
 
-$('#main_display').on('click', '#trashed_user', function() {
+$('#main_display').on('click', '#trashed_user', function(e) {
 
     $.ajax({
         type:'GET',
@@ -615,7 +615,7 @@ $('#main_display').on('click', '#confirmed_user', function() {
 
 });
 
-$('#main_display').on('input', '#input_search_users', function () {
+$('#main_display').on('input', '#user_search', function () {
 
 
     $.ajax({
@@ -893,7 +893,9 @@ $('#main_display').on('input', '#content_search', function() {
 
 
 //filter
-$('#main_display').on('click', '.ss_users_filter', function(){
+$('#main_display').on('click', '.ss_users_filter', function(e){
+
+    console.log($(e.target).parents().find('#user_trash_btn'));
 
     const catg = $(this).attr('data-id'); 
 
@@ -901,6 +903,32 @@ $('#main_display').on('click', '.ss_users_filter', function(){
         type: 'GET',
         url: '/admin/users/filter' + catg,
         success: function(res) {
+
+            if(catg == '2') {
+                $('#user_confrme_btn').remove();
+                const btn_trashed = $(e.target).parents().find('#user_trash_btn');
+
+                btn_trashed.css('background-color','green');
+                btn_trashed.text('Recover');
+                btn_trashed.attr('id', 'user_recover_btn');
+
+            } else if(catg == 0) {
+                $('#user_confrme_btn').remove();
+                const btn = $('<button>Confirmed</button>')
+                .attr('id', 'user_confrme_btn')
+                .attr('type', 'button');
+                
+                btn.insertAfter($('#user_update_btn'));
+                
+
+            } else {
+                $('#user_confrme_btn').remove();
+                const btn_trashed = $(e.target).parents().find('#user_recover_btn');
+                btn_trashed.css('background-color','red');
+                btn_trashed.text('Trashed');
+                btn_trashed.attr('id', 'user_trash_btn');
+            }
+
             $('#row_users').html(res);
         }
     });
@@ -985,8 +1013,12 @@ $('#main_display').on('click', '#user_update_btn', function() {
         success: function(res) {
 
 
-            if(res === true) {
+            if(res.length > 0) {
+
+                $('#row_users').html(res);
+
                 $('#editModalUsers').modal('hide');
+
             }
             else if(res === 'image missing') {
                 alert('Image missing');
@@ -1001,7 +1033,8 @@ $('#main_display').on('click', '#user_update_btn', function() {
 
 });
 
-$('#main_display').on('click', '#user_trash_btn', function() {
+//moving on the trashe data
+$('#main_display').on('click', '#user_trash_btn', function(e) {
 
     const id = $('#cont_edit_user').attr('data-id');
 
@@ -1009,7 +1042,9 @@ $('#main_display').on('click', '#user_trash_btn', function() {
         type: 'get',
         url: '/delete/user' + id,
         success: function(res) {
-            if(res) {
+
+            if(res.length > 0) {
+                $('#row_users').html(res);
                 $('#editModalUsers').modal('hide');
             }
             else {
@@ -1020,6 +1055,54 @@ $('#main_display').on('click', '#user_trash_btn', function() {
     });
 
 });
+
+//recover user
+$('#main_display').on('click', '#user_recover_btn', function(e) {
+
+    const id = $('#cont_edit_user').attr('data-id');
+
+    $.ajax({
+        type: 'get',
+        url: '/recover/user' + id,
+        success: function(res) {
+
+            if(res.length > 0) {
+                $('#row_users').html(res);
+                $('#editModalUsers').modal('hide');
+            }
+            else {
+                alert('Some things goes wrong1!!');
+            }
+        }
+
+    });
+
+});
+
+//confirme user
+
+$('#main_display').on('click', '#user_confrme_btn', function(e) {
+
+    const id = $('#cont_edit_user').attr('data-id');
+
+    $.ajax({
+        type: 'get',
+        url: '/confirme/user' + id,
+        success: function(res) {
+
+            if(res.length > 0) {
+                $('#row_users').html(res);
+                $('#editModalUsers').modal('hide');
+            }
+            else {
+                alert('Some things goes wrong1!!');
+            }
+        }
+
+    });
+
+});
+
 
 /*View User*/
 

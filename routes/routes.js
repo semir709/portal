@@ -93,6 +93,8 @@ route.get('/password_isChanged',admin.password_isChanged)
 route.get('/admin/new_user', admin.isAuthenticated, admin.new_user);
 route.post('/admin/add_new_user', admin.add_new_user);
 route.get('/delete/user:id', admin.delete_user);
+route.get('/recover/user:id', admin.recover_user);
+route.get('/confirme/user:id', admin.confirmed_user);
 
 route.get('/admin/settings', admin.isAuthenticated, admin.settings);
 route.post('/admin/settings/update', upload.fields([{name: 'icon', maxCount: 1}, {name: 'logo', maxCount: 1}]) ,admin.settings_update);
