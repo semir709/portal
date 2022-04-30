@@ -1194,7 +1194,6 @@ module.exports = {
 
         const name = data[0][0].full_name;
         const role = data[0][0].user_role;
-
         const user = await custom.getUser(req.user.id);
 
 
@@ -1234,9 +1233,22 @@ module.exports = {
 
         let icon_res = await custom.contorlingImage(data.oldIcon, icon);
 
+        console.log(data);
+
+        let n = 1234;
+        let nn = '12a34';
+
+        if(isNaN(data.post_page) || isNaN(data.pag_count)) {
+
+            res.send('2');
+            return;
+
+        }
+
 
         if(logo_res == '1' || icon_res == '1') {
             res.send('1');
+            return;
         }
         else if(logo_res == false || icon_res == false) {
             res.send(false);

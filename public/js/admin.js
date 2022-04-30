@@ -1422,7 +1422,15 @@ $('#main_display').on('click', '#btn_save_settings', function(){
         processData: false,
         contentType: false,
         success: function(res) {
-            console.log(res);
+            if(res == '1') {
+                alert('Problem with images');
+            }
+            else if(res == '2') {
+                alert('post per page and pag count must be type number');
+            }
+            else {
+               
+            }
         }
     });
 
