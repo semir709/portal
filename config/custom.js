@@ -187,10 +187,6 @@ module.exports = {
 
     let itemsList = data.slice(start, end);
 
-    // console.log(start, 'start');
-    // console.log(end, 'end');
-    // console.log(itemsList);
-
     const page_count = Math.ceil(data.length / row_per_page);
 
     let count_limit = 1;
@@ -227,6 +223,10 @@ module.exports = {
 
     const arr_data = [];
     const arr_data_filter = [];
+
+    // console.log(category, 'c');
+    // console.log(data);
+    // console.log(cg);
 
 
     for(let i = 0; i < data.length; i++) {
@@ -267,6 +267,30 @@ module.exports = {
     const user =  await con.promise().query(`SELECT full_name FROM users WHERE id_user = ?`, id);
 
     return user[0][0].full_name;
+
+  },
+
+  sortCatgList: function(data, rows) {
+
+    let a = [];
+    // let rows = 5;
+    let list = 1;
+
+    let firstIndex = rows * (list - 1);
+    let lastIndex = firstIndex + rows;
+
+    for(let i = 0; i < data.length / 5; i++) {
+
+        a.push([...data.slice(firstIndex, lastIndex)]);
+
+        list++;
+
+        firstIndex = rows * (list - 1);
+        lastIndex = firstIndex + rows; 
+
+    }
+
+    return a;
 
   }
 

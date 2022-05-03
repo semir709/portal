@@ -32,15 +32,40 @@
             </div>
           </li>
           <li class="nav-item ss_list">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center" id="other_button">
                 <i class="fab fa-ubuntu"></i>
                 <a class="nav-link ps-2" >Other</a>
             </div>
           </li>
         </ul>
+
         <div class="ss_list"> 
             <a class="nav-link">About</a>
         </div>
       </div>
+
     </div>
+
+    <div class="ss_block_others p-2 pe-5">
+      
+      <div class="ss_block_other_holder d-flex justify-content-between">
+
+        <% for(let i = 0; i < other_categorys.length; i++) { %>
+
+          <div class="block_catg">
+
+              <ul>
+                <% for(let j = 0; j < other_categorys[i].length; j++) { %>
+                <li class="list_categroy_all" data-id="<%=other_categorys[i][j].id_category%>" ><%= other_categorys[i][j].category %></li>
+                <% } %>
+              </ul>
+    
+          </div>
+        <% } %>
+
+      </div>
+
+              
+    </div>
+
   </nav>

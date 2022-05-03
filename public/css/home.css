@@ -4,6 +4,43 @@ body {
 }
 
 
+/*Navigation*/
+
+.ss_nav_background {
+    position: relative;
+}
+
+.ss_block_others {
+    display: none;
+    background-color: #093d5e;
+    opacity: 0.8;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    top: 100%;
+    z-index: 999;
+}
+
+.ss_block_other_holder {
+    width: 100%;
+    height: 100%;
+}
+
+.ss_show_other {
+    display: block;
+}
+
+.block_catg li {
+    color: #fff;
+    list-style: none;
+}
+
+.block_catg li:hover {
+    cursor: pointer;
+    color: #d69c14;
+}
+
+
 /* .ss_navbar {
     background: red;
 } */

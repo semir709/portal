@@ -24,9 +24,23 @@ module.exports = {
 
         const {itemsList, pagination} = custom.pagination(5, 1, other_data, 10);
 
-        
+        const other_categorys = await con.promise().query(`SELECT category_name as category, id_category FROM category
+        WHERE in_use = ? AND category_name != ? AND category_name != ? AND category_name != ?
+        AND category_name != ?`, [1,'Hardwar', 'Softwar', 'Network', 'Code']);
 
-        res.render('home.ejs', {data: itemsList, main_content:main_data, side_data: side_data, settings: sett_data[0], pag: pagination, all_content: true});
+        const newList = custom.sortCatgList(other_categorys[0], 5);
+
+        let obj = {
+            data: itemsList,
+            main_content:main_data,
+            side_data: side_data,
+            settings: sett_data[0],
+            pag: pagination,
+            all_content: true,
+            other_categorys: newList
+        }
+
+        res.render('home.ejs', obj);
     },
     // next: function(req, res) {
     //     res.render('category_page.ejs') not in use this ejs file
@@ -55,11 +69,29 @@ module.exports = {
 
         const {itemsList, pagination} = custom.pagination(5, page, other_data, 10);
 
-       
+        const other_categorys = await con.promise().query(`SELECT category_name as category, id_category FROM category
+        WHERE in_use = ? AND category_name != ? AND category_name != ? AND category_name != ?
+        AND category_name != ?`, [1,'Hardwar', 'Softwar', 'Network', 'Code']);
+
+        const newList = custom.sortCatgList(other_categorys[0], 5);
 
         const new_side_data = custom.reduceSidedata(side_data);
+
+
+        let obj = {
+
+            data: itemsList,
+            main_content: [],
+            side_data: new_side_data,
+            settings: sett_data[0],
+            pag: pagination,
+            all_content: false,
+            category: category,
+            other_categorys: newList
+
+        }
         
-        res.render('home.ejs', {data: itemsList, main_content: [], side_data: new_side_data , settings: sett_data[0], pag: pagination, all_content: false, category: category});
+        res.render('home.ejs', obj);
     },
 
     page: async function(req, res) {
@@ -105,7 +137,13 @@ module.exports = {
 
         const side_data = custom.filter_data(all_data[0], '1', '2').arr_data;
 
-        res.render('content.ejs', {data: data[0][0], side_data: side_data})
+        const other_categorys = await con.promise().query(`SELECT category_name as category, id_category FROM category
+        WHERE in_use = ? AND category_name != ? AND category_name != ? AND category_name != ?
+        AND category_name != ?`, [1,'Hardwar', 'Softwar', 'Network', 'Code']);
+
+        const newList = custom.sortCatgList(other_categorys[0], 5);
+
+        res.render('content.ejs', {data: data[0][0], side_data: side_data, other_categorys: newList})
 
         
 

@@ -96,6 +96,7 @@ module.exports = {
             data:content[0],
             filter: filter,
             filter_class_name: 'ss_content_filter',
+            input_search_id: 'content_search'
 
 
         }
@@ -139,7 +140,7 @@ module.exports = {
 
         else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
             let path = './public';
-            await unlinkAsync(path +  data.old_image);
+            await unlinkAsync(path +  data.old_image).catch(err => {if(err) console.log(err)});
 
             img = file.filename;
         }
@@ -158,8 +159,6 @@ module.exports = {
         ,id_user = ? WHERE id_content = ?`
         ,[data.input_title, data.txt_area, '/img/'+ img, custom.publishConvert(data.inputGroup_publish.trim())
         , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
-        
-        console.log(content);
 
 
         let category = [];
@@ -254,6 +253,7 @@ module.exports = {
             data:all_data[0],
             filter: filter,
             filter_class_name: 'ss_content_filter',
+            input_search_id: 'content_search'
 
 
         }
@@ -275,7 +275,16 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
+        let obj = {
+            data:content[0],
+            header_name: 'All content',
+            name: user,
+            filter: filter,
+            filter_class_name: 'ss_content_filter',
+            input_search_id: 'content_search'
+        }
+
+        res.render('all_content_admin.ejs', obj);
 
 
     },
@@ -293,7 +302,17 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
+        let obj = {
+            data:content[0],
+            header_name: 'All content',
+            name: user,
+            filter: filter,
+            filter_class_name: 'ss_content_filter',
+            input_search_id: 'content_search'
+        }
+
+
+        res.render('all_content_admin.ejs', obj);
 
     },
 
@@ -310,7 +329,17 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
+        let obj = {
+            data:content[0],
+            header_name: 'All content',
+            name: user,
+            filter: filter,
+            filter_class_name: 'ss_content_filter',
+            input_search_id: 'content_search'
+        }
+
+
+        res.render('all_content_admin.ejs', obj);
 
 
     },
@@ -328,7 +357,17 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('all_content_admin.ejs', {name: user, header_name: 'All content', data:content[0]});
+        let obj = {
+            data:content[0],
+            header_name: 'All content',
+            name: user,
+            filter: filter,
+            filter_class_name: 'ss_content_filter',
+            input_search_id: 'content_search'
+        }
+
+
+        res.render('all_content_admin.ejs', obj);
 
     },
 
