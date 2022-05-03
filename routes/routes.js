@@ -37,6 +37,7 @@ route.post('/login/verify', passport.authenticate('local', admin.login_verify));
 
 route.post('/admin/logout', admin.logout);
 
+//SINGIN
 route.get('/singin', admin.singin);
 route.post('/singin/send_request', upload.single('file'), admin.send_request);
 route.get('/singin/thanks', admin.singin_thanks);

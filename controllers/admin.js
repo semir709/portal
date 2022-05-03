@@ -658,6 +658,13 @@ module.exports = {
 
                 else {
 
+                    console.log(data.password, data.confirme_pass);
+
+                    if(data.password != data.confirme_pass) {
+                        res.send('password not match!!!');
+                        return;
+                    }
+
                     const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ? AND num = ?`, [data.email, data.num]);
 
                     if(user[0].length <= 0) {

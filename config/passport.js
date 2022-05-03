@@ -1,6 +1,7 @@
 
 const LocalStrategy = require('passport-local');
 const db = require('../config/database');
+const bcrypt = require('bcrypt');
 
 
 module.exports = function (passport) {
@@ -9,19 +10,24 @@ module.exports = function (passport) {
 
         const con = db.getCon();    
 
-        const user = await con.promise().query(`SELECT id_user AS id FROM users WHERE e_mail = ? AND user_password = ?`,
-        [email, password])
+        const user = await con.promise().query(`SELECT id_user AS id, user_password AS password FROM users WHERE e_mail = ?`,
+        [email.trim()])
         .then((res) => {
 
             const id = res[0][0];
 
             if(res[0].length > 0) {
 
-                return cb(null, res[0][0]);;
+                bcrypt.compare(password, res[0][0].password , function(err, result) {
+                    console.log(result);
+                    if(result) return cb(null, res[0][0]);
+                    else return cb(null, false, { message: 'Incorrect password' });
+                    
+                });
 
             } else {
 
-                return cb(null, false, { message: 'Incorrect username or password.' });
+                return cb(null, false, { message: 'Incorrect e-mail' });
 
             }
 

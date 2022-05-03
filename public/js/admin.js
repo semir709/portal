@@ -527,8 +527,6 @@ $('#main_display').on('click', '#update_content', function(e) {
 
     const formData = contentValues(e);
 
-    console.log(formData);
-
     for(let [i, val] of formData) {
         console.log(i, val);
     }
@@ -1145,6 +1143,7 @@ $('#btn_send').on('click', function() {
     const instagram = $('#instagram_singin').val();
     const twitter = $('#twitter_singin').val();
     const password = $('#custom_password_singin').val();
+    const confirmePassword = $('#custom_password_confirme_singin').val();
     const txt_area = $('#main_text_area_singin').val();
     const role = $('#role').text();
 
@@ -1162,6 +1161,7 @@ $('#btn_send').on('click', function() {
     formData.append('instagram',instagram);
     formData.append('twitter',twitter);
     formData.append('password',password);
+    formData.append('confirme_pass', confirmePassword);
     formData.append('txt_area',txt_area);
     formData.append('role',convertedRole);
     formData.append('id',id);
@@ -1222,6 +1222,11 @@ $('#btn_send').on('click', function() {
             else if(res === 'not valid') {
                 alert('E-mail is not valid');
                 $('#email_singin').css('border', '1px solid red');
+            }
+
+            else if (res === 'password not match!!!') {
+                alert('password not match!!!');
+                
             }
 
             else {
