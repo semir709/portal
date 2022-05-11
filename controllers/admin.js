@@ -8,6 +8,7 @@ const unlinkAsync = promisify(fs.unlink)
 const bcrypt = require('bcrypt');
 const custom = require('../config/custom');
 const { type } = require('express/lib/response');
+const { rulesToMonitor } = require('nodemon/lib/monitor/match');
 
 module.exports = {
 
@@ -511,6 +512,12 @@ module.exports = {
 
     changePassword: async function(req, res) {
 
+        if (req.session.views == 1) {
+          
+            res.send('You can\'t access this link');
+        
+        } 
+
         const con = db.getCon();
         const id = req.query.id;
 
@@ -525,8 +532,12 @@ module.exports = {
         const con = db.getCon();
         const data = req.body;
 
-        //need hasing 
-        console.log(data);
+        if(data.newPassword.length < 8) {
+
+            res.send('4');
+            return;
+
+        }
 
         let isEmpty = custom.isEmpty(data.password, data.newPassword, data.newPassword2);
 
@@ -535,19 +546,39 @@ module.exports = {
             return;
         }
 
-        const user = await con.promise().query(`SELECT full_name AS name FROM users WHERE user_password = ?`, [data.password]);
+        const user = await con.promise().query(`SELECT full_name AS name,
+        user_password AS password FROM users
+        WHERE id_user = ?`, [data.id]);
 
         if(user[0].length < 1) {
             res.send('1');
             return;
-        } 
+        } else {
 
-        if(data.newPassword == data.newPassword2) {
-            await con.promise().query(`UPDATE users SET user_password = ? WHERE id_user = ?` , [data.newPassword, data.id]);
-            res.send('/password_isChanged');
-        }
-        else {
-            res.send('3');
+            bcrypt.compare(data.password.trim(), user[0][0].password, function(err, result) {
+                if(result) {
+
+                    if(data.newPassword == data.newPassword2) {
+
+                        bcrypt.hash(data.newPassword,10, async function(err,hash) {
+
+                            await con.promise().query(`UPDATE users SET user_password = ? WHERE id_user = ?` , [hash, data.id]);
+                            req.session.views = 1;
+                            res.send('/password_isChanged');
+
+                        });
+                    }
+                    else {
+                        res.send('3');
+                    }
+
+                } else {
+                    res.send('2');
+                    return;
+                }
+                
+            });
+
         }
 
     },
@@ -623,6 +654,12 @@ module.exports = {
 
     singin: async function(req, res) {
 
+        if (req.session.views == 1) {
+          
+            res.send('You can\'t access this link');
+        
+        } 
+
         let id = req.query.id;
         const con = db.getCon();
         
@@ -677,7 +714,10 @@ module.exports = {
                             ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
                 
                         });
-
+                        
+                         
+                        req.session.views = 1;
+                        
                         res.send('/singin/thanks');
 
                     }

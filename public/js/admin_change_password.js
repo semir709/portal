@@ -37,11 +37,19 @@ $('#form_pass').on('submit', function(e) {
             }
 
             else if(res == '1') {
+                $('#msg').text('Something goes wrong');
+            }
+
+            else if(res == '2') {
                 $('#msg').text('Incorect password');
             }
 
             else if(res == '3') {
                 $('#msg').text('new password do not match each other');
+            }
+
+            else if(res =='4') {
+                $('#msg').text('new password must be eight characters long');
             }
 
             else {
