@@ -37,7 +37,7 @@ body {
 
 .block_catg li:hover {
     cursor: pointer;
-    color: #d69c14;
+    color: #ff5100;
 }
 
 
@@ -54,6 +54,10 @@ body {
     height: 300px;
     background-color: gray;
    
+}
+
+.ss_main_content_size:hover {
+    cursor: pointer;
 }
 
 .ss_carousel_full {
@@ -147,12 +151,22 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .ss_img_holder img {
     object-fit: cover;
     width: 100%;
     height: 100%;
+    transition: 0.5s all ease-in-out;
+}
+
+.ss_main_content:hover .ss_img_holder img {
+    transform: scale(1.5);
+}
+
+.ss_main_content_side:hover .ss_img_holder img {
+    transform: scale(1.5);
 }
 
 .ss_main_right_content {
@@ -177,7 +191,7 @@ body {
     width: 100%;
     height: 100%;
     top: 0;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 
@@ -232,6 +246,14 @@ body {
     color: #fff;
 }
 
+.ss_paragraphs {
+    color: #fff;
+}
+
+.ss_main_header_side {
+    font-size: 23px !important;
+}
+
 .ss_article_info_right {
     position: absolute;
     top: 25%;
@@ -260,6 +282,11 @@ body {
     font-size: 2em;
 }
 
+.ss_main_header:hover {
+    color: #008cff;
+    cursor: pointer;
+}
+
 .ss_paragraphs {
     margin: 0px 0px 0px 15px;
     opacity: 0.7;
@@ -270,8 +297,17 @@ body {
     font-size: large;
 }
 
+
+/*all content*/
+
+#content_img_holder {
+
+    height: 160px;
+
+}
+
 .ss_img_content_holder {
-    height: 200px;
+    height: 100%;
     width: 100%;
 }
 
@@ -307,13 +343,23 @@ body {
 
 .ss_content_header {
     display: block;
-    height: 80%;
+    /* height: 80%; */
     width: 100%;
     font-weight: 400;
 }
 
 .ss_content_header p {
     font-weight: 300;
+}
+
+.ss_content_header:hover {
+    color: #008cff;
+    cursor: pointer;
+}
+
+
+.ss_author_info_all_content {
+    font-weight: 100;   
 }
 
 .ss_info_content_holder {

@@ -22,9 +22,9 @@
 
         <% if(main_content.length > 0) { %> 
 
-            <div class="row ss_main_content_size mt-5 mx-0 ">
+            <div class="row ss_main_content_size mt-5 mx-0 " >
 
-                <div class="col-6 ss_main_content">
+                <div class="col-6 ss_main_content ss_main_content_click" data-id="<%= main_content[0].id_content %>">
                     
                     <div class="ss_img_holder">
                         <img src="<%= main_content[0].content_image %>" alt="">
@@ -47,19 +47,19 @@
                             </div>
 
                             <p class="ss_paragraphs"><%= main_content[0].full_name %></p>
-                            <p class="ss_paragraphs"><%= main_content[0].date.toUTCString().slice(0, -13) %></p>
-                            <p class="ss_paragraphs"><%= main_content[0].time %></p>
+                            <p class="ss_paragraphs"><%= main_content[0].date.toUTCString().slice(5, -13) %></p>
+                            <p class="ss_paragraphs"><%= main_content[0].time.slice(0,5) %>h</p>
 
                         </div>
                     </div>
                     
                 </div>
     
-                <div class="col-6 p-0">
+                <div class="col-6 p-0" >
     
                     <div class="row ss_main_content_size mx-0">
     
-                        <div class="col-12 ss_main_content_side ">
+                        <div class="col-12 ss_main_content_side ss_main_content_click" data-id="<%= main_content[1].id_content %>">
                             
                             <div class="ss_img_holder">
                                 <img src="<%= main_content[1].content_image %>" alt="">
@@ -69,28 +69,28 @@
                             <div class="ss_article_info_main_side">
 
                                 <div class="ss_header_holder d-flex align-items-end">
-                                    <h1 class="ss_main_header"><%= main_content[1].title %></h1>
+                                    <h1 class="ss_main_header ss_main_header_side"><%= main_content[1].title %></h1>
                                 </div>
         
                                 <div class="d-flex align-items-center">
         
                                     <div class="ss_img_author_holder">
         
-                                        <img src="<%= main_content[1].user_image %>" alt="">
+                                        <img  src="<%= main_content[1].user_image %>" alt="">
                                         <div class="ss_dark_filter rounded-circle"></div>
         
                                     </div>
         
                                     <p class="ss_paragraphs"><%= main_content[1].full_name %></p>
-                                    <p class="ss_paragraphs"><%= main_content[1].date.toUTCString().slice(0, -13) %></p>
-                                    <p class="ss_paragraphs"><%= main_content[1].time %></p>
+                                    <p class="ss_paragraphs"><%= main_content[1].date.toUTCString().slice(5, -13) %></p>
+                                    <p class="ss_paragraphs"><%= main_content[1].time.slice(0,5) %>h</p>
         
                                 </div>
                             </div>
     
                         </div>
     
-                        <div class="col-12 ss_main_content_side">
+                        <div class="col-12 ss_main_content_side ss_main_content_click" data-id="<%= main_content[2].id_content %>">
                             
                             <div class="ss_img_holder">
                                 <img src="<%= main_content[2].content_image %>" alt="">
@@ -100,7 +100,7 @@
                             <div class="ss_article_info_main_side">
 
                                 <div class="ss_header_holder d-flex align-items-end">
-                                    <h1 class="ss_main_header"><%= main_content[2].title %></h1>
+                                    <h1 class="ss_main_header ss_main_header_side"><%= main_content[2].title %></h1>
                                 </div>
         
                                 <div class="d-flex align-items-center">
@@ -113,8 +113,8 @@
                                     </div>
         
                                     <p class="ss_paragraphs"><%= main_content[2].full_name %></p>
-                                    <p class="ss_paragraphs"><%= main_content[2].date.toUTCString().slice(0, -13) %></p>
-                                    <p class="ss_paragraphs"><%= main_content[2].time %></p>
+                                    <p class="ss_paragraphs"><%= main_content[2].date.toUTCString().slice(5, -13) %></p>
+                                    <p class="ss_paragraphs"><%= main_content[2].time.slice(0,5) %>h</p>
         
                                 </div>
                             </div>

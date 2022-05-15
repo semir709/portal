@@ -7,39 +7,23 @@ $('.ss_article').on('click', function() {
 });
 
 
-$('.content_holder').on('click','#content_img_holder', function() {
+//click on the main content
+$('.ss_main_content_click').on('click', function() {
 
-    const id = $(this).parent().attr('data-id');
+    const id = $(this).attr('data-id');
     window.location.href = '/content/' + id;
-    
-
-});
-
-$('.content_holder').on('click','#content_info_holder', function() {
-
-    const id = $(this).parent().attr('data-id');
-    window.location.href = '/content/' + id;
-    
 
 });
 
 
-$('.content_holder').on('click','#side_content_img_holder', function() {
+//click on the content
+$('.content_holder').on('click', '.ss_content_holder', function() {
 
-    const id = $(this).parent().attr('data-id');
+    const id = $(this).attr('data-id');
     window.location.href = '/content/' + id;
-    
 
 });
 
-
-$('.content_holder').on('click','#side_content_info_holder', function() {
-
-    const id = $(this).parent().attr('data-id');
-    window.location.href = '/content/' + id;
-    
-
-});
 
 //navigation home
 $('#other_button').on('click', function() {

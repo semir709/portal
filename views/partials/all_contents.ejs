@@ -1,7 +1,7 @@
 
  <% for(let i = 0; i < data.length; i++) { %>
 
-    <div class="row" data-id="<%= data[i].id_content %>">
+    <div class="row ss_content_holder" data-id="<%= data[i].id_content %>">
 
         <div class="col-lg-5 order-2 order-lg-1 mb-sm-3" id="content_img_holder">
     
@@ -19,9 +19,9 @@
                 <div class="ss_img_author_holder">
                     <img src="<%= data[i].user_image %>" alt="">
                 </div>
-                <p class="mb-0 ms-2"><%= data[i].full_name %></p>
-                <p><%= data[i].date.toUTCString().slice(0, -13) %></p>
-                <p class="ms-5"> <%= data[i].time %></p>
+                <p class="mb-0 ms-2 ss_author_info_all_content"><%= data[i].full_name %></p>
+                <p class="mb-0 ms-2 ss_author_info_all_content"><%= data[i].date.toUTCString().slice(5, -13) %></p>
+                <p class="ms-2 mb-0 ss_author_info_all_content"> <%= data[i].time.slice(0,5) %>h</p>
             </div>
     
         </div>
