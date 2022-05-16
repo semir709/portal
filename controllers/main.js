@@ -22,7 +22,7 @@ module.exports = {
 
         const sett_data = await con.promise().query(`SELECT post_per_page AS post_page, pagination_count AS pag_cnt FROM settings`);
 
-        const {itemsList, pagination} = custom.pagination(5, 1, other_data, 10);
+        const {itemsList, pagination, max_pag} = custom.pagination(sett_data[0][0].post_page, 1, other_data, sett_data[0][0].pag_cnt);
 
         const other_categorys = await con.promise().query(`SELECT category_name as category, id_category FROM category
         WHERE in_use = ? AND category_name != ? AND category_name != ? AND category_name != ?
@@ -34,10 +34,12 @@ module.exports = {
             data: itemsList,
             main_content:main_data,
             side_data: side_data,
-            settings: sett_data[0],
+            // settings: sett_data[0],
             pag: pagination,
             all_content: true,
-            other_categorys: newList
+            other_categorys: newList,
+            selected: 1,
+            max_pag
         }
 
         res.render('home.ejs', obj);
@@ -67,7 +69,7 @@ module.exports = {
 
         const sett_data = await con.promise().query(`SELECT post_per_page AS post_page, pagination_count AS pag_cnt FROM settings`);
 
-        const {itemsList, pagination} = custom.pagination(5, page, other_data, 10);
+        const {itemsList, pagination, max_pag} = custom.pagination(5, page, other_data, 10);
 
         const other_categorys = await con.promise().query(`SELECT category_name as category, id_category FROM category
         WHERE in_use = ? AND category_name != ? AND category_name != ? AND category_name != ?
@@ -83,12 +85,13 @@ module.exports = {
             data: itemsList,
             main_content: [],
             side_data: new_side_data,
-            settings: sett_data[0],
+            // settings: sett_data[0],
             pag: pagination,
             all_content: false,
             category: category,
-            other_categorys: newList
-
+            other_categorys: newList,
+            selected: page,
+            max_pag
         }
         
         res.render('home.ejs', obj);
@@ -97,7 +100,6 @@ module.exports = {
     page: async function(req, res) {
         
         const page = req.params.pg;
-        
 
         const con = db.getCon();
 
@@ -112,12 +114,29 @@ module.exports = {
 
         const sett_data = await con.promise().query(`SELECT post_per_page AS post_page, pagination_count AS pag_cnt FROM settings`);
 
-        const {itemsList, pagination} = custom.pagination(5, page, other_data, 10);
+        const {itemsList, pagination, max_pag} = custom.pagination(5, page, other_data, 10);
 
-        
+        const other_categorys = await con.promise().query(`SELECT category_name as category, id_category FROM category
+        WHERE in_use = ? AND category_name != ? AND category_name != ? AND category_name != ?
+        AND category_name != ?`, [1,'Hardwar', 'Softwar', 'Network', 'Code']);
 
-        res.render('home.ejs', {data: itemsList, main_content:[], side_data: side_data, settings: sett_data[0], pag: pagination, all_content: true});
-        
+        const newList = custom.sortCatgList(other_categorys[0], 5);
+
+        let obj = {
+
+            data: itemsList,
+            main_content: [],
+            side_data: side_data,
+            // settings: sett_data[0],
+            pag: pagination,
+            all_content: true,
+            other_categorys: newList,
+            selected: page,
+            max_pag
+
+        }
+
+        res.render('home.ejs', obj);
 
     },
 

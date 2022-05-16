@@ -211,7 +211,8 @@ module.exports = {
     return  {
 
       itemsList,
-      pagination
+      pagination,
+      max_pag: page_count
 
     }
 

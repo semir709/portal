@@ -1,39 +1,125 @@
-<div class="row">
+<% if(all_content == true) { %>
+
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10 p-0 d-flex justify-content-center">
+          <nav>
+              <ul class="pagination ss">
+                <li class="page-item  me-3">
+
+                  <% if(selected - 1 == 0) { %>
+                    <a class="page-link ss_page_link px-4"  href="/page/<%= selected%>" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+  
+                  <% } else { %>
+  
+                    <a class="page-link ss_page_link px-4"  href="/page/<%= selected - 1%>" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+  
+                  <% } %>
+
+                </li>
+
+                <% for(let i = 0; i < pag.length; i++) { %>
+
+                  <% if(selected == pag[i]) { %>
+
+                    <li class="page-item  me-3"><a class="page-link px-4 ss_page_link ss_selected" href="/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
+
+                  <% } else { %>
+
+                    <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href="/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
+
+                  <% } %>
+  
+                <% } %>         
+
+                <li class="page-item">
+
+                  <% if(selected == max_pag) { %>
+
+                    <a class="page-link ss_page_link px-4" href="/page/<%= max_pag %>" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+
+                  <% } else { %>
+
+                    <a class="page-link ss_page_link px-4" href="/page/<%= parseInt(selected) + 1%>" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+
+                  <% } %>
+                  
+                </li>
+              </ul>
+            </nav>
+      </div>
+      <div class="col-1"></div>
+    </div>
+
+
+<% } else { %>
+
+  <div class="row">
     <div class="col-1"></div>
     <div class="col-10 p-0 d-flex justify-content-center">
         <nav>
             <ul class="pagination ss">
               <li class="page-item  me-3">
-                <a class="page-link ss_page_link px-4" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
 
-              <% if(all_content == true) { %> 
+                <% if(selected - 1 == 0) { %>
+                  <a class="page-link ss_page_link px-4"  href="/category/<%= category %>/page/<%= selected%>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
 
-                <% for(let i = 0; i < pag.length; i++) { %>
+                <% } else { %>
 
-                  <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href="/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
-  
+                  <a class="page-link ss_page_link px-4"  href="/category/<%= category %>/page/<%= selected - 1%>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+
                 <% } %>
 
-              <% } else { %>
+              </li>
 
-                <% for(let i = 0; i < pag.length; i++) { %>
+              <% for(let i = 0; i < pag.length; i++) { %>
+
+                <% if(selected == pag[i]) { %>
+
+                  <li class="page-item  me-3"><a class="page-link px-4 ss_page_link ss_selected" href="/category/<%= category %>/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
+
+                <% } else { %>
 
                   <li class="page-item  me-3"><a class="page-link px-4 ss_page_link" href="/category/<%= category %>/page/<%= pag[i] %>" ><%= pag[i] %></a></li>
-  
+
                 <% } %>
 
               <% } %>
 
               <li class="page-item">
-                <a class="page-link ss_page_link px-4" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
+
+                <% if(selected == max_pag) { %>
+
+                  <a class="page-link ss_page_link px-4" href="/category/<%= category %>/page/<%= max_pag %>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+
+                <% } else { %>
+
+                  <a class="page-link ss_page_link px-4" href="/category/<%= category %>/page/<%= parseInt(selected) + 1%>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+
+                <% } %>
+                
               </li>
             </ul>
           </nav>
     </div>
     <div class="col-1"></div>
-</div>
+  </div>
+
+
+<% } %>

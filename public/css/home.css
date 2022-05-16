@@ -386,6 +386,10 @@ body {
     color: #fff;
 }
 
+.ss_selected {
+    background-color: #008cff;
+}
+
 .ss_page_link:hover {
     background: #008cff;
     color: #fff;
