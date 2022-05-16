@@ -149,6 +149,8 @@ module.exports = {
         TIME(c.publish_time) AS time, u.full_name as name, u.image AS author_image  FROM content c INNER JOIN users u ON u.id_user = c.id_user
         WHERE c.id_content = ?`, [id]);
 
+        console.log(data[0]);
+
         const all_data = await con.promise().query(`SELECT c.id_content, c.title, c.article, c.image AS content_image,
         DATE(c.publish_time) AS date, TIME(c.publish_time) AS time,
         c.publish, c.post_place, u.id_user, u.full_name, u.image AS user_image FROM content c 

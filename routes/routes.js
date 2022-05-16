@@ -28,7 +28,7 @@ route.get('/category/:cg/page/:pg', main.content);
 // content
 route.get('/content/:id', main.getContent);
 
-route.get('/about', main.about);
+// route.get('/about', main.about);
 
 
 //LOGIN

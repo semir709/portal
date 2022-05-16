@@ -18,23 +18,25 @@
   <body>
     <%- include('partials/home_nav.ejs')%>
 
-    <div class="container mt-4">
+    <div class="container ss_container mt-4">
 
         <div class="row">
 
 
             <div class="col-12">
 
-                <div class="ss_top_info">
+                <div class="ss_top_info ">
 
                     <h1 class="fs-2"><%= data.title %></h1>
 
-                    <div class="d-flex">
+                    <div class="d-flex mb-3">
 
                         <div class="ss_img_author_holder me-3">
-                            <img src="<%=data.author_image%>>" alt="">
+                            <img src="<%=data.author_image%>" alt="">
                         </div>
-                        <p><%= data.content_image %></p>
+                        <p class="mb-0 ms-2 ss_author_info_all_content"><%= data.name %></p>
+                        <p class="mb-0 ms-2 ss_author_info_all_content"><%= data.date.toUTCString().slice(5, -13) %></p>
+                        <p class="ms-2 mb-0 ss_author_info_all_content"> <%= data.time.slice(0,5) %>h</p>
 
                     </div>
 
@@ -52,7 +54,7 @@
 
         <div class="row mt-5 mb-5 mx-0" >
 
-            <div class="col-xl-9 ss_content_text">
+            <div class="col-xl-9 ps-0 ss_content_text">
 
                 <%- data.article %>
 
@@ -70,13 +72,13 @@
 
         <div class="row">
 
-            <div class="col-1"></div>
+        
 
-            <div class="col-10 p-0">
+            <div class="col-12 p-0">
                 <div class="line mb-5"></div>
             </div>
 
-            <div class="col-1"></div>
+           
 
         </div>
 
