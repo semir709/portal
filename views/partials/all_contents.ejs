@@ -3,7 +3,7 @@
 
     <div class="row ss_content_holder" data-id="<%= data[i].id_content %>">
 
-        <div class="col-lg-5 order-2 order-lg-1 mb-sm-3" id="content_img_holder">
+        <div class="col-sm-5 order-2 order-sm-1 mb-sm-3" id="content_img_holder">
     
             <div class="ss_img_content_holder ">
                 <img src="<%= data[i].content_image %>" alt="">
@@ -11,7 +11,7 @@
     
         </div>
     
-        <div class="col-lg-7  order-lg-2 mb-sm-4" id="content_info_holder">
+        <div class="col-sm-7 mt-0  order-sm-2 mb-sm-4" id="content_info_holder">
     
             <h3 class="fs-4 ss_content_header" ><%= data[i].title %></h3>
     
@@ -19,7 +19,7 @@
                 <div class="ss_img_author_holder">
                     <img src="<%= data[i].user_image %>" alt="">
                 </div>
-                <p class="mb-0 ms-2 ss_author_info_all_content"><%= data[i].full_name %></p>
+                <p class="mb-0 ms-2 ss_author_info_all_content"><%= data[i].full_name%></p>
                 <p class="mb-0 ms-2 ss_author_info_all_content"><%= data[i].date.toUTCString().slice(5, -13) %></p>
                 <p class="ms-2 mb-0 ss_author_info_all_content"> <%= data[i].time.slice(0,5) %>h</p>
             </div>
