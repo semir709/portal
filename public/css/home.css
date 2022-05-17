@@ -196,9 +196,9 @@ body {
 
 }
 
-.ss_top_info {
+/* .ss_top_info {
     height: 80vh;
-}
+} */
 
 /* .ss {
     height: fit-content;
@@ -399,6 +399,10 @@ body {
     font-weight: 100;   
 }
 
+.ss_header_content {
+    color: #000;
+}
+
 .ss_author_info_all_content {
     font-size: 13px;
 }
@@ -587,6 +591,10 @@ body {
         height: 50px;
     }
 
+    .ss_content_text {
+        padding-right: 0;
+    }
+
 }
 
 @media (max-width: 992px) {
@@ -704,6 +712,11 @@ body {
         margin-left: 45%;
     }
 
+    /*content image*/
+    .ss_img_main_holder {
+        height: 50vh;
+    }
+
 
 }
 
@@ -778,6 +791,12 @@ body {
     .ss_carousel {
         height: 200px;
     }
+
+    /*content image*/
+    .ss_img_main_holder {
+        height: 30vh;
+    }
+
     
 
 }
