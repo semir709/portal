@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg ss_nav_background">
     <div class="container-fluid p-0">
-      <a class="navbar-brand ms-sm-2" href="/">TechTips</a>
+      <a class="navbar-brand ss_logo" href="/">TechTips</a>
       <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span ><i class="fa fa-bars" aria-hidden="true"></i></span>
       </button>
@@ -32,10 +32,33 @@
             </div>
           </li>
           <li class="nav-item ss_list">
+
             <div class="d-flex align-items-center" id="other_button">
                 <i class="fab fa-ubuntu ss_other_child"></i>
                 <a class="nav-link ps-2 ss_other_child" >Other</a>
             </div>
+
+            <div class="d-flex align-items-center" id="other_button_mobile">
+              <i class="fab fa-ubuntu ss_other_child"></i>
+              <a class="nav-link ps-2 ss_other_child" >Other</a>
+            </div>
+            <div class="ss_block_other_holder ss_mobile_block_other_holder  justify-content-between">
+
+              <% for(let i = 0; i < other_categorys.length; i++) { %>
+      
+                <div class="block_catg">
+      
+                    <ul>
+                      <% for(let j = 0; j < other_categorys[i].length; j++) { %>
+                      <li class="list_categroy_all" data-id="<%=other_categorys[i][j].id_category%>" ><%= other_categorys[i][j].category %></li>
+                      <% } %>
+                    </ul>
+          
+                </div>
+              <% } %>
+      
+            </div>
+
           </li>
         </ul>
       </div>

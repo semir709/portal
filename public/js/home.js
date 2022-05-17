@@ -13,6 +13,13 @@ $('#other_button').on('click', function() {
 
 });
 
+//navigation other mobile
+$('#other_button_mobile').on('click', function() {
+
+    $('.ss_mobile_block_other_holder').toggle('.ss_show_mobile_block');
+
+});
+
 //closing other content list on any diffrent click
 
 $(document).mouseup(function(e) 
@@ -36,6 +43,12 @@ $(document).mouseup(function(e)
 //click on the main content
 $('.ss_main_content_click').on('click', function() {
 
+    const id = $(this).attr('data-id');
+    window.location.href = '/content/' + id;
+
+});
+
+$('.ss_carousel_item').on('click', function(e) {
     const id = $(this).attr('data-id');
     window.location.href = '/content/' + id;
 

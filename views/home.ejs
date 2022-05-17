@@ -18,7 +18,7 @@
 
     <!--  -->
 
-    <div class="container ss_container">
+    <div class="container ss_container mt-5">
 
         <% if(main_content.length > 0) { %> 
 
@@ -37,9 +37,9 @@
                             <h1 class="ss_main_header"><%= main_content[0].title %></h1>
                         </div>
 
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center ss_main_block_content">
 
-                            <div class="ss_img_author_holder">
+                            <div class="ss_img_author_holder ">
 
                                 <img src="<%= main_content[0].user_image %>" alt="">
                                 <div class="ss_dark_filter rounded-circle"></div>
@@ -72,7 +72,7 @@
                                     <h1 class="ss_main_header ss_main_header_side"><%= main_content[1].title %></h1>
                                 </div>
         
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center ss_main_block_content">
         
                                     <div class="ss_img_author_holder">
         
@@ -103,7 +103,7 @@
                                     <h1 class="ss_main_header ss_main_header_side"><%= main_content[2].title %></h1>
                                 </div>
         
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center ss_main_block_content">
         
                                     <div class="ss_img_author_holder">
         
@@ -131,7 +131,7 @@
             <div id="carouselExampleControls" class="carousel slide ss_carousel_full" data-bs-ride="carousel">
 
                 <div class="carousel-inner ss_carousel">
-                  <div class="carousel-item active ss_img_holder">
+                  <div class="carousel-item active ss_img_holder ss_carousel_item" data-id="<%= main_content[0].id_content %>">
                     <img src="<%= main_content[0].content_image %>" class="d-block w-100" alt="...">
                     <div class="ss_dark_filter"></div>
 
@@ -158,7 +158,7 @@
                     </div>
 
                   </div>
-                  <div class="carousel-item ss_img_holder">
+                  <div class="carousel-item ss_img_holder ss_carousel_item" data-id="<%= main_content[1].id_content %>">
                     <img src="<%= main_content[1].content_image %>" class="d-block w-100" alt="...">
                     <div class="ss_dark_filter"></div>
 
@@ -184,7 +184,7 @@
                         </div>
                     </div>
                   </div>
-                  <div class="carousel-item ss_img_holder">
+                  <div class="carousel-item ss_img_holder ss_carousel_item" data-id="<%= main_content[2].id_content %>">
                     <img src="<%= main_content[2].content_image %>" class="d-block w-100" alt="...">
                     <div class="ss_dark_filter"></div>
 
