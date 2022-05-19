@@ -7,7 +7,7 @@
 }
 
 body {
-    background: #FAFAFA;
+    background: #eee;
 }
 
 
@@ -365,7 +365,7 @@ body {
 
 .ss_nav_all_content li {
     display: inline-block !important;
-    color: black;
+    color: #6e6e6e;
     margin-left: 7px;
 }
 
@@ -463,6 +463,7 @@ body {
     height: auto;
     border-right: none;
     height: 80px;
+    width: 150px;
 }
 
 .ss_contents_holder {
@@ -470,8 +471,9 @@ body {
     align-items: center;
     border: 1px solid #C0C0C0;
     background-color: #fff;
-    margin: 16px 0px !important;
+    /* margin: 16px 0px !important; */
 }
+
 
 .ss_header_content {
     max-height: 90%;
@@ -876,6 +878,19 @@ body {
     background-color: #fff;
     border: 1px solid #C0C0C0;
     width: 100px;
+}
+
+.ss_data_empty_holder {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    justify-content: center;
+}
+
+.ss_data_empty_holder i {
+    display: block;
+    color: #a6a6a6;
+    font-size: 50vh;
 }
 
 

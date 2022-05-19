@@ -59,7 +59,7 @@ module.exports = {
         res.render('admin_home.ejs', {name: user, header_name: 'Home'});
     },
 
-    all_content: async function(req, res) {
+    all_content: async function(req, res) { //----------------------------------------------------
 
         const con = db.getCon();
 
@@ -97,7 +97,8 @@ module.exports = {
             data:content[0],
             filter: filter,
             filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'content_search',
+            ctg: '1'
 
 
         }
@@ -105,7 +106,7 @@ module.exports = {
         res.render('all_content_admin.ejs', obj);
     },
 
-    all_content_data: async function (req, res) {
+    all_content_data: async function (req, res) { //----------------------------------------------------
 
         const con = db.getCon();
 
@@ -115,7 +116,11 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?`
         , [category]);
 
-        res.render('partials/all_content_data.ejs', {data: content[0]});
+        if(content[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/all_content_data.ejs', {data: content[0], publish_name: category});
+        }
 
     },
 
@@ -220,8 +225,6 @@ module.exports = {
 
             }
 
-            console.log(val[0]);
-
         }
 
         let filter = [
@@ -263,7 +266,7 @@ module.exports = {
 
     },
 
-    content_trash: async function(req, res) {
+    content_trash: async function(req, res) { //----------------------------------------------------
 
         const id = req.params.id;
         const con = db.getCon();
@@ -282,7 +285,8 @@ module.exports = {
             name: user,
             filter: filter,
             filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'content_search',
+            ctg: '4'
         }
 
         res.render('all_content_admin.ejs', obj);
@@ -290,7 +294,7 @@ module.exports = {
 
     },
 
-    content_publish: async function(req, res) {
+    content_publish: async function(req, res) { //----------------------------------------------------
 
         const id = req.params.id;
         const con = db.getCon();
@@ -309,15 +313,17 @@ module.exports = {
             name: user,
             filter: filter,
             filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'content_search',
+            ctg: '1'
         }
 
-
+        
         res.render('all_content_admin.ejs', obj);
+        
 
     },
 
-    content_draft: async function(req, res) {
+    content_draft: async function(req, res) { //----------------------------------------------------
 
         const id = req.params.id;
         const con = db.getCon();
@@ -336,16 +342,18 @@ module.exports = {
             name: user,
             filter: filter,
             filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'content_search',
+            ctg: '2'
         }
 
 
         res.render('all_content_admin.ejs', obj);
+        
 
 
     },
 
-    content_schedule: async function(req, res) {
+    content_schedule: async function(req, res) { //----------------------------------------------------
 
         const id = req.params.id;
         const con = db.getCon();
@@ -364,24 +372,39 @@ module.exports = {
             name: user,
             filter: filter,
             filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'content_search',
+            ctg: '3'
         }
 
-
         res.render('all_content_admin.ejs', obj);
+        
 
     },
 
-    content_search: async function(req, res) {
+    content_search: async function(req, res) { //----------------------------------------------------
 
         const input = req.params.input;
-        const con = db.getCon();
+        const con = db.getCon();   
+        let data; 
+
+        let newInput = input.split('-');
+
+        if(newInput[0] == 'empty') {
+            data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+            INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+            ,[newInput[1]]);
+        }
+         else {
+            data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+            INNER JOIN users ON content.id_user = users.id_user WHERE title = ? OR full_name = ?`, [newInput[0], newInput[0]]);
+        }
 
 
-        const data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
-        INNER JOIN users ON content.id_user = users.id_user WHERE title = ? OR full_name = ?`, [input, input]);
-
-        res.render('partials/all_content_data.ejs', {data: data[0]});
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/all_content_data.ejs', {data: data[0]});
+        }
 
         
     },
@@ -975,7 +998,7 @@ module.exports = {
 
     //category
 
-    category: async function(req, res) {
+    category: async function(req, res) { //--------------------------------
 
         const con = db.getCon();
         
@@ -1006,7 +1029,8 @@ module.exports = {
             data:data[0],
             filter: filter,
             filter_class_name: 'ss_category_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'category_search',
+            ctg: '1'
 
 
         }
@@ -1027,7 +1051,11 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('partials/category_list.ejs', {name: user, header_name: 'All content', data:data[0]});
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/category_list.ejs', {name: user, header_name: 'All content', data:data[0]});
+        }
 
     },
 
@@ -1073,28 +1101,6 @@ module.exports = {
 
     },
 
-    // category_use: async function(req, res) {
-
-    //     const con = db.getCon();
-
-    //     const data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
-    //     WHERE in_use = ?`, [1]);
-        
-    //     res.render('partials/category_list.ejs', {data: data[0]});
-
-        
-    // },
-
-    // category_trashed: async function(req, res) {
-
-    //     const con = db.getCon();
-
-    //     const data = await con.promise().query(`SELECT category_name AS category, in_use, id_category AS id FROM category
-    //     WHERE in_use = ?`, [0]);
-        
-    //     res.render('partials/category_list.ejs', {data: data[0]});
-    // },
-
     edit_trashed: async function(req, res) {
 
         const data = req.body;
@@ -1127,26 +1133,28 @@ module.exports = {
 
         const input = req.params.input;
         const con = db.getCon();
+        let data;
 
-        const data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
-        WHERE category_name = ?`,[input]);
+        let newInput = input.split('-');
 
-        res.render('partials/category_list.ejs', {data: data[0]});
+        console.log(newInput[0]);
+
+        if(newInput[0] == 'empty') {
+            data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
+            WHERE in_use = ?`,[newInput[1]]);
+        }
+            else {
+                data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
+                WHERE category_name = ?`,[newInput[0], newInput[0]]);
+        }
+
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/category_list.ejs', {data: data[0]});
+        }
 
     },
-
-
-
-    //
-
-    // inbox: function(req, res) {
-    //     const user = await custom.getUser(req.user.id);
-    //     res.render('inbox.ejs', {name: 'Niko Nikic', header_name: 'Inbox'});
-    // },
-
-    // media: function(req, res) {
-    //     res.render('media.ejs', {name: 'Niko Nikic', header_name: 'Media'});
-    // },
 
     user: async function(req, res) {
 
@@ -1183,7 +1191,8 @@ module.exports = {
             data:data[0],
             filter: filter,
             filter_class_name: 'ss_users_filter',
-            input_search_id: 'user_search'
+            input_search_id: 'user_search',
+            ctg: 1
 
 
         }
@@ -1259,13 +1268,36 @@ module.exports = {
 
         const input = req.params.input;
         const con = db.getCon();
+        let data;
 
+        let newInput = input.split('-');
         const role = custom.convertRoletoNum(input.toLowerCase());
 
-        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
-        WHERE user_role = ? OR full_name = ? `, [role, input]);
+        if(newInput[0] == 'empty') {
 
-        res.render('partials/user_card.ejs', {data: data[0]});
+            if(newInput[1] == '0' || newInput[1] == '1') {
+
+                data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+                WHERE user_confirmed = ? `, [newInput[1]]);
+
+            } else {
+
+                data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+                WHERE user_trashed = ? `, ['1']);
+
+            }
+        }
+         else {
+            data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+            WHERE user_role = ? OR full_name = ? `, [role, newInput[0]]);
+        }
+
+
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/user_card.ejs', {data: data[0]});
+        }
 
     },
 

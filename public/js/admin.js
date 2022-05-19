@@ -343,13 +343,16 @@ $(".ss_list ").on('click',function() {
 });
 
 
-// all contents
+// ALL CONTENTS
 
 //filter all content
 
-$('#main_display').on('click', '.ss_content_filter', function(){
+$('#main_display').on('click', '.ss_content_filter', function(){//----------------------------------------------------
 
     const catg = $(this).attr('data-id'); 
+
+    $('#content_search').removeAttr('data-ctg');
+    $('#content_search').attr('data-ctg', catg);
 
     $.ajax({
         type: 'GET',
@@ -369,13 +372,28 @@ $('#main_display').on('click', '.ss_content_filter', function(){
 // });
 
 //search content
-$('#main_display').on('input', '#content_search', function() {
+$('#main_display').on('keyup', '#content_search', function() { //----------------------------------------------------
+    
+    let val;
+
+    let ctg = $('#content_search').attr('data-ctg');
+
+    if($(this).val() == '') {
+
+        val = 'empty-' + ctg;
+    } else {
+        val = $(this).val();
+    }
 
     $.ajax({
         type:'GET',
-        url:'/admin/content/search' + $(this).val(),
+        url:'/admin/content/search' + val,
         success: function(res) {
+
             $('#all_content').html(res);
+
+            
+            
         }
     });
 
@@ -613,12 +631,22 @@ $('#main_display').on('click', '#confirmed_user', function() {
 
 });
 
-$('#main_display').on('input', '#user_search', function () {
+$('#main_display').on('keyup', '#user_search', function () {
 
+    let val;
+
+    let ctg = $('#user_search').attr('data-ctg');
+
+    if($(this).val() == '') {
+
+        val = 'empty-' + ctg;
+    } else {
+        val = $(this).val();
+    }
 
     $.ajax({
         type:'GET',
-        url:'/admin/user_search'+ $(this).val(),
+        url:'/admin/user_search'+ val,
         success: function(res) {
             $('#row_users').html(res);
         }
@@ -751,6 +779,9 @@ $('#main_display').on('click', '.ss_category_filter', function(){
 
     const catg = $(this).attr('data-id'); 
 
+    $('#category_search').removeAttr('data-ctg');
+    $('#category_search').attr('data-ctg', catg);
+
     $.ajax({
         type: 'GET',
         url: '/admin/category/filter' + catg,
@@ -869,15 +900,24 @@ $('#main_display').on('click', '#category_recover', function() {
 
 });
 
-$('#main_display').on('input', '#content_search', function() {
+$('#main_display').on('keyup', '#category_search', function() { 
 
-    const input = $(this).val();
+    // const input = $(this).val();
 
-    console.log(input);
+    let val;
+
+    let ctg = $('#category_search').attr('data-ctg');
+
+    if($(this).val() == '') {
+
+        val = 'empty-' + ctg;
+    } else {
+        val = $(this).val();
+    }
 
     $.ajax({
         type:'GET',
-        url:'/admin/category_input' + input,
+        url:'/admin/category_input' + val,
         success: function(res) {
 
             $('#category_display').html(res);
@@ -893,9 +933,10 @@ $('#main_display').on('input', '#content_search', function() {
 //filter
 $('#main_display').on('click', '.ss_users_filter', function(e){
 
-    console.log($(e.target).parents().find('#user_trash_btn'));
-
     const catg = $(this).attr('data-id'); 
+
+    $('#user_search').removeAttr('data-ctg');
+    $('#user_search').attr('data-ctg', catg);
 
     $.ajax({
         type: 'GET',
