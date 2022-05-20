@@ -164,6 +164,15 @@ body {
     margin-bottom: 40px;
 }
 
+#input_edit_category {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.ss_input_edit {
+    display: block !important;
+}
+
 .ss_media {
     margin-bottom: 40px;
 }
@@ -891,6 +900,14 @@ body {
     display: block;
     color: #a6a6a6;
     font-size: 50vh;
+}
+
+.ss_list_ctg:hover {
+    cursor: pointer;
+}
+
+.ss_list_ctg:first-child {
+    border-bottom: 1px solid black;
 }
 
 

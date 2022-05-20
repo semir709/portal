@@ -364,13 +364,6 @@ $('#main_display').on('click', '.ss_content_filter', function(){//--------------
 
 });
 
-//????????????????
-// $("#main_display").on('click','#label_search',function() {
-//     let input_search = document.getElementById('search_input');
-
-//     input_search.classList.toggle("ss_input_streach");
-// });
-
 //search content
 $('#main_display').on('keyup', '#content_search', function() { //----------------------------------------------------
     
@@ -431,6 +424,14 @@ $('#main_display').on('click', '.ss_list_stack', function(e) {
 
 });
 
+$('#main_display').on('click', '.ss_veiw_post', function() {
+
+    const id = $(this).attr('data-id');
+
+    window.location.href = '/content/' + id
+
+});
+
 $('#main_display').on('click', '#set_trash', function(e) {
 
     e.stopPropagation();
@@ -485,32 +486,32 @@ $('#main_display').on('click', '#set_draft', function(e) {
 
 });
 
-$('#main_display').on('click', '#set_schedule', function(e) {
+// $('#main_display').on('click', '#set_schedule', function(e) {
 
-    e.stopPropagation();
+//     e.stopPropagation();
 
-    const id = $(this).closest('.ss_contents_holder ').attr('data-id');
+//     const id = $(this).closest('.ss_contents_holder ').attr('data-id');
 
-    $.ajax({
-        type:'GET',
-        url:'/admin/content/schedule' + id,
-        success: function(res) {
+//     $.ajax({
+//         type:'GET',
+//         url:'/admin/content/schedule' + id,
+//         success: function(res) {
 
-            if(res.length > 0) {
+//             if(res.length > 0) {
 
-                $('#main_display').html(res);
+//                 $('#main_display').html(res);
 
-            }
+//             }
 
-            else {
-                alert('somethin goes wrong');
-            }
+//             else {
+//                 alert('somethin goes wrong');
+//             }
            
-         }
-    });
+//          }
+//     });
 
 
-});
+// });
 
 $('#main_display').on('click', '#set_public', function(e) {
 
@@ -577,9 +578,11 @@ $('#main_display').on('click', '#update_content', function(e) {
 
 //is used in more diffren pages
 
-$('#main_display').on('click', ".ss_list_all li", function(){
+$('#main_display').on('click', ".ss_list_ctg", function(){
 
-    $(".ss_list_all li ").css("border-bottom", "none");
+    console.log('Hey');
+
+    $('.ss_list_ctg').css("border-bottom", "none");
     
     $(this).css("border-bottom", "1px solid black");
 
@@ -800,12 +803,19 @@ $('#main_display').on('click', '#category_edit', function() {
 
 $('#main_display').on('click', '#update_category', function() {
 
+    console.log('Hey');
+
     const input = $('#input_edit_category').val();
     const id = $('#editModal').attr('data-id');
 
+    const ctg = $('#category_search').attr('data-ctg');
+
+    console.log(ctg);
+
     const data = {
         input,
-        id
+        id,
+        ctg: ctg
     }
 
     $.ajax({
@@ -813,12 +823,19 @@ $('#main_display').on('click', '#update_category', function() {
         url:'/admin/category_update',
         data: data,
         success: function(res) {
-            if(res.length > 0) {
-                $('#editModal').modal('hide');
-                $('#main_display').html(res);
+            if(res == 'empty') {
+                const input = $('#input_edit_category');
+                input.css('border', '1px solid red');
+
+                $('<p>You need to for fill this filed !!!</p>').css('color', 'red').insertBefore(input);
             }
             else {
-                alert('Can\'t update this category');
+                $('#editModal').modal('hide');
+                $('#category_display').html(res);
+                $('#input_edit_category').val('');
+                // $('#main_display').html(res);
+
+                //category_display
             }
         }
     });

@@ -55,7 +55,7 @@ route.post('/admin/content/update',upload.single('file'), admin.content_update);
 
 route.get('/admin/content/trash:id', admin.content_trash);
 route.get('/admin/content/public:id', admin.content_publish);
-route.get('/admin/content/schedule:id', admin.content_schedule);
+// route.get('/admin/content/schedule:id', admin.content_schedule);
 route.get('/admin/content/draft:id', admin.content_draft);
 route.get('/admin/content/search:input', admin.content_search);
 

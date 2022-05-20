@@ -77,10 +77,10 @@ module.exports = {
                 id: '2',
                 name: 'Draft'
             },
-            {
-                id: '3',
-                name: 'Scheduled'
-            },
+            // {
+            //     id: '3',
+            //     name: 'Scheduled'
+            // },
             {
                 id: '4',
                 name: 'Trashed'
@@ -237,10 +237,10 @@ module.exports = {
                 id: '2',
                 name: 'Draft'
             },
-            {
-                id: '3',
-                name: 'Scheduled'
-            },
+            // {
+            //     id: '3',
+            //     name: 'Scheduled'
+            // },
             {
                 id: '4',
                 name: 'Trashed'
@@ -353,33 +353,33 @@ module.exports = {
 
     },
 
-    content_schedule: async function(req, res) { //----------------------------------------------------
+    // content_schedule: async function(req, res) { 
 
-        const id = req.params.id;
-        const con = db.getCon();
+    //     const id = req.params.id;
+    //     const con = db.getCon();
 
-        await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['3', id]);
+    //     await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['3', id]);
 
-        const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
-        INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
-        ,['1']);
+    //     const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
+    //     INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
+    //     ,['1']);
 
-        const user = await custom.getUser(req.user.id);
+    //     const user = await custom.getUser(req.user.id);
 
-        let obj = {
-            data:content[0],
-            header_name: 'All content',
-            name: user,
-            filter: filter,
-            filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search',
-            ctg: '3'
-        }
+    //     let obj = {
+    //         data:content[0],
+    //         header_name: 'All content',
+    //         name: user,
+    //         filter: filter,
+    //         filter_class_name: 'ss_content_filter',
+    //         input_search_id: 'content_search',
+    //         ctg: '3'
+    //     }
 
-        res.render('all_content_admin.ejs', obj);
+    //     res.render('all_content_admin.ejs', obj);
         
 
-    },
+    // },
 
     content_search: async function(req, res) { //----------------------------------------------------
 
@@ -1064,11 +1064,16 @@ module.exports = {
         const con = db.getCon();
         const data = req.body;
 
+        if(data.input == '') {
+            res.send('empty');
+            return;
+        }
+
         await con.promise().query(`UPDATE category SET category_name = ? WHERE id_category = ?`, [data.input, data.id]);
 
         const new_data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category
-        group by c.category_name`); 
+        WHERE c.in_use = ? group by c.category_name`, [data.ctg]); 
 
         filter = [
 
@@ -1092,12 +1097,17 @@ module.exports = {
             data:new_data[0],
             filter: filter,
             filter_class_name: 'ss_category_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'category_search',
+            ctg: data.ctg
 
 
         }
 
-        res.render('category.ejs', obj);
+        res.render('partials/category_list.ejs', obj);
+
+        // res.render('partials/category_list.ejs', {name: user, header_name: 'All content', data:data[0]});
+
+        // res.render('category.ejs', obj);
 
     },
 
@@ -1136,8 +1146,6 @@ module.exports = {
         let data;
 
         let newInput = input.split('-');
-
-        console.log(newInput[0]);
 
         if(newInput[0] == 'empty') {
             data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
