@@ -1059,6 +1059,13 @@ $('#main_display').on('click', '#user_update_btn', function() {
     }
 
     form.append('id', id);
+
+    const span = $('<span></span>', {class: 'visually-hidden'});
+    const button = $('<div></div>', {class: 'spinner-border text-light ss_spinner', role: 'status'}).html(span);
+
+    $('#user_update_btn').html(button);
+
+
     
     $.ajax({
         type: 'POST',
@@ -1068,20 +1075,47 @@ $('#main_display').on('click', '#user_update_btn', function() {
         data: form,
         success: function(res) {
 
+            const inputs = $('.ss_edit_input');
 
-            if(res.length > 0) {
+            $('#user_update_btn').text('Update');
 
+            if(res === 'image missing') {
+                $('<p>Please add image</p>').addClass('p_msg').css('color', 'red').insertBefore('#cont_edit_user');
+
+                $('#img_edit_user').css('border', '1px solid #ced4da')
+
+                $('#img_edit_user').css('border', '1px solid red');
+            }
+
+            else if(res == 'empty') {
+
+
+                $('<p>Something is empty</p>').addClass('p_msg').css('color', 'red').insertBefore('#cont_edit_user');
+
+                inputs.css('border', '1px solid #ced4da')
+
+                inputs.filter(function() { return this.value == ''; }).css('border', '1px solid red');
+
+            }
+
+            else if(res == 'email not valid') {
+                
+                $('<p>E-mail is not valid</p>').addClass('p_msg').css('color', 'red').insertBefore('#cont_edit_user');
+                inputs.filter(function() {return $(this).attr('name') == 'email'; }).css('border', '1px solid red');
+            }
+
+            // else if(res == false) {
+
+            // }
+
+            else {
                 $('#row_users').html(res);
 
                 $('#editModalUsers').modal('hide');
-
-            }
-            else if(res === 'image missing') {
-                alert('Image missing');
-            }
-
-            else {
-                alert('Something goes wrong!!!');
+                $('#user_update_btn').text('Update');
+                $('#img_edit_user').css('border', '1px solid #ced4da');
+                inputs.css('border', '1px solid #ced4da');
+                $('.p_msg').hide();
             }
 
         }
@@ -1163,23 +1197,23 @@ $('#main_display').on('click', '#user_confrme_btn', function(e) {
 /*View User*/
 
 
-$('#main_display').on('click', '#view_user', function() {
+// $('#main_display').on('click', '#view_user', function() {
 
-    const main_display = $('#main_display');
+//     const main_display = $('#main_display');
 
-    const id = this.getAttribute('data-id');
+//     const id = this.getAttribute('data-id');
 
-    $.ajax({
-        type: 'GET',
-        url: '/admin/view_user' + id,
-        success: function(res) {
+//     $.ajax({
+//         type: 'GET',
+//         url: '/admin/view_user' + id,
+//         success: function(res) {
 
-            main_display.html(res);
+//             main_display.html(res);
 
-        }
-    });
+//         }
+//     });
     
-});
+// });
 
 //singin
 
@@ -1513,3 +1547,90 @@ $('#main_display').on('click', '#img_logo', function() {
 
     
 });
+
+
+//user password_change
+
+function getId() {
+
+    let url_string = window.location.href;
+    let url = new URL(url_string);
+    let id = url.searchParams.get('id');
+
+    $('#form_pass').append($('<input/>').attr('type', 'hidden')
+    .attr('name', 'id')
+    .attr('value', id));
+
+}
+
+getId();
+
+$('#update_user_password').on('click', function(e) {
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    const data = {
+
+        password: $('#password').val(),
+        newPassword: $('#new_password').val(),
+        newPassword2:$('#new_password2').val(),
+        id: urlParams.get('id')
+
+    }
+
+    $.ajax({
+        type:'POST',
+        url: '/user_changePassword',
+        data: data,
+        success: function(res) {
+            const input = $('.ss_pass_chng_input');
+
+            input.css('border', '1px solid #ccc'); 
+
+            if(res == '0') {
+
+                input.filter(function() {
+                    return $(this).val() == '';
+                }).css('border', '1px solid red');
+
+                $('#msg').text('Please fill all inputs').css('color', 'red');
+
+            }
+
+            else if(res == '1') {
+                $('#msg').text('Something goes wrong').css('color', 'red');
+            }
+
+            else if(res == '2') {
+                $('.ss_pass_main').css('border', '1px solid red');
+
+                $('#msg').text('Inncorect password').css('color', 'red');
+            }
+
+            else if(res == '3') {
+
+                $('.ss_pass_new').css('border', '1px solid red');
+
+                $('#msg').text('new password do not match each other').css('color', 'red');
+            }
+
+            else if(res =='4') {
+
+                $('.ss_pass_new').filter(function() {
+                    return $(this).val().length < 7;
+                }).css('border', '1px solid red');
+
+                $('#msg').text(' password must be eight characters long').css('color', 'red');
+            }
+
+            else {
+
+                window.location.href = res;
+            }
+        }
+
+    });
+
+}); 
+

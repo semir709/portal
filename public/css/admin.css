@@ -557,10 +557,11 @@ body {
 
 .ss_card {
     border-radius: 10px;
-    border: 1px solid #E0DEDE;
+    /* border: 1px solid #fff; */
+    background: #fff;
     margin-top: 40px ;
     padding: 0px 5px 10px 10px;
-    box-shadow: 10px 10px 5px #E0DEDE;
+    box-shadow: -4px 6px 13px 0px #e0dede;
 }
 
 .ss_row_users {
@@ -586,9 +587,23 @@ body {
      padding: 5px;
 }
 
+.ss_img_modal {
+    width: 40%;
+    
+}
+
+.ss_input:hover {
+
+    color: #212529;
+    border-color: none !important;
+    box-shadow: none !important;
+    
+
+}
+
 .ss_inputs_modal {
     width: 60%;
-    margin-right: 10% !important;
+    /* margin-right: 10% !important; */
 }
 
 .ss_inputs_modal input {
@@ -618,7 +633,7 @@ body {
 
 }
 
-.ss_social_edit_user {
+/* .ss_social_edit_user {
     width: 70%;
 }
 
@@ -633,12 +648,17 @@ body {
 .ss_social_edit_user input {
     margin-left: 20px;
 
-}
+} */
 
 .ss_modal_footer button {
     width: 80px;
     border: none;
     background: #008cff;
+}
+
+.ss_spinner {
+    width: 17px;
+    height: 17px;
 }
 
 .ss_button:focus {
@@ -908,6 +928,48 @@ body {
 
 .ss_list_ctg:first-child {
     border-bottom: 1px solid black;
+}
+
+
+/*change password form*/
+
+
+.ss_change_pass_holder {
+    border: 1px solid #ccc !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 16px 8px #ccc;
+    width: 600px;
+    height: 80%;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.ss_change_pass_holder label {
+    color: #000;
+}
+
+.ss_form_chg_pass {
+    width: 100%;
+}
+
+.ss_right_icon {
+    width: 100%;
+
+}
+
+.ss_right_icon img {
+    object-fit: contain;
+}
+
+#update_user_password {
+    border: 1px solid #ccc;
+    border-radius:10px ;
+    background-color: #fff;
+    padding: 2px 20px;
+}
+
+.ss_form_chg_pass input {
+    border: 1px solid #ccc;
 }
 
 
@@ -1221,6 +1283,24 @@ body {
 
     .ss_link button {
         margin: 0px 0px 20px 0px;
+    }
+
+    /*change password */
+    .ss_change_pass_holder  {
+
+        display: block !important;
+    }
+
+    .ss_change_pass_holder {
+        width: 400px;
+    }
+
+    .ss_form_chg_pass input {
+        width: 100%;
+    }
+
+    .ss_form_chg_pass {
+        margin-top: 20px;
     }
      
 }

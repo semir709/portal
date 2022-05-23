@@ -429,110 +429,6 @@ module.exports = {
         res.render('add_content.ejs', {name: user, header_name: 'Add new'});
     },
 
-    edit_user: async function(req, res) {
-
-        const con = db.getCon();
-        const id = req.query.id;
-
-        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, about, image, facebook
-        , instagram, twitter FROM users WHERE id_user = ?`, [id]);
-
-        // const newRole = custom.convertRole(data[0][0].user_role);
-
-        // data[0][0].user_role = newRole;
-
-        res.send(data[0][0]);
-
-    },
-
-    update_user: async function(req, res, next) {
-        
-        const data = req.body;
-        const file = req.file;
-        const con = db.getCon();
-
-        let img;
-
-        if((typeof  data.src === 'undefined' || data.src == '') && typeof file === 'undefined') {
-            res.send('image missing');
-            return;
-        }
-
-        else if((typeof  data.src !== 'undefined' || data.src != '') && typeof file === 'undefined') {
-            let old_img = data.src.split('/img/')[1];
-            img = old_img;
-        }
-
-        else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
-            let path = './public';
-            await unlinkAsync(path +  data.old_image).catch(err => {if(err) console.log(err)});
-
-            img = file.filename;
-        }
-
-        else {
-            res.send(false);
-            return;
-        }
-
-        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, image = ?
-        ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
-        ,[data.name, data.role, data.email, data.num, '/img/'+ img, data.facebook, data.instagram, data.twitter, data.id]);
-
-        const transporter = mail.getTransport();    
-
-
-        let info = await transporter.sendMail({
-            from: '"Fred Foo 👻" <foo@example.com>',
-            to: "semirselman321@gmail.com", 
-            subject: "Update data ✔", 
-            text: "Some information about you on our website is changed, if you want to change you password click link below: ", 
-            html: '<p>Click <a href="http://127.0.0.1:3000/changePassword?id=' + data.id +'">here</a> to singin</p>', 
-        });
-
-        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
-         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
-
-        const newRole = custom.convertRole(data.role);
-
-        let filter = [
-
-            {
-                id: '1',
-                name: 'Confirmed'
-            },
-            {
-                id: '0',
-                name: 'Not Confirmed'
-            },
-            {
-                id: '2',
-                name: 'Trashed'
-            }
-
-        ];
-
-        const user = await custom.getUser(req.user.id);
-
-        obj = {
-
-            name: user, 
-            header_name: 'Users',
-            data:users[0],
-            filter: filter,
-            filter_class_name: 'ss_users_filter',
-            input_search_id: 'user_search'
-
-
-        }
-
-        res.render('partials/user_card.ejs', obj);
-
-
-        // res.send(true);
-
-    },
-
     changePassword: async function(req, res) {
 
         if (req.session.views == 1) {
@@ -555,18 +451,18 @@ module.exports = {
         const con = db.getCon();
         const data = req.body;
 
-        if(data.newPassword.length < 8) {
-
-            res.send('4');
-            return;
-
-        }
-
         let isEmpty = custom.isEmpty(data.password, data.newPassword, data.newPassword2);
 
         if(isEmpty) {
             res.send('0');
             return;
+        }
+
+        if(data.newPassword.length < 7 ||data.newPassword2.length < 7) {
+
+            res.send('4');
+            return;
+
         }
 
         const user = await con.promise().query(`SELECT full_name AS name,
@@ -1168,8 +1064,8 @@ module.exports = {
 
         const con = db.getCon();
 
-        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
-         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num FROM users
+        WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
         const newRole = custom.convertRole(data.role);
 
@@ -1200,7 +1096,8 @@ module.exports = {
             filter: filter,
             filter_class_name: 'ss_users_filter',
             input_search_id: 'user_search',
-            ctg: 1
+            ctg: 1,
+            custom: custom
 
 
         }
@@ -1238,7 +1135,7 @@ module.exports = {
 
         const user = await custom.getUser(req.user.id);
 
-        res.render('partials/user_card.ejs', {name: user, header_name: 'All content', data:data[0], recoverInfo:recoverInfo});
+        res.render('partials/user_card.ejs', {name: user, header_name: 'All content', custom: custom, data:data[0], recoverInfo:recoverInfo});
 
     },
 
@@ -1248,7 +1145,7 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
         WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
 
-        res.render('partials/user_card.ejs', {data: data[0]});
+        res.render('partials/user_card.ejs', {data: data[0], custom: custom});
 
     },
 
@@ -1258,7 +1155,7 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
-        res.render('partials/user_card.ejs', {data: data[0]});
+        res.render('partials/user_card.ejs', {data: data[0], custom: custom});
 
     },
 
@@ -1268,7 +1165,7 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
         WHERE user_trashed = ?`, [1]);
 
-        res.render('partials/user_card.ejs', {data: data[0]});
+        res.render('partials/user_card.ejs', {data: data[0], custom: custom});
 
     },
 
@@ -1309,23 +1206,139 @@ module.exports = {
 
     },
 
-    user_view: async function(req, res) {
-
-        const id = req.params.id;
+    edit_user: async function(req, res) {
 
         const con = db.getCon();
+        const id = req.query.id;
 
-        const data = await con.promise().query(`SELECT full_name, user_role, e_mail, num,
-        about, image, facebook, twitter, instagram FROM users WHERE id_user = ?`, [id]);
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, about, image, facebook
+        , instagram, twitter FROM users WHERE id_user = ?`, [id]);
 
-        const name = data[0][0].full_name;
-        const role = data[0][0].user_role;
-        const user = await custom.getUser(req.user.id);
+        // const newRole = custom.convertRole(data[0][0].user_role);
 
+        // data[0][0].user_role = newRole;
 
-        res.render('user_view.ejs', {name: name, header_name: role, data: data[0]});
+        res.send(data[0][0]);
 
     },
+
+    update_user: async function(req, res, next) {
+        
+        const data = req.body;
+        const file = req.file;
+        const con = db.getCon();
+
+        let img;
+
+        if((typeof  data.src === 'undefined' || data.src == '') && typeof file === 'undefined') {
+            res.send('image missing');
+            return;
+        }
+
+        else if((typeof  data.src !== 'undefined' || data.src != '') && typeof file === 'undefined') {
+            let old_img = data.src.split('/img/')[1];
+            img = old_img;
+        }
+
+        else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
+            let path = './public';
+            await unlinkAsync(path +  data.old_image).catch(err => {if(err) console.log(err)});
+
+            img = file.filename;
+        }
+
+        // else {
+        //     res.send(false);
+        //     return;
+        // }
+
+        if(custom.isEmpty(data.name, data.role, data.email, data.num, data.id)) {
+            res.send('empty');
+            return;
+
+        }
+
+        if(custom.validateEmail(data.email) == false) {
+            res.send('email not valid');
+            return;
+        }
+
+        const d = await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, image = ?
+        WHERE id_user = ?`
+        ,[data.name, data.role, data.email, data.num, '/img/'+ img, data.id]);
+
+        const transporter = mail.getTransport();    
+
+
+        let info = await transporter.sendMail({
+            from: '"Fred Foo 👻" <foo@example.com>',
+            to: "semirselman321@gmail.com", 
+            subject: "Update data ✔", 
+            text: "Some information about you on our website is changed, if you want to change you password click link below: ", 
+            html: '<p>Click <a href="http://127.0.0.1:3000/changePassword?id=' + data.id +'">here</a> to singin</p>', 
+        });
+
+        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        const newRole = custom.convertRole(data.role);
+
+        let filter = [
+
+            {
+                id: '1',
+                name: 'Confirmed'
+            },
+            {
+                id: '0',
+                name: 'Not Confirmed'
+            },
+            {
+                id: '2',
+                name: 'Trashed'
+            }
+
+        ];
+
+        const user = await custom.getUser(req.user.id);
+
+        obj = {
+
+            name: user, 
+            header_name: 'Users',
+            data:users[0],
+            filter: filter,
+            filter_class_name: 'ss_users_filter',
+            input_search_id: 'user_search',
+            custom
+
+
+        }
+
+        res.render('partials/user_card.ejs', obj);
+
+
+        // res.send(true);
+
+    },
+
+    // user_view: async function(req, res) {
+
+    //     const id = req.params.id;
+
+    //     const con = db.getCon();
+
+    //     const data = await con.promise().query(`SELECT full_name, user_role, e_mail, num,
+    //     about, image, facebook, twitter, instagram FROM users WHERE id_user = ?`, [id]);
+
+    //     const name = data[0][0].full_name;
+    //     const role = data[0][0].user_role;
+    //     const user = await custom.getUser(req.user.id);
+
+
+    //     res.render('user_view.ejs', {name: name, header_name: role, data: data[0]});
+
+    // },
 
     new_user: async function(req, res) {
         const user = await custom.getUser(req.user.id);
