@@ -1271,6 +1271,9 @@ module.exports = {
         const file = req.file;
         const con = db.getCon();
 
+        console.log(file, 'file');
+        console.log(data.src, 'src'); 
+
         let img;
 
         if((typeof  data.src === 'undefined' || data.src == '') && typeof file === 'undefined') {
@@ -1411,36 +1414,37 @@ module.exports = {
 
         const con = db.getCon();
 
-        let logo_res = await custom.contorlingImage(data.oldLogo, logo);
+        let logo_res = await custom.contorlingImage(logo, data.logo);
+        let icon_res = await custom.contorlingImage(icon, data.icon); 
 
-        let icon_res = await custom.contorlingImage(data.oldIcon, icon);
+        if(custom.isEmpty(data.post_page) || custom.isEmpty(data.pag_count) || custom.isEmpty(data.title) || custom.isEmpty(data.tagline)) {
 
-        console.log(data);
+            res.send('IsEmpty');
+            return;
 
-        let n = 1234;
-        let nn = '12a34';
+        }
 
         if(isNaN(data.post_page) || isNaN(data.pag_count)) {
 
-            res.send('2');
+            res.send('IsNaN');
             return;
 
         }
 
 
-        if(logo_res == '1' || icon_res == '1') {
-            res.send('1');
+        if(logo_res == 'Empty image' || icon_res == 'Empty image') {
+            res.send('emptyImage');
             return;
-        }
-        else if(logo_res == false || icon_res == false) {
-            res.send(false);
         }
         else {
 
             await con.promise().query(`UPDATE settings SET site_icon = ?, site_logo = ?,
             site_title = ?, site_tagline = ?, post_per_page = ?, pagination_count = ?
-            WHERE id_settings = ?`, ['/img/'+ icon_res, '/img/'+ logo_res, data.title, data.tagline,
+            WHERE id_settings = ?`, [icon_res, logo_res, data.title, data.tagline,
             data.post_page,data.pag_count, '1']);
+
+            res.send('yes');
+            return;
 
 
         }

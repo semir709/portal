@@ -149,33 +149,19 @@ module.exports = {
 
   },
 
-  contorlingImage: async function(image, file) {
+  contorlingImage: async function(file, image) {
 
-    let img;
 
-    if((typeof image === 'undefined' || image == '') && typeof file === 'undefined') {
+    if(typeof file !== 'undefined') {
+      return '/img/' + file[0].filename;
+    } else{
 
-      return '1';
-    }
+        if(image.length > 0) {
+            return image;
+        } else {
+            return 'Empty image';
+        }
 
-    else if((typeof  image !== 'undefined' || image != '') && typeof file === 'undefined') {
-        let old_img = image.split('/img/')[1];
-        img = old_img;
-        return img;
-    }
-
-    else if(typeof file !== 'undefined') {
-        let path = './public';
-        await unlinkAsync(path +  image).catch(err => {if(err) {console.log(err)}});
-
-        img = file[0].filename;
-
-        return img;
-    }
-
-    else {
-        
-        return false;
     }
 
   },

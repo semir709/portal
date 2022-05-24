@@ -782,6 +782,10 @@ body {
     padding: 10px;
 }
 
+.ss_container_settings label {
+    color: #000;
+}
+
 .ss_settings_main_inputs label{
     display: block;
 }

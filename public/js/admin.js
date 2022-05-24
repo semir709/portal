@@ -128,9 +128,9 @@ $('#main_display').on('click', '#img_content', function(e) {
 
 });
 
-function previewFile2(file) {
+function previewFile2(file, img) {
 
-    const image = $(file).parents().find('#img_singin');
+    const image = $(file).parents().find(img);
    
     const f = $(file)[0].files[0];
     const reader = new FileReader();
@@ -1046,7 +1046,7 @@ $('#main_display').on('click', '#img_edit_user', function() {
 });
 
 $('#main_display').on('click', '#user_update_btn', function() {
-
+//
     const id = $('#cont_edit_user').attr('data-id');
 
     const f = document.getElementById('form_edit_user');
@@ -1478,24 +1478,33 @@ $('#main_display').on('click', '#btn_save_settings', function(){
     const logo = $('#input_file_settings_logo')[0].files[0];
     const icon = $('#input_file_settings_icon')[0].files[0];
 
-    const img_logo = $('#img_logo').attr('data-oldLogo');
-    const img_icon = $('#img_icon').attr('data-oldIcon');
+    const form = new FormData();
+
+    if(typeof logo === 'undefined') {
+        form.append('logo', $('#img_logo').attr('src'));
+    } else {
+        form.append('logo', logo);
+    }
+
+    if(typeof icon === 'undefined') {
+        form.append('icon', $('#img_icon').attr('src'));
+    } else {
+        form.append('icon', icon);
+    }
 
     const title = $('#site_title').val();
     const tagline = $('#site_tagline').val();
     const post_page = $('#post_per_page').val();
     const pag_count = $('#pag_count').val();
 
-    const form = new FormData();
-
-    form.append('logo', logo);
-    form.append('icon', icon);
     form.append('title', title);
     form.append('tagline', tagline);
     form.append('post_page', post_page);
     form.append('pag_count', pag_count);
-    form.append('oldLogo', img_logo);
-    form.append('oldIcon', img_icon);
+
+    const images = $('.ss_img_tag_settings');
+    const inputs = $('.ss_input_settings');
+    const num_inputs = $('.ss_input_num');
 
     $.ajax({
         type:'POST',
@@ -1504,14 +1513,39 @@ $('#main_display').on('click', '#btn_save_settings', function(){
         processData: false,
         contentType: false,
         success: function(res) {
-            if(res == '1') {
-                alert('Problem with images');
+
+            inputs.css('border', '1px solid #ccc');
+            $('.p_msg').hide();
+            images.css('border', '1px solid #ccc');
+
+            if(res == 'IsEmpty') {
+
+                giveMsg('Something is empty', '.ss_settings_main_inputs');
+                inputs.filter(function() {
+                    return $(this).val() == '';
+                }).css('border', '1px solid red');
+
             }
-            else if(res == '2') {
-                alert('post per page and pag count must be type number');
+            else if(res == 'IsNaN') {
+                giveMsg('Post per page and Pag count must be type number', '.ss_settings_main_inputs');
+                num_inputs.filter(function() {
+
+                    return  $.isNumeric($(this).val()) != true;
+
+                }).css('border', '1px solid red');
+                
             }
-            else {
+            else if (res == 'emptyImage'){
+
+                giveMsg('Image is empty', '.ss_settings_main_inputs');
+
+                images.filter(function() {
+                    return $(this).attr('src').length <= 0;
+                }).css('border', '1px solid red');
                
+            } 
+            else {
+                giveMsg('Settings are successfully changed', '.ss_settings_main_inputs', 'green');
             }
         }
     });

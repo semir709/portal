@@ -12,8 +12,8 @@
 
                 <div class="ss_img_holder">
 
-                    <img src="<%= data[0].icon %>" alt="" id="img_icon" data-oldIcon="<%= data[0].icon %>" >
-                    <input type="file" class="ss_input_singin_img" id="input_file_settings_icon" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                    <img src="<%= data[0].icon %>" class="ss_img_tag_settings" alt="" id="img_icon" data-oldIcon="<%= data[0].icon %>" >
+                    <input type="file" class="ss_input_singin_img ss_input_settings" id="input_file_settings_icon" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_icon')">
 
                 </div>
 
@@ -25,15 +25,15 @@
 
                     <div class="">
 
-                        <label for="">Site title</label>
-                        <input type="text" value="<%= data[0].site_title %>" id="site_title">
+                        <label for="site_title">Site title</label>
+                        <input type="text" class="ss_input_settings" value="<%= data[0].site_title %>" id="site_title">
 
                     </div>
 
                     <div class="">
 
-                        <label for="">Site tagline</label>
-                        <input type="text" value="<%= data[0].site_tagline %>" id="site_tagline">
+                        <label for="site_tagline">Site tagline</label>
+                        <input type="text" class="ss_input_settings" value="<%= data[0].site_tagline %>" id="site_tagline">
                         
 
                     </div>
@@ -53,8 +53,8 @@
 
                 <div class="ss_img_holder">
 
-                    <img src="<%= data[0].logo %>" alt="" id="img_logo" data-oldLogo="<%= data[0].logo %>">
-                    <input type="file" class="ss_input_singin_img" id="input_file_settings_logo" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                    <img src="<%= data[0].logo %>" class="ss_img_tag_settings" alt="" id="img_logo" data-oldLogo="<%= data[0].logo %>">
+                    <input type="file" class="ss_input_singin_img ss_input_settings" id="input_file_settings_logo" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_logo')">
 
                 </div>
 
@@ -65,13 +65,13 @@
                 <div class="d-flex ss_content_page_settings">
 
                     <div class="">
-                        <label for="">Post per page</label>
-                        <input type="text" value="<%= data[0].post_per_page %>" id="post_per_page">
+                        <label for="post_per_page">Post per page</label>
+                        <input type="text" class="ss_input_settings ss_input_num" value="<%= data[0].post_per_page %>" id="post_per_page">
                     </div>
 
                     <div class="">
-                        <label for="">Pagination count</label>
-                        <input type="text" value="<%= data[0].pagination_count %>" id="pag_count">
+                        <label for="pag_count">Pagination count</label>
+                        <input type="text" class="ss_input_settings ss_input_num" value="<%= data[0].pagination_count %>" id="pag_count">
                     </div>
 
                 </div>
