@@ -688,8 +688,23 @@ body {
     border: 1px solid #C0C0C0;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 10px 10px 5px #E0DEDE;  
+    box-shadow: -2px 2px 13px 6px #e0dede;  
     background: #fff;
+}
+
+.ss_main_info_new_user label {
+
+    color: #151515;
+}
+
+#send_mail:hover {
+    background-color: #008cff;
+    color: #fff;
+}
+
+.ss_spinner_send {
+    width: 20px;
+    height: 20px;
 }
 
 .ss_card_edit_user h2 {

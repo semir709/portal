@@ -515,7 +515,7 @@ module.exports = {
 
         if(custom.isEmpty(data.name, data.checkbox, data.email)) {
 
-            res.send(false);
+            res.send('IsEmpty');
 
         }
 

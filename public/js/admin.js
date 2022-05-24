@@ -1220,9 +1220,9 @@ $('#main_display').on('click', '#user_confrme_btn', function(e) {
 
 $('#main_text_area_singin').trumbowyg(plugin);
 
-function giveMsg (msg, element, css) {
+function giveMsg (msg, element, color = 'red') {
 
-    $(`<p>${msg}</p>`).addClass('p_msg').css('color', 'red').insertBefore(element);
+    $(`<p>${msg}</p>`).addClass('p_msg').css('color', color).insertBefore(element);
 }
 
 
@@ -1337,10 +1337,18 @@ $('#main_display').on('click', '#btn_right_block', function() {
 
 });
 
+$('#main_display').on('click', '.ss_check_add_user', function() {
+
+    $('.ss_check_add_user').prop( "checked", false);
+
+    $(this).prop( "checked", true );
+    
+});
+
 $('#main_display').on('click','#send_mail', function() {
 
     const div_spinner = $('<div>', {
-        class: 'spinner-border',
+        class: 'spinner-border ss_spinner_send',
         role: 'status'
     });
 
@@ -1408,35 +1416,39 @@ $('#main_display').on('click','#send_mail', function() {
         data: data,
         success: function(res) {
 
-            if(res === false) {
+            const input = $('.ss_input_add_new_user');
+            const checkBox = $('.ss_check_add_user');
+            input.css('border', '1px solid #ccc');
+
+            checkBox.css('border', '1px solid #ccc');
+
+            const elBefore = $('.ss_main_info_new_user');
+            $('.p_msg').hide();
+
+            if(res === 'IsEmpty') {
+
+                input.filter(function() {
+                    return $(this).val() == '';
+                }).css('border', '1px solid red');
+
+
+                if(checkBox.is(':checked') == false) {
+
+                    checkBox.css('border', '1px solid red');
+
+                }
+
+                giveMsg('Something is empty', elBefore);
 
                 $('#send_mail').html('Send');
-
-                if(name === '') {
-                    
-                    $('#add_user_name').css('border', '1px solid red');
-                }
-
-                if(email ==='') {
-                    
-                    $('#add_user_email').css('border', '1px solid red');
-                }
-
-                if(checkbox === 0) {
-                    $('#super_admin_check').css('border', '1px solid red');
-                    $('#admin_check').css('border', '1px solid red');
-                    $('#editor_check').css('border', '1px solid red');
-                    $('#author_check').css('border', '1px solid red');
-                    $('#contributor_check').css('border', '1px solid red');
-                    $('#supporter_check').css('border', '1px solid red'); 
-                }
 
             }
 
             else if(res === 'not valid') {
-                alert('E-mail is not valid');
+                
                 $('#add_user_email').css('border', '1px solid red');
                 $('#send_mail').html('Send');
+                giveMsg('E-mail is not valid', elBefore);
             }
 
             else {
@@ -1445,27 +1457,10 @@ $('#main_display').on('click','#send_mail', function() {
 
                 if(res === 'done') {
 
-                    $('#add_user_name').val('');
-                    $('#add_user_email').val('');
-                    $('#super_admin_check').prop('checked', false);
-                    $('#admin_check').prop('checked', false);;
-                    $('#editor_check').prop('checked', false);
-                    $('#author_check').prop('checked', false);
-                    $('#contributor_check').prop('checked', false);
-                    $('#supporter_check').prop('checked', false);
+                    $('.ss_input_add_new_user').val('');
+                    checkBox.prop('checked', false);
 
-                    const div_msg = $('<div>', {
-                        class: 'alert alert-success',
-                        role: 'alert'
-                    }).text('A simple success alert—check it out!');
-
-                    const button_x = $('<button>', {
-                        class: 'btn-close'
-                    }).attr('data-bs-dismiss', 'alert');
-
-                    div_msg.append(button_x);
-
-                    $('#row_add_user').prepend(div_msg);
+                    giveMsg('You add new user', elBefore, 'green'); 
 
                 }
 
