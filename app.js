@@ -29,6 +29,7 @@ app.use('/css', express.static('public/css'));
 app.use('/js', express.static('public/js'));
 app.use('/img', express.static('public/img'));
 app.use('/svg', express.static('public/svg'));
+// app.use('/messages', express.static('views/messages'));
 app.use('/trumbowyg', express.static('public/trumbo'))
 
 app.use('/', require('./routes/routes'));

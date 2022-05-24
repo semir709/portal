@@ -60,3 +60,37 @@ body {
     margin-left: 20px;
 }
 
+
+/*singup*/
+
+
+/* .ss_input_singin_img {
+    display: none;
+} */
+
+.ss_img_holder {
+    width: 100%;
+}
+
+.ss_input_singin_img {
+    display: none;
+  
+}
+
+.ss_input_label {
+    color: #fff;
+    border-radius:5px;
+    background-color: rgb(122, 122, 122);
+}
+
+.ss_input_label:hover{
+    cursor: pointer;
+}
+
+.ss_img_holder img {
+    width: 90px;
+    height: 60px;
+    object-fit: cover;
+}
+
+

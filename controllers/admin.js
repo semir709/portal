@@ -599,25 +599,30 @@ module.exports = {
         let isEmpty;
 
         if(typeof file !== 'undefined') {
-            isEmpty = custom.isEmpty(data.name, data.role, data.email, data.num, data.txt_area, data.facebook, data.instagram, data.twitter);
+            isEmpty = custom.isEmpty(data.name, data.role, data.email, data.num, data.password, data.confirme_pass);
 
             if(isEmpty) {
                 await unlinkAsync(req.file.path);
-                res.send(false);
+                res.send('IsEmpty');
+                return;
             }
     
             else {
 
                 if(custom.validateEmail(data.email) === false) {
-                    res.send('not valid');
+                    res.send('email not valid');
+                    return;
                 }
 
                 else {
 
-                    console.log(data.password, data.confirme_pass);
-
                     if(data.password != data.confirme_pass) {
                         res.send('password not match!!!');
+                        return;
+                    }
+
+                    if(data.password.length < 7 || data.confirme_pass.length < 7) {
+                        res.send('password length');
                         return;
                     }
 
@@ -626,23 +631,25 @@ module.exports = {
                     if(user[0].length <= 0) {
 
                         bcrypt.hash(data.password, 10, async function(err, hash) {
-                            if(err) throw err;
+                            if(err) { res.send('hashing err'); console.log(err.message); return}
                 
-                        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, about = ?, image = ?
-                            ,facebook = ?, instagram = ?, twitter = ? WHERE id_user = ?`
-                            ,[data.name, data.role, data.email, data.num, hash, data.txt_area, '/img/'+ file.filename, data.facebook, data.instagram, data.twitter, data.id]);
+                        await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, image = ?
+                        WHERE id_user = ?`
+                        ,[data.name, custom.convertRoletoNum(data.role), data.email, data.num, hash, '/img/'+ file.filename, data.id]);
                 
                         });
                         
                          
-                        req.session.views = 1;
+                        // req.session.views = 1;
                         
                         res.send('/singin/thanks');
+                        return;
 
                     }
 
                     else {
-                        res.send('user');
+                        res.send('user exsist');
+                        return;
                     }
 
 
@@ -653,7 +660,8 @@ module.exports = {
         }
 
         else {
-            res.send(false);
+            res.send('image is empty');
+            return;
         }
         
         
@@ -662,13 +670,26 @@ module.exports = {
     delete_user: async function(req, res) {
 
         const id = req.params.id;
-
+        let data;
         const con = db.getCon();
 
         await con.promise().query(`UPDATE users SET user_trashed = ? WHERE id_user = ?`, [1, id]);
 
-        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+        const usr = await con.promise().query(`SELECT user_confirmed FROM users WHERE id_user = ?`, [id]).then(res => { return res[0][0].user_confirmed});
+
+        console.log(usr);
+
+        if(usr == 1) {
+
+            data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
          WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        } else {
+
+            data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
+
+        }
 
         let filter = [
 
@@ -693,15 +714,22 @@ module.exports = {
 
             name: user, 
             header_name: 'Users',
-            data:users[0],
+            data:data[0],
             filter: filter,
             filter_class_name: 'ss_users_filter',
-            input_search_id: 'user_search'
+            input_search_id: 'user_search',
+            custom
 
 
         }
 
-        res.render('partials/user_card.ejs', obj);
+        // res.render('partials/user_card.ejs', obj);
+
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/user_card.ejs', obj);
+        }
 
         // res.send(true); 
 
@@ -711,12 +739,14 @@ module.exports = {
 
         const id = req.params.id;
 
+        console.log(id);
+
         const con = db.getCon();
 
         await con.promise().query(`UPDATE users SET user_trashed = ? WHERE id_user = ?`, [0, id]);
 
-        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
-         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_trashed = ?`, [ 1]);
 
         let filter = [
 
@@ -741,16 +771,22 @@ module.exports = {
 
             name: user, 
             header_name: 'Users',
-            data:users[0],
+            data:data[0],
             filter: filter,
             filter_class_name: 'ss_users_filter',
-            input_search_id: 'user_search'
+            input_search_id: 'user_search',
+            custom
 
 
         }
 
-        res.render('partials/user_card.ejs', obj);
+        // res.render('partials/user_card.ejs', obj);
 
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/user_card.ejs', obj);
+        }
 
 
     },
@@ -765,8 +801,8 @@ module.exports = {
 
         await con.promise().query(`UPDATE users SET user_confirmed = ? WHERE id_user = ?`, [1, id]);
 
-        const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
-         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+        const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
+         WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
 
         let filter = [
 
@@ -791,15 +827,22 @@ module.exports = {
 
             name: user, 
             header_name: 'Users',
-            data:users[0],
+            data:data[0],
             filter: filter,
             filter_class_name: 'ss_users_filter',
-            input_search_id: 'user_search'
+            input_search_id: 'user_search',
+            custom
 
 
         }
 
-        res.render('partials/user_card.ejs', obj);
+        // res.render('partials/user_card.ejs', obj);
+
+        if(data[0].length <= 0) {
+            res.render('messages/noData_msg.ejs');
+        } else {
+            res.render('partials/user_card.ejs', obj);
+        }
 
     },
 
@@ -1201,7 +1244,7 @@ module.exports = {
         if(data[0].length <= 0) {
             res.render('messages/noData_msg.ejs');
         } else {
-            res.render('partials/user_card.ejs', {data: data[0]});
+            res.render('partials/user_card.ejs', {data: data[0], custom});
         }
 
     },

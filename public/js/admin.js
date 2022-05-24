@@ -130,10 +130,9 @@ $('#main_display').on('click', '#img_content', function(e) {
 
 function previewFile2(file) {
 
-    const image = $(file).parent().find('img');
+    const image = $(file).parents().find('#img_singin');
    
     const f = $(file)[0].files[0];
-    console.log(f);
     const reader = new FileReader();
   
     reader.onloadend = function () {
@@ -960,6 +959,8 @@ $('#main_display').on('click', '.ss_users_filter', function(e){
         url: '/admin/users/filter' + catg,
         success: function(res) {
 
+            console.log(catg);
+
             if(catg == '2') {
                 $('#user_confrme_btn').remove();
                 const btn_trashed = $(e.target).parents().find('#user_trash_btn');
@@ -968,11 +969,18 @@ $('#main_display').on('click', '.ss_users_filter', function(e){
                 btn_trashed.text('Recover');
                 btn_trashed.attr('id', 'user_recover_btn');
 
-            } else if(catg == 0) {
+            } else if(catg == '0') {
                 $('#user_confrme_btn').remove();
-                const btn = $('<button>Confirmed</button>')
+                const btn = $('<button></button>')
                 .attr('id', 'user_confrme_btn')
-                .attr('type', 'button');
+                .attr('type', 'button')
+                .addClass('btn btn-warning ss_cofigrme_btn').text('Confirm');
+
+                $('#user_confrme_btn').remove();
+                const btn_trashed = $(e.target).parents().find('#user_recover_btn');
+                btn_trashed.css('background-color','red');
+                btn_trashed.text('Trashed');
+                btn_trashed.attr('id', 'user_trash_btn');
                 
                 btn.insertAfter($('#user_update_btn'));
                 
@@ -1133,13 +1141,11 @@ $('#main_display').on('click', '#user_trash_btn', function(e) {
         url: '/delete/user' + id,
         success: function(res) {
 
-            if(res.length > 0) {
-                $('#row_users').html(res);
-                $('#editModalUsers').modal('hide');
-            }
-            else {
-                alert('Some things goes wrong1!!');
-            }
+           
+            $('#row_users').html(res);
+            $('#editModalUsers').modal('hide');
+            
+
         }
 
     });
@@ -1156,13 +1162,11 @@ $('#main_display').on('click', '#user_recover_btn', function(e) {
         url: '/recover/user' + id,
         success: function(res) {
 
-            if(res.length > 0) {
+            if(res) {
                 $('#row_users').html(res);
                 $('#editModalUsers').modal('hide');
             }
-            else {
-                alert('Some things goes wrong1!!');
-            }
+            
         }
 
     });
@@ -1180,13 +1184,10 @@ $('#main_display').on('click', '#user_confrme_btn', function(e) {
         url: '/confirme/user' + id,
         success: function(res) {
 
-            if(res.length > 0) {
-                $('#row_users').html(res);
-                $('#editModalUsers').modal('hide');
-            }
-            else {
-                alert('Some things goes wrong1!!');
-            }
+          
+            $('#row_users').html(res);
+            $('#editModalUsers').modal('hide');
+            
         }
 
     });
@@ -1219,6 +1220,11 @@ $('#main_display').on('click', '#user_confrme_btn', function(e) {
 
 $('#main_text_area_singin').trumbowyg(plugin);
 
+function giveMsg (msg, element, css) {
+
+    $(`<p>${msg}</p>`).addClass('p_msg').css('color', 'red').insertBefore(element);
+}
+
 
 $('#btn_send').on('click', function() {
 
@@ -1231,15 +1237,11 @@ $('#btn_send').on('click', function() {
     const img = $('#img_singin').attr('src');
     const email = $('#email_singin').val();
     const num = $('#num_singin').val();
-    const facebook = $('#facebook_singin').val();
-    const instagram = $('#instagram_singin').val();
-    const twitter = $('#twitter_singin').val();
     const password = $('#custom_password_singin').val();
     const confirmePassword = $('#custom_password_confirme_singin').val();
-    const txt_area = $('#main_text_area_singin').val();
-    const role = $('#role').text();
+    const role = $('#sing_up_role').text();
 
-    let convertedRole = convertRole(role);
+    // let convertedRole = convertRole(role);
 
     const id = urlParam.get('id');
 
@@ -1249,13 +1251,9 @@ $('#btn_send').on('click', function() {
     formData.append('file', upload.files[0]);
     formData.append('email',email);
     formData.append('num',num);
-    formData.append('facebook',facebook);
-    formData.append('instagram',instagram);
-    formData.append('twitter',twitter);
     formData.append('password',password);
     formData.append('confirme_pass', confirmePassword);
-    formData.append('txt_area',txt_area);
-    formData.append('role',convertedRole);
+    formData.append('role',role);
     formData.append('id',id);
 
     $.ajax({
@@ -1266,59 +1264,51 @@ $('#btn_send').on('click', function() {
         processData: false,
         success: function(res) {
 
-            if(res === false) {
-                
-                if(name === '') {
-                    $('#singin_name').css('border', '1px solid red');
-                }
+            const input = $('.ss_singup_input');
+            const form = $('.ss_role_holder_singup');
 
-                if(email ==='') {
-                    $('#email_singin').css('border', '1px solid red');
-                }
+            input.css('border', '1px solid #ccc');
+            $('#img_singin').css('border', '1px solid #ccc');
 
-                if(num ==='') {
-                    $('#num_singin').css('border', '1px solid red');
-                }
+            $('.p_msg').hide();
 
-                if(facebook ==='') {
-                    $('#facebook_singin').css('border', '1px solid red');
-                }
+            if(res == 'IsEmpty') {
 
-                if(instagram ==='') {
-                    $('#instagram_singin').css('border', '1px solid red');
-                }
-
-                if(twitter ==='') {
-                    $('#twitter_singin').css('border', '1px solid red');
-                }
-
-                if(password ==='') {
-                    $('#custom_password_singin').css('border', '1px solid red');
-                }
-               
-                if(txt_area ==='') {
-
-                    $('.trumbowyg-box').css('border', '1px solid red');
-                }
-
-                if(img === '') {
-                    $('#img_singin').css('border', '1px solid red')
-                }
+                giveMsg('Something is empty', form);
+                input.filter(function() {return $(this).val() == ''}).css('border', '1px solid red');
                 
             }
 
-            else if (res === 'user') {
-                alert('User already exists in database');
+            else if (res === 'user exsist') {
+                giveMsg('User already exists in database', form);
+                $('#email_singin').css('border', '1px solid red');
+                
             }
 
-            else if(res === 'not valid') {
-                alert('E-mail is not valid');
+            else if(res === 'email not valid') {
+                giveMsg('E-mail is not valid', form);
                 $('#email_singin').css('border', '1px solid red');
             }
 
             else if (res === 'password not match!!!') {
-                alert('password not match!!!');
+                giveMsg('Password not match!', form);
+                $('.ss_input_password').css('border', '1px solid red');
                 
+            }
+            else if(res == 'password length') {
+                giveMsg('Password must be 8 characters long', form);
+                $('.ss_input_password').css('border', '1px solid red');
+            }
+
+            else if(res == 'image is empty') {
+                giveMsg('Image is empty', form);
+                $('#img_singin').css('border', '1px solid red');
+                
+            }
+
+            else if(res == 'hashing err') {
+                giveMsg('Hashing err', form);
+                $('.ss_input_password').css('border', '1px solid red');
             }
 
             else {

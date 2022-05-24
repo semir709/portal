@@ -656,6 +656,14 @@ body {
     background: #008cff;
 }
 
+/* #user_confrme_btn {
+    padding: 10px;
+} */
+
+.ss_cofigrme_btn {
+    color: #fff;
+}
+
 .ss_spinner {
     width: 17px;
     height: 17px;
@@ -971,7 +979,6 @@ body {
 .ss_form_chg_pass input {
     border: 1px solid #ccc;
 }
-
 
 @media (max-width: 1200px) {
 
