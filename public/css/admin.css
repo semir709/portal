@@ -2,9 +2,9 @@
 
 /*often used*/
 
-.ss_input_singin_img {
+/* .ss_input_singin_img {
     display: none;
-}
+} */
 
 body {
     background: #eee;
@@ -179,6 +179,22 @@ body {
 
 .ss_settings {
     margin-bottom: 100px;
+}
+
+.ss_input_settings_image {
+        background-color: rgb(122, 122, 122);
+        margin:5px 0px;
+        width: fit-content;
+        border-radius: 5px;
+        padding: 5px;
+}
+
+.ss_input_settings_image div {
+    color: #fff;
+}
+
+.ss_img_settings_holder {
+    height: 160px !important;
 }
 /* 
 .ss_main_display {
@@ -829,6 +845,14 @@ body {
 
 /*add content*/
 
+.ss_add_content_container {
+    height: 100vh;
+}
+
+.ss_full_holder {
+    height: 100%;
+}
+
 /* .ss_left_side_holder {
     display: inline-block;
     width: 60%;
@@ -836,6 +860,7 @@ body {
 
 .ss_right_block_holder {
     padding-right: 12px;
+    /* height: 650px; */
 } 
 
 .ss_input_category_name {
@@ -854,19 +879,77 @@ body {
     margin-left: 10px;
 }
 
-.ss_txt_area {
-    width: 100%;
+.ss_input_tag_popup {
+    border: 1px solid #ccc;
 }
 
-.ss_txt_area textarea {
-    width: 100%;
+#btn_tag_popup {
+    border: 1px solid #ccc;
 }
+
+.ss_button  {
+    height: 35px;
+}
+
+.ss_txt_area {
+    width: 100%;
+    height: 93%;
+    background-color: #fff;
+}
+
+.ss_txt_area .trumbowyg-box  {
+    height: 100%;
+}
+/* .ss_txt_area textarea {
+    width: 100%;
+} */
 
 .ss_right_block {
     border:1px solid #C0C0C0;
     padding: 10px 5px;
     background: #fff;
-    height: 100%;
+    /* height: 100%; */
+}
+
+.ss_input_tag {
+
+    border: 1px solid #ccc ;
+    width: 70%;
+
+}
+
+.ss_btn_add {
+    border: 1px solid #ccc !important;
+}
+
+.ss_btn_add:hover {
+    color: #fff;
+}
+
+.ss_holder_image_add {
+    width: 100%;
+}
+
+.ss_add_image_holder {
+    height: 70px;
+    width: 90px;
+}
+
+.ss_add_input {
+    display: none;
+}
+
+.ss_input_label {
+    color: #fff;
+    border-radius: 5px;
+    background-color: rgb(122, 122, 122);
+    height: 30px;
+    padding: 0px 5px;
+    margin-left: 10px;
+}
+
+.ss_input_label:hover {
+    cursor: pointer;
 }
 
 .ss_inputs_block p {
@@ -882,6 +965,26 @@ body {
     border-radius: 10px;
     display: inline-block;
     margin-right: 5px;
+}
+
+.ss_img_popup_holder {
+    width: 140px;
+    height: 100px;
+}
+
+.ss_img_popup_holder img {
+    width: 100%;
+}
+
+.tag_category_popup {
+
+    border: 1px solid #c0c0c0;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-right: 5px;
+
 }
 
 
@@ -1022,6 +1125,10 @@ body {
 }
 
 @media (max-width:992px) {
+
+    .ss_full_holder {
+        height: fit-content;
+    }
 
     /* .trumbowyg-button-pane {
         position: relative !important;
@@ -1164,7 +1271,7 @@ body {
 
     .ss_right_block_holder {
         position: relative;
-        
+        /* height: fit-content; */
     }
 
     .ss_right_block {

@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const custom = require('../config/custom');
 const { type } = require('express/lib/response');
 const { rulesToMonitor } = require('nodemon/lib/monitor/match');
+const { all } = require('express/lib/application');
 
 module.exports = {
 
@@ -129,103 +130,59 @@ module.exports = {
         const data = req.body;
         const file = req.file;
         const con = db.getCon();
-        let img;
 
-        // console.log(data);
-        // console.log(file);
-        
-        if((typeof  data.img_content === 'undefined' || data.img_content == '') && typeof file === 'undefined') {
-            res.send('1');
+        if(custom.isEmpty(data.title, data.text_area, data.publish, data.post, data.category)) {
+            res.send('IsEmpty');
             return;
         }
 
-        else if((typeof  data.img_content !== 'undefined' || data.img_content != '') && typeof file === 'undefined') {
-            let old_img = data.img_content.split('/img/')[1];
-            img = old_img;
-        }
+        const image = custom.contorlingImage(file, data.image);
 
-        else if(typeof  data.src === 'undefined' && typeof file !== 'undefined') {
-            let path = './public';
-            await unlinkAsync(path +  data.old_image).catch(err => {if(err) console.log(err)});
-
-            img = file.filename;
-        }
-
-        else {
-            res.send(false);
+        if(image == 'Empty image') {
+            res.send('Empty image');
             return;
         }
 
-        // const content = await con.promise().query(`UPDATE content SET title = ?, article = ?, image = ?, publish = ?, post_place = ?
-        // ,id_user = ? WHERE id_content = ?`
-        // ,[data.input_title, data.txt_area, '/img/'+ img, custom.publishConvert(data.inputGroup_publish.trim())
-        // , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
+        const cg = custom.formatInputTag(data.category);
+
+        const all_category = await con.promise().query(`SELECT category_name FROM category`)
+        .then(res => {
+            let array = [];
+            res[0].forEach(el => {array.push(el.category_name)});
+            return array;
+        });
+
+        let new_categorys = cg.filter(function(el) {
+            if(all_category.indexOf(el) == -1) return el;
+            
+        });
 
         const content = await con.promise().query(`UPDATE content SET title = ?, article = ?, image = ?, publish = ?, post_place = ?
         ,id_user = ? WHERE id_content = ?`
-        ,[data.input_title, data.txt_area, '/img/'+ img, custom.publishConvert(data.inputGroup_publish.trim())
-        , custom.postConvert(data.inputGroup_post.trim()), req.user.id, data.id_content]);
+        ,[data.title, data.text_area, image, custom.publishConvert(data.publish.trim())
+        , custom.postConvert(data.post.trim()), req.user.id, data.content_id]);
 
-
-        let category = [];
-
-        const cg = data.category_ch.split(',');
-
-
-        const all_category = await con.promise().query(`SELECT category_name FROM category`);
-        const array_categroy = [];
-
-        for(let i = 0; i < all_category[0].length; i++) {
-            array_categroy.push(all_category[0][i].category_name);
-        }
-
-
-        const final_cg = [];
-        const old_cg = [];
-
+        for(let i = 0; i < new_categorys.length; i++) {
+            await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [new_categorys[i]]);
+         }
+ 
+         let category_ids = [];
+ 
         for(let i = 0; i < cg.length; i++) {
+            let id = await con.promise().query('SELECT id_category FROM category WHERE category_name = ?', [cg[i]]);
 
-            if(array_categroy.indexOf(cg[i].trim()) === -1 ) {
-                final_cg.push(cg[i].trim());
-            }
-
-            else {
-                old_cg.push(cg[i]);
-            }
-
+            category_ids.push(id[0][0]);
         }
 
+       await con.promise().query(`DELETE FROM content_category WHERE id_content = ?`, [data.content_id,]);
 
-        for(let i = 0; i < final_cg.length; i++) {
-           category[i] = await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [final_cg[i]]);
-        }
-
-
-        for(let i = 0; i < category.length; i++) {
-            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [data.id_content, category[i][0].insertId]);
+        for(let i = 0; i < category_ids.length; i++) {
+            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [data.content_id, category_ids[i].id_category]);
         }
 
         const all_data = await con.promise().query(`SELECT id_content, title, content.image, full_name FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
-
-        //old category not working same for add new content
-
-        for(let i = 0; i < old_cg.length; i++) {
-
-            let id_old = await con.promise().query(`SELECT c.id_category FROM category c WHERE c.category_name = ?`,[old_cg[i]]);
-
-            let val = await con.promise().query(`SELECT cg.id_category FROM content_category cg INNER JOIN
-            content con ON con.id_content = cg.id_content  WHERE cg.id_category = ?`, [id_old[0].id_category]);
-
-            if(val[0] <= 0) {
-
-                await con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`,
-                [data.id_content, id_old[0].id_category]);
-
-            }
-
-        }
 
         let filter = [
 
@@ -257,7 +214,8 @@ module.exports = {
             data:all_data[0],
             filter: filter,
             filter_class_name: 'ss_content_filter',
-            input_search_id: 'content_search'
+            input_search_id: 'content_search',
+            ctg: '1'
 
 
         }
@@ -848,81 +806,62 @@ module.exports = {
 
     add_new_post: async function(req, res) {
 
-        //
-
         const id = req.user.id;
         const data = req.body;
         const file = req.file;
 
         const con = db.getCon();
 
-        let content;
-        let category = [];
+        console.log(data, 'data');
+        console.log(file, 'file');
 
-        if(typeof file === 'undefined') {
+
+        if(custom.isEmpty(data.title, data.text_area, data.publish, data.post, data.category)) {
             res.send('IsEmpty');
             return;
         }
 
-        const imgLocation = file.path.split('\\public')[1];
+        const image = custom.contorlingImage(file, data.image);
 
-
-        if(custom.isEmpty(data.input_title, data.txt_area, data.img_content, data.inputGroup_publish, data.inputGroup_post)) {
-            res.send('IsEmpty');
+        if(image == 'Empty image') {
+            res.send('Empty image');
             return;
         }
 
+        const cg = custom.formatInputTag(data.category);
+
+        const all_category = await con.promise().query(`SELECT category_name FROM category`)
+        .then(res => {
+            let array = [];
+            res[0].forEach(el => {array.push(el.category_name)});
+            return array;
+        });
+
+        let new_categorys = cg.filter(function(el) {
+            if(all_category.indexOf(el) == -1) return el;
+            
+        });
 
         content = await con.promise().query(`INSERT INTO content (title, article, image, publish, post_place, id_user, publish_time) 
-        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())`, [data.input_title, data.txt_area, imgLocation, custom.publishConvert(data.inputGroup_publish),custom.postConvert(data.inputGroup_post), id]);
-
-        const cg = data.category_ch.split(',');
+        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())`, [data.title, data.text_area, image, custom.publishConvert(data.publish),custom.postConvert(data.post), id]);
 
 
-        const all_category = await con.promise().query(`SELECT category_name FROM category`);
-        const array_categroy = [];
-
-        for(let i = 0; i < all_category[0].length; i++) {
-            array_categroy.push(all_category[0][i].category_name);
+        for(let i = 0; i < new_categorys.length; i++) {
+           await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [new_categorys[i]]);
         }
 
-
-        const final_cg = [];
-        const old_cg = [];
+        let category_ids = [];
 
         for(let i = 0; i < cg.length; i++) {
+            let id = await con.promise().query('SELECT id_category FROM category WHERE category_name = ?', [cg[i]]);
 
-            if(array_categroy.indexOf(cg[i].trim()) === -1 ) {
-                final_cg.push(cg[i].trim());
-            }
-
-            else {
-                old_cg.push(cg[i]);
-            }
-
+            category_ids.push(id[0][0]);
         }
 
-        for(let i = 0; i < final_cg.length; i++) {
-           category[i] = await con.promise().query(`INSERT INTO category (category_name) VALUES (?)`, [final_cg[i]]);
-        }
+        const id_content = content[0].insertId;
 
-
-        for(let i = 0; i < category.length; i++) {
-            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [content[0].insertId, category[i][0].insertId]);
-        }
-
-        const old_id = [];
-        let old_catg_id;
-
-        for(let i = 0; i < old_cg.length; i++) {
-            old_catg_id = await con.promise().query(`SELECT id_category FROM category WHERE category_name = ?`, [old_cg[i]]);
-
-            old_id.push(old_catg_id[0][0].id_category);
-        }
-
-
-        for(let i = 0; i < old_id.length; i++) {
-            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [content[0].insertId, old_id[i]]);
+        for(let i = 0; i < category_ids.length; i++) {
+            con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [id_content, category_ids[i].id_category]);
         }
 
         res.send('done');
@@ -1414,8 +1353,8 @@ module.exports = {
 
         const con = db.getCon();
 
-        let logo_res = await custom.contorlingImage(logo, data.logo);
-        let icon_res = await custom.contorlingImage(icon, data.icon); 
+        let logo_res = custom.contorlingImage(logo[0], data.logo);
+        let icon_res = custom.contorlingImage(icon[0], data.icon); 
 
         if(custom.isEmpty(data.post_page) || custom.isEmpty(data.pag_count) || custom.isEmpty(data.title) || custom.isEmpty(data.tagline)) {
 

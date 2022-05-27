@@ -149,11 +149,11 @@ module.exports = {
 
   },
 
-  contorlingImage: async function(file, image) {
+  contorlingImage: function(file, image) {
 
 
     if(typeof file !== 'undefined') {
-      return '/img/' + file[0].filename;
+      return '/img/' + file.filename;
     } else{
 
         if(image.length > 0) {
@@ -278,6 +278,29 @@ module.exports = {
     }
 
     return a;
+
+  },
+
+  formatInputTag: function(input) {
+
+    let inputs = input.split(',');
+
+    let newInput = [];
+
+    for(i = 0; i < inputs.length; i++) {
+
+      let arryInput = inputs[i].split('');
+      let string = arryInput[0].toUpperCase();
+
+      for(let j = 1; j < arryInput.length; j++) {
+        string += arryInput[j].toLowerCase();
+      }
+
+      newInput.push(string);
+
+    }
+
+    return newInput;
 
   }
 

@@ -42,46 +42,46 @@ const plugin = {
 
 /*Custom function*/
 
-function contentValues(e) {
+// function contentValues(e) {
 
-    const view = $(e.target).parent().attr('data-check');
-    let parent;
+//     const view = $(e.target).parent().attr('data-check');
+//     let parent;
 
-    view == 'full' ? parent = $(e.target).parents().find('.ss_full_holder') :  parent = $(e.target).parents().find('.ss_full_holder_phone');
+//     view == 'full' ? parent = $(e.target).parents().find('.ss_full_holder') :  parent = $(e.target).parents().find('.ss_full_holder_phone');
 
-    console.log(view);
+//     console.log(view);
 
-    let txt_area = $('#txt_area').val();
-    let input_title = $('#input_title').val(); 
-    let inputGroup_publish = parent.find('#inputGroup_publish option:selected').text();
-    let inputGroup_post = parent.find('#inputGroup_post option:selected').text()
-    let inputGroup_category = parent.find('#inputGroup_category');
-    let img_content = parent.find('#img_content').attr('src');
-    let upload = parent.find('#upload')[0];
-    let old_image = parent.find('#img_content').attr('data-old');
-    let content_id = parent.attr('data-id');
+//     let txt_area = $('#txt_area').val();
+//     let input_title = $('#input_title').val(); 
+//     let inputGroup_publish = parent.find('#inputGroup_publish option:selected').text();
+//     let inputGroup_post = parent.find('#inputGroup_post option:selected').text()
+//     let inputGroup_category = parent.find('#inputGroup_category');
+//     let img_content = parent.find('#img_content').attr('src');
+//     let upload = parent.find('#upload')[0];
+//     let old_image = parent.find('#img_content').attr('data-old');
+//     let content_id = parent.attr('data-id');
 
-    let category_ch = [];
+//     let category_ch = [];
 
-    for(let i = 0; i < inputGroup_category.children().length; i++) { 
-        category_ch[i] = $(inputGroup_category.children()[i]).children().text();
-    }
+//     for(let i = 0; i < inputGroup_category.children().length; i++) { 
+//         category_ch[i] = $(inputGroup_category.children()[i]).children().text();
+//     }
 
-    const formData = new FormData();
+//     const formData = new FormData();
 
-    formData.append('input_title',input_title);
-    formData.append('txt_area', txt_area);
-    formData.append('inputGroup_publish', inputGroup_publish);
-    formData.append('inputGroup_post', inputGroup_post);
-    formData.append('img_content', img_content);
-    formData.append('category_ch', category_ch); 
-    formData.append('file', upload.files[0]);
-    formData.append('old_image', old_image); 
-    formData.append('id_content', content_id); 
+//     formData.append('input_title',input_title);
+//     formData.append('txt_area', txt_area);
+//     formData.append('inputGroup_publish', inputGroup_publish);
+//     formData.append('inputGroup_post', inputGroup_post);
+//     formData.append('img_content', img_content);
+//     formData.append('category_ch', category_ch); 
+//     formData.append('file', upload.files[0]);
+//     formData.append('old_image', old_image); 
+//     formData.append('id_content', content_id); 
 
-    return formData;
+//     return formData;
 
-}
+// }
 
 /*
     super admin 1
@@ -543,34 +543,18 @@ $('#main_display').on('click', '#set_public', function(e) {
 /* Is used in the add_content.ejs but it is part of all content*/
 $('#main_display').on('click', '#update_content', function(e) {
 
-    const formData = contentValues(e);
 
-    for(let [i, val] of formData) {
-        console.log(i, val);
-    }
+    const title = $('#input_title');
+    const text_area = $('#txt_area');
+    const publish = $('#inputGroup_publish');
+    const post = $('#inputGroup_post');
+    const category = $('#inputGroup_category');
+    const image = $('#img_content');
+    const file = $('#upload');
+    const input_tag = $('.ss_input_tag');
+    const tag = $('.tag_category');
 
-    $.ajax({
-        type:'POST',
-        url:'/admin/content/update',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(res) {
-            if(res.length > 0) {
-
-                $('#main_display').html(res);
-
-            }
-
-            else if(res == '1') {
-                alert(' the image is missing');
-            }
-            else {
-                alert('somethin goes wrong');
-            }
-         }
-    });
-
+    sendingData(title, text_area, publish, post, category, image, file, input_tag, tag, '/admin/content/update', 'update');
 
 });
 
@@ -578,8 +562,6 @@ $('#main_display').on('click', '#update_content', function(e) {
 //is used in more diffren pages
 
 $('#main_display').on('click', ".ss_list_ctg", function(){
-
-    console.log('Hey');
 
     $('.ss_list_ctg').css("border-bottom", "none");
     
@@ -682,95 +664,223 @@ $('#main_display').on('click', '.tag_category' ,function(e) {
 
 });
 
+$('#main_display').on('click', '.tag_category_popup' ,function(e) {
+
+    this.remove();
+
+});
+
+
 
 //add category tag
-function tag_category(e) {
+function tag_category(input, tags, add_tag_class_name, ss_tags_container) {
 
     let same = false;
-    const parent = $(e.target).parent();
-    const input = $(parent).find('.ss_input_tag').val();
-    const tags = $(parent).parent().find('.ss_tags_container').find('.tag_category');
+    // const parent = $(e.target).parent();
+    // const input = $(parent).find('.ss_input_tag').val();
+    // const tags = $(parent).parent().find('.ss_tags_container').find('.tag_category');
 
     tags.each(function(i, obj) {
 
         let oldTags = $(obj).find('span').text();
 
-        if(oldTags == input) {
+        if(oldTags == input.val()) {
             same = true;
         } 
 
     });
 
-    if(typeof input !== 'undefined' && input !== '' && same === false) {
-
+    if(typeof input.val() !== 'undefined' && input.val() !== '' && same === false) {
 
         let div = $('<div> </div>');
         let span = $('<span> </span>');
 
-        div.addClass('tag_category');
+        div.addClass(add_tag_class_name);
 
-        span.text(input);
+        span.text(input.val());
 
         div.append(span);
         
-        $('.ss_tags_container').append(div);
+        $(ss_tags_container).append(div);
 
     } 
 
 
-    $('.ss_input_tag').val('');
+    $(input).val('');
 
 }
 
 $('#main_display').on('click','#btn_tag', function(e) {
-    tag_category(e);
+    const input_tag = $('.ss_input_tag');
+    const tags = $('.tag_category');
+    const ss_tags_container = $('.ss_tags_container');
+
+    tag_category(input_tag, tags, 'tag_category', ss_tags_container);
+    
+});
+
+$('#main_display').on('click','#btn_tag_popup', function(e) {
+    const input_tag = $('.ss_input_tag_popup');
+    const tags = $('.tag_category_popup');
+    const ss_tags_container =$('.ss_tags_container_popup');
+
+    tag_category(input_tag, tags, 'tag_category_popup', ss_tags_container);
     
 });
 
 
-$(document).on('keypress', function(e) {  
+
+$(document).on('keypress', function(e) {
+    
+    const input_tag = $('.ss_input_tag');
+    const tags = $('.tag_category');
+    const ss_tags_container = $('.ss_tags_container');
 
     if(e.code === 'Enter' || e.code === 'Space') {
         
-        tag_category(e);
+        tag_category(input_tag, tags, 'tag_category', ss_tags_container);
     }
 });
 
-$('#main_display').on('click','#post_content_btn', function(e) {
+
+//take all data from elements for add or update contents 
+function sendingData(title, text_area, publish, post, category, image, file, input_tag, tag, link, role) {
+
+    const form = new FormData();
+    let category_ch = [];
+
+    for(let i = 0; i < category.children().length; i++) { 
+        category_ch.push($(category.children()[i]).children().text());
+    }
+
+    let f = file[0].files[0];
+    let i;
+
+    if(typeof f !== 'undefined') {
+        i = f;
+    } else {
+        i = image.attr('src');
+    }
+
+    const content_id = $('.ss_full_holder').attr('data-id');
+
+    form.append('title', title.val());
+    form.append('text_area', text_area.val());
+    form.append('publish', publish.find(':selected').text());
+    form.append('post', post.find(':selected').text());
+    form.append('category',category_ch);
+    form.append('image',i);
+    form.append('content_id', content_id);
     
-    const form = contentValues(e);
-   
 
     $.ajax({
         type: 'POST',
-        url: '/admin/add_new/post',
+        url: link,
         data: form,
         contentType: false,
         processData: false,
         success: function(res) {
-            const view = $(e.target).parent().attr('data-check');
-            view == 'full' ? parent = $(e.target).parents().find('.ss_full_holder') :  parent = $(e.target).parents().find('.ss_full_holder_phone');
+
+            title.css('border', '1px solid #ccc');
+            $('.p_msg').hide();
+            input_tag.css('border', '1px solid #ccc');
+            text_area.parent().css('border', '1px solid #ccc');
+            image.css('border', '1px solid #ccc');
+
             
             if(res == 'IsEmpty') {
-                alert('Something is empty');
+
+                giveMsg('Something is empty', '.ss_right_block');
+
+                if(title.val() == '') {
+                    title.css('border', '1px solid red');
+                }
+
+                if(text_area.val() == '') {
+                    text_area.parent().css('border', '1px solid red');
+                }
+
+                if(category_ch.length <= 0) {
+
+                    input_tag.css('border', '1px solid red');
+
+                }
+                
+            } 
+            else if(res == 'Empty image') {
+
+                giveMsg('Image is empty', '.ss_right_block');
+
+                if(image.attr('src').length <= 0) {
+
+                    image.css('border', '1px solid red');
+
+                }
+                
+            } else {
+
+                if(role == 'update') {
+
+                    $('#main_display').html(res);
+
+                } else {
+
+                    giveMsg('You uploade new content', '.ss_right_block', 'green');
+                    title.val('');
+                    image.attr('src', '');
+                    tag.remove();
+
+                    text_area.val();
+                    
+                }
+
             }
 
-            else if(res == 'done'){
-
-                $('#input_title').val('');
-                $('.trumbowyg-editor').text('');
-                parent.find('#inputGroup_publish option:selected').text('');
-                parent.find('#inputGroup_post option:selected').text('')
-                $('#inputGroup_category').val('');
-                parent.find('#img_content').attr('src', '');
-
-                $('.ss_tags_container').empty();
-
-                $('#addNewModal').modal('hide');
-
-            }
+            
         }
     });
+
+
+
+}
+
+$('#main_display').on('click', '#cancle_content', function() {
+    $('#addNewModal').modal('hide');
+});
+
+//for small screens
+$('#main_display').on('click', '#post_content_btn_modul', function () {
+
+    const title = $('#input_title');
+    const text_area = $('#txt_area');
+    const publish = $('#inputGroup_publish_popup');
+    const post = $('#inputGroup_post_popup');
+    const category = $('#inputGroup_category_popup');
+    const image = $('#img_content_popup');
+    const file = $('#upload_popup');
+    const input_tag = $('.ss_input_tag_popup');
+    const tag = $('.tag_category_popup');
+    
+    sendingData(title, text_area, publish, post, category, image, file, input_tag, tag, '/admin/add_new/post', 'save');
+
+    $('#addNewModal').modal('hide');
+
+});
+
+//for large screens
+$('#main_display').on('click','#post_content_btn', function(e) {
+
+    const title = $('#input_title');
+    const text_area = $('#txt_area');
+    const publish = $('#inputGroup_publish');
+    const post = $('#inputGroup_post');
+    const category = $('#inputGroup_category');
+    const image = $('#img_content');
+    const file = $('#upload');
+    const input_tag = $('.ss_input_tag');
+    const tag = $('.tag_category');
+
+    sendingData(title, text_area, publish, post, category, image, file, input_tag, tag, '/admin/add_new/post', 'save');
     
 });
 
@@ -1505,6 +1615,7 @@ $('#main_display').on('click', '#btn_save_settings', function(){
     const images = $('.ss_img_tag_settings');
     const inputs = $('.ss_input_settings');
     const num_inputs = $('.ss_input_num');
+    //
 
     $.ajax({
         type:'POST',

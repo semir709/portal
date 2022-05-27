@@ -8,14 +8,16 @@
         <h3>Site icon</h3>
         <div class="row mb-3">
 
-            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-8 ss_img_settings">
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-8">
 
-                <div class="ss_img_holder">
-
+                <div class="ss_img_holder ss_img_settings_holder">
                     <img src="<%= data[0].icon %>" class="ss_img_tag_settings" alt="" id="img_icon" data-oldIcon="<%= data[0].icon %>" >
-                    <input type="file" class="ss_input_singin_img ss_input_settings" id="input_file_settings_icon" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_icon')">
-
                 </div>
+
+                <label for="input_file_settings_icon"  class=" ss_input_settings_image align-items-center d-flex">
+                    <div>Get image</div>
+                    <input type="file" class="ss_input_singin_img ss_input_settings ss_add_input" id="input_file_settings_icon" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_icon')">
+                </label>
 
             </div>
 
@@ -49,14 +51,18 @@
         <h3>Site logo</h3>
         <div class="row mb-3">
 
-            <div class="col-xl-2 col-lg-3  col-md-4 col-sm-8 ss_img_settings">
+            <div class="col-xl-2 col-lg-3  col-md-4 col-sm-8 ">
 
-                <div class="ss_img_holder">
-
+                <div class="ss_img_holder ss_img_settings_holder">
                     <img src="<%= data[0].logo %>" class="ss_img_tag_settings" alt="" id="img_logo" data-oldLogo="<%= data[0].logo %>">
-                    <input type="file" class="ss_input_singin_img ss_input_settings" id="input_file_settings_logo" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_logo')">
-
                 </div>
+
+                <label for="input_file_settings_logo"  class=" ss_input_settings_image align-items-center d-flex">
+                    <div>Get image</div>
+                    <input type="file" class="ss_input_singin_img ss_input_settings ss_add_input" id="input_file_settings_logo" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_logo')">
+                </label>
+
+               
 
             </div>
 

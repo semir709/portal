@@ -14,13 +14,13 @@
            
             <div class="modal-body ss_full_holder_phone">
                 
-                <div class="ss_inputs_block ">
+                <div class="ss_inputs_block_popup ">
         
                     <p>Publish</p>
                     <div class="ss_line"></div>
         
-                    <div class="mb-3">
-                        <select class="form-select" id="inputGroup_publish" >
+                    <div class="mb-3 mt-2">
+                        <select class="form-select" id="inputGroup_publish_popup" >
                             <% let options_id = ['1','2','3','4']; %>
                             <% let options = ['', 'Publish','Draft','Schedule','Trashe']; %>
 
@@ -40,7 +40,7 @@
                     <div class="ss_line"></div>
         
                     <div class="mb-3">
-                        <select class="form-select" id="inputGroup_post">
+                        <select class="form-select" id="inputGroup_post_popup">
 
                             <% let post_place_id = ['1','2','3']; %>
                             <% let post_place_options = ['', 'Main article','Article','Author choise']; %>
@@ -57,17 +57,17 @@
                 </div>
         
         
-                <div class="ss_inputs_block">
+                <div class="ss_inputs_block mb-3">
         
                     <p>Category</p>
                     <div class="ss_line"></div>
     
                     <div class="input-group mb-3" >
-                        <input type="text" class="ss_input_tag">
-                        <button class="btn" id="btn_tag" type="button">Click</button>
+                        <input type="text" class="ss_input_tag_popup">
+                        <button class="btn" id="btn_tag_popup" type="button">Click</button>
                     </div>
     
-                    <div class="ss_tags_container" id="inputGroup_category">
+                    <div class="ss_tags_container_popup" id="inputGroup_category_popup">
                         
                         <% data.forEach( e => { %>
 
@@ -83,15 +83,20 @@
     
                 <div class="row">
     
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 d-flex align-items-center">
     
-                        <div class="ss_img_holder">
-                            <img id="img_content" src="<%= data[0].image %>" data-old="<%= data[0].image%>" alt="">
-                            <input type="file" id="upload" class="ss_input_singin_img" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                        <div class="ss_img_holder ss_img_popup_holder  d-flex ss_add_image_holder">
+                            <img id="img_content_popup" src="<%= data[0].image %>" data-old="<%= data[0].image%>" alt="">
                         </div>
+
+                        <label for="upload_popup" class="ss_input_label align-items-center d-flex">
+                            <div>Get image</div>
+                            <input type="file" id="upload_popup" class="ss_input_singin_img ss_add_input" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_content_popup')">
+                        </label>
     
                     </div>
-    
+                    
+
                 </div>
                      
                     
@@ -100,7 +105,7 @@
     
             <div class="modal-footer justify-content-start ss_modal_footer" data-check="phone">
     
-              <button type="submit" class="btn btn-primary ss_button " id="post_content_btn" >Update</button>
+              <button type="submit" class="btn btn-primary ss_button " id="post_content_btn_modul" >Update</button>
               <button type="button" class="btn btn-primary ss_button" id="cancle_content">Cancle</button>
     
             </div>
@@ -127,14 +132,13 @@
            
             <div class="modal-body ss_full_holder_phone">
                 
-                <div class="ss_inputs_block ">
+                <div class="ss_inputs_block_popup ">
         
                     <p>Publish</p>
                     <div class="ss_line"></div>
         
-                    <div class="mb-3">
-                        <select class="form-select" id="inputGroup_publish" >
-                            <option value="" disabled selected value></option>
+                    <div class="mb-3 mt-2">
+                        <select class="form-select" id="inputGroup_publish_popup" >
                             <option value="1">Publish</option>
                             <option value="2">Draft</option>
                             <option value="3">Schedule</option>
@@ -150,8 +154,7 @@
                     <div class="ss_line"></div>
         
                     <div class="mb-3">
-                        <select class="form-select" id="inputGroup_post">
-                            <option value="" disabled selected value></option>
+                        <select class="form-select" id="inputGroup_post_popup">
                             <option value="1">Main article</option>
                             <option value="2">Article</option>
                             <option value="3">Author choise</option>
@@ -161,17 +164,17 @@
                 </div>
         
         
-                <div class="ss_inputs_block">
+                <div class="ss_inputs_block mb-3">
         
                     <p>Category</p>
                     <div class="ss_line"></div>
     
                     <div class="input-group mb-3" >
-                        <input type="text" class="ss_input_tag">
-                        <button class="btn" id="btn_tag" type="button">Click</button>
+                        <input type="text" class="ss_input_tag_popup">
+                        <button class="btn" id="btn_tag_popup" type="button">Click</button>
                     </div>
     
-                    <div class="ss_tags_container" id="inputGroup_category">
+                    <div class="ss_tags_container_popup" id="inputGroup_category_popup">
                         
             
                     </div>
@@ -180,12 +183,16 @@
     
                 <div class="row">
     
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 d-flex align-items-center">
     
-                        <div class="ss_img_holder">
-                            <img id="img_content" src="" alt="">
-                            <input type="file" id="upload" class="ss_input_singin_img" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this)">
+                        <div class="ss_img_holder ss_img_popup_holder d-flex ss_add_image_holder">
+                            <img id="img_content_popup" src="" alt="">
                         </div>
+
+                        <label for="upload_popup"  class="ss_input_label align-items-center d-flex">
+                            <div>Get image</div>
+                            <input type="file" id="upload_popup" class="ss_input_singin_img ss_add_input" accept="image/png, image/gif, image/jpeg" onchange="previewFile2(this, '#img_content_popup')">
+                        </label>
     
                     </div>
     
@@ -197,7 +204,7 @@
     
             <div class="modal-footer justify-content-start ss_modal_footer" data-check="phone">
     
-              <button type="submit" class="btn btn-primary ss_button " id="post_content_btn" >Update</button>
+              <button type="submit" class="btn btn-primary ss_button " id="post_content_btn_modul" >Update</button>
               <button type="button" class="btn btn-primary ss_button" id="cancle_content">Cancle</button>
     
             </div>

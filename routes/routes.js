@@ -51,7 +51,7 @@ route.get('/admin/admin_home', admin.isAuthenticated ,admin.admin_home);
 route.get('/admin/all_content', admin.isAuthenticated ,admin.all_content);
 route.get('/admin/all_content_data:category', admin.isAuthenticated , admin.all_content_data);
 route.get('/admin/all_content_data/getArticle:id', admin.isAuthenticated , admin.getArticle)
-route.post('/admin/content/update',upload.single('file'), admin.content_update);
+route.post('/admin/content/update',upload.single('image'), admin.content_update);
 
 route.get('/admin/content/trash:id', admin.content_trash);
 route.get('/admin/content/public:id', admin.content_publish);
@@ -60,7 +60,7 @@ route.get('/admin/content/draft:id', admin.content_draft);
 route.get('/admin/content/search:input', admin.content_search);
 
 route.get('/admin/add_new', admin.isAuthenticated ,admin.add_new);
-route.post('/admin/add_new/post', admin.isAuthenticated , upload.single('file') , admin.add_new_post);
+route.post('/admin/add_new/post', admin.isAuthenticated , upload.single('image') , admin.add_new_post);
 route.post('/admin/image_upload', admin.isAuthenticated , upload.single('image'), admin.upload_image);
 
 
