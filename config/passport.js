@@ -34,9 +34,6 @@ module.exports = function (passport) {
 
         })
         .catch((err) => {console.log(err);  cb(err)});
-
-           //check password
-           //---------------------------------------------------------------------
         
 
     }));

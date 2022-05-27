@@ -43,7 +43,7 @@ module.exports = {
 
     home: async function(req, res) {
 
-        req.session.cookie.maxAge = 3600000;
+        // req.session.cookie.maxAge = 3600000;
 
         res.render('admin.ejs')
     },
@@ -60,13 +60,15 @@ module.exports = {
         res.render('admin_home.ejs', {name: user, header_name: 'Home'});
     },
 
-    all_content: async function(req, res) { //----------------------------------------------------
+    all_content: async function(req, res) { 
 
         const con = db.getCon();
 
         const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
+
+        con.end();
 
         filter = [
 
@@ -116,6 +118,8 @@ module.exports = {
         const content = await con.promise().query(`SELECT id_content , title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE content.publish = ?`
         , [category]);
+
+        con.end();
 
         if(content[0].length <= 0) {
             res.render('messages/noData_msg.ejs');
@@ -184,6 +188,8 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
+        con.end();
+
         let filter = [
 
             {
@@ -235,6 +241,8 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
+        con.end();
+
         const user = await custom.getUser(req.user.id);
 
         let obj = {
@@ -262,6 +270,8 @@ module.exports = {
         const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
+
+        con.end();
 
         const user = await custom.getUser(req.user.id);
 
@@ -292,6 +302,8 @@ module.exports = {
         INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
         ,['1']);
 
+        con.end();
+
         const user = await custom.getUser(req.user.id);
 
         let obj = {
@@ -311,35 +323,7 @@ module.exports = {
 
     },
 
-    // content_schedule: async function(req, res) { 
-
-    //     const id = req.params.id;
-    //     const con = db.getCon();
-
-    //     await con.promise().query(`UPDATE content SET publish = ? WHERE id_content = ?`, ['3', id]);
-
-    //     const content = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
-    //     INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
-    //     ,['1']);
-
-    //     const user = await custom.getUser(req.user.id);
-
-    //     let obj = {
-    //         data:content[0],
-    //         header_name: 'All content',
-    //         name: user,
-    //         filter: filter,
-    //         filter_class_name: 'ss_content_filter',
-    //         input_search_id: 'content_search',
-    //         ctg: '3'
-    //     }
-
-    //     res.render('all_content_admin.ejs', obj);
-        
-
-    // },
-
-    content_search: async function(req, res) { //----------------------------------------------------
+    content_search: async function(req, res) { 
 
         const input = req.params.input;
         const con = db.getCon();   
@@ -351,10 +335,14 @@ module.exports = {
             data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
             INNER JOIN users ON content.id_user = users.id_user WHERE publish = ? `
             ,[newInput[1]]);
+
+            con.end();
         }
          else {
             data = await con.promise().query(`SELECT id_content, title, content.image, full_name, publish FROM content
             INNER JOIN users ON content.id_user = users.id_user WHERE title = ? OR full_name = ?`, [newInput[0], newInput[0]]);
+
+            con.end();
         }
 
 
@@ -376,6 +364,8 @@ module.exports = {
         INNER JOIN content_category ON content.id_content = content_category.id_content 
         INNER JOIN category ON category.id_category = content_category.id_category WHERE content.id_content = ? `, [id]);
 
+        con.end();
+
         const user = await custom.getUser(req.user.id);
 
         res.render('add_content.ejs', {name: user, header_name: 'Add new', data: data[0]});
@@ -389,16 +379,22 @@ module.exports = {
 
     changePassword: async function(req, res) {
 
-        if (req.session.views == 1) {
+        // req.session.count = 1;
+
+        // console.log(req.session);
+
+        // if (req.session.views == 1) {
           
-            res.send('You can\'t access this link');
+        //     res.send('You can\'t access this link');
         
-        } 
+        // } 
 
         const con = db.getCon();
         const id = req.query.id;
 
         const data = await con.promise().query(`SELECT full_name AS name FROM users WHERE id_user = ?`, [id]);
+
+        con.end();
 
         res.render('changePassword.ejs', data[0][0]);
 
@@ -441,6 +437,8 @@ module.exports = {
 
                             await con.promise().query(`UPDATE users SET user_password = ? WHERE id_user = ?` , [hash, data.id]);
                             req.session.views = 1;
+
+                            con.end();
                             res.send('/password_isChanged');
 
                         });
@@ -492,6 +490,8 @@ module.exports = {
 
             const user_info = await con.promise().query(`SELECT full_name, user_role, e_mail FROM users WHERE id_user = ?`, [user_id]);
 
+            con.end();
+
             const name = user_info[0][0].full_name;
             const role = user_info[0][0].user_role;
             const user_mail = user_info[0][0].e_mail;
@@ -542,6 +542,8 @@ module.exports = {
         
         const data = await con.promise().query(`SELECT full_name AS name, user_role AS role, e_mail FROM users WHERE id_user = ?`, [id]);
 
+        con.end();
+
         const final_data = data[0][0];
 
         final_data.role = custom.convertRole(final_data.role);
@@ -586,6 +588,8 @@ module.exports = {
 
                     const user = await con.promise().query(`SELECT full_name FROM users WHERE e_mail = ? AND num = ?`, [data.email, data.num]);
 
+                    con.end();
+
                     if(user[0].length <= 0) {
 
                         bcrypt.hash(data.password, 10, async function(err, hash) {
@@ -594,6 +598,8 @@ module.exports = {
                         await con.promise().query(`UPDATE users SET full_name = ?, user_role = ?, e_mail = ?, num = ?, user_password = ?, image = ?
                         WHERE id_user = ?`
                         ,[data.name, custom.convertRoletoNum(data.role), data.email, data.num, hash, '/img/'+ file.filename, data.id]);
+
+                        con.end();
                 
                         });
                         
@@ -635,17 +641,19 @@ module.exports = {
 
         const usr = await con.promise().query(`SELECT user_confirmed FROM users WHERE id_user = ?`, [id]).then(res => { return res[0][0].user_confirmed});
 
-        console.log(usr);
-
         if(usr == 1) {
 
             data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
          WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
+         con.end();
+
         } else {
 
             data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
          WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
+
+         con.end();
 
         }
 
@@ -697,14 +705,14 @@ module.exports = {
 
         const id = req.params.id;
 
-        console.log(id);
-
         const con = db.getCon();
 
         await con.promise().query(`UPDATE users SET user_trashed = ? WHERE id_user = ?`, [0, id]);
 
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
          WHERE user_trashed = ?`, [ 1]);
+
+         con.end();
 
         let filter = [
 
@@ -762,6 +770,8 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
          WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
 
+         con.end();
+
         let filter = [
 
             {
@@ -794,8 +804,6 @@ module.exports = {
 
         }
 
-        // res.render('partials/user_card.ejs', obj);
-
         if(data[0].length <= 0) {
             res.render('messages/noData_msg.ejs');
         } else {
@@ -811,9 +819,6 @@ module.exports = {
         const file = req.file;
 
         const con = db.getCon();
-
-        console.log(data, 'data');
-        console.log(file, 'file');
 
 
         if(custom.isEmpty(data.title, data.text_area, data.publish, data.post, data.category)) {
@@ -864,6 +869,8 @@ module.exports = {
             con.promise().query(`INSERT INTO content_category (id_content, id_category) VALUES (?, ?)`, [id_content, category_ids[i].id_category]);
         }
 
+        con.end();
+
         res.send('done');
 
     },
@@ -884,6 +891,8 @@ module.exports = {
         const data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
         group by c.category_name`, [1]);
+
+        con.end();
         
         filter = [
 
@@ -927,6 +936,8 @@ module.exports = {
         LEFT JOIN content_category cg ON c.id_category = cg.id_category WHERE c.in_use = ?
         group by c.category_name`, [use]);
 
+        con.end();
+
         const user = await custom.getUser(req.user.id);
 
         if(data[0].length <= 0) {
@@ -952,6 +963,8 @@ module.exports = {
         const new_data = await con.promise().query(`SELECT c.category_name AS category, c.in_use, c.id_category AS id, count(cg.id_category) AS count FROM category c
         LEFT JOIN content_category cg ON c.id_category = cg.id_category
         WHERE c.in_use = ? group by c.category_name`, [data.ctg]); 
+
+        con.end();
 
         filter = [
 
@@ -983,10 +996,6 @@ module.exports = {
 
         res.render('partials/category_list.ejs', obj);
 
-        // res.render('partials/category_list.ejs', {name: user, header_name: 'All content', data:data[0]});
-
-        // res.render('category.ejs', obj);
-
     },
 
     edit_trashed: async function(req, res) {
@@ -998,6 +1007,8 @@ module.exports = {
 
         const new_data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
         WHERE in_use = ?`, [1]);
+
+        con.end();
 
         res.render('partials/category_list.ejs', {data:new_data[0]});
 
@@ -1012,6 +1023,8 @@ module.exports = {
 
         const new_data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category
         WHERE in_use = ?`, [0]);
+
+        con.end();
 
         res.render('partials/category_list.ejs', {data:new_data[0]});
 
@@ -1028,10 +1041,14 @@ module.exports = {
         if(newInput[0] == 'empty') {
             data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
             WHERE in_use = ?`,[newInput[1]]);
+
+            con.end();
         }
             else {
                 data = await con.promise().query(`SELECT category_name AS category, id_category AS id, in_use FROM category 
                 WHERE category_name = ?`,[newInput[0], newInput[0]]);
+
+                con.end();
         }
 
         if(data[0].length <= 0) {
@@ -1048,6 +1065,8 @@ module.exports = {
 
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num FROM users
         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
+
+        con.end();
 
         const newRole = custom.convertRole(data.role);
 
@@ -1106,6 +1125,8 @@ module.exports = {
             data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
             WHERE user_trashed = ?`, [1]);
 
+            con.end();
+
             recoverInfo.isRecover = true;
             
 
@@ -1113,6 +1134,8 @@ module.exports = {
 
             data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
             WHERE user_confirmed = ? AND user_trashed = ?`, [use, 0]);
+
+            con.end();
         }
 
         const user = await custom.getUser(req.user.id);
@@ -1127,6 +1150,8 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
         WHERE user_confirmed = ? AND user_trashed = ?`, [0, 0]);
 
+        con.end();
+
         res.render('partials/user_card.ejs', {data: data[0], custom: custom});
 
     },
@@ -1137,6 +1162,8 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
         WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
+        con.end();
+
         res.render('partials/user_card.ejs', {data: data[0], custom: custom});
 
     },
@@ -1146,6 +1173,8 @@ module.exports = {
         const con = db.getCon();
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
         WHERE user_trashed = ?`, [1]);
+
+        con.end();
 
         res.render('partials/user_card.ejs', {data: data[0], custom: custom});
 
@@ -1179,6 +1208,8 @@ module.exports = {
             WHERE user_role = ? OR full_name = ? `, [role, newInput[0]]);
         }
 
+        con.end();
+
 
         if(data[0].length <= 0) {
             res.render('messages/noData_msg.ejs');
@@ -1196,9 +1227,7 @@ module.exports = {
         const data = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, about, image, facebook
         , instagram, twitter FROM users WHERE id_user = ?`, [id]);
 
-        // const newRole = custom.convertRole(data[0][0].user_role);
-
-        // data[0][0].user_role = newRole;
+        con.end();
 
         res.send(data[0][0]);
 
@@ -1209,9 +1238,6 @@ module.exports = {
         const data = req.body;
         const file = req.file;
         const con = db.getCon();
-
-        console.log(file, 'file');
-        console.log(data.src, 'src'); 
 
         let img;
 
@@ -1266,6 +1292,8 @@ module.exports = {
         const users = await con.promise().query(`SELECT id_user, full_name, user_role, e_mail, num, facebook, twitter, instagram FROM users
          WHERE user_confirmed = ? AND user_trashed = ?`, [1, 0]);
 
+         con.end();
+
         const newRole = custom.convertRole(data.role);
 
         let filter = [
@@ -1307,24 +1335,6 @@ module.exports = {
 
     },
 
-    // user_view: async function(req, res) {
-
-    //     const id = req.params.id;
-
-    //     const con = db.getCon();
-
-    //     const data = await con.promise().query(`SELECT full_name, user_role, e_mail, num,
-    //     about, image, facebook, twitter, instagram FROM users WHERE id_user = ?`, [id]);
-
-    //     const name = data[0][0].full_name;
-    //     const role = data[0][0].user_role;
-    //     const user = await custom.getUser(req.user.id);
-
-
-    //     res.render('user_view.ejs', {name: name, header_name: role, data: data[0]});
-
-    // },
-
     new_user: async function(req, res) {
         const user = await custom.getUser(req.user.id);
         res.render('new_user.ejs', {name: user, header_name: 'New user'});
@@ -1339,6 +1349,8 @@ module.exports = {
 
         const data = await con.promise().query(`SELECT site_icon AS icon, site_logo AS logo, site_title, 
         site_tagline, post_per_page, pagination_count FROM settings`);
+
+        con.end();
 
         const user = await custom.getUser(req.user.id);
 
@@ -1381,6 +1393,8 @@ module.exports = {
             site_title = ?, site_tagline = ?, post_per_page = ?, pagination_count = ?
             WHERE id_settings = ?`, [icon_res, logo_res, data.title, data.tagline,
             data.post_page,data.pag_count, '1']);
+
+            con.end();
 
             res.send('yes');
             return;
