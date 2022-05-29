@@ -2,47 +2,134 @@
 
     <button onclick="myFunction()" id="btn_nav" class="ss_btn_nav"><i class="fas fa-chevron-left ss_arrow" id="arrow"></i></button>
 
-    <ul class="p-0 ss_ul">
-        <li class="px-3 py-2 ss_list ss_dashboard d-flex align-items-center">
-            <i class="fas fa-tachometer-alt ss_icon_nav"></i>
-            <label class="ss_label ms-2" data-val="Dashboard">Dash</label>
-        </li>
+    <% if(role == '1') { %>
 
-        <li class="px-3 py-2 ss_list d-flex align-items-center">
-            <i class="fas fa-sticky-note ss_icon_nav"></i>
-            <label class="ss_label ms-2"  data-val="All content">Content</label>
-        </li>
+        <ul class="p-0 ss_ul">
+            <li class="px-3 py-2 ss_list ss_dashboard d-flex align-items-center">
+                <i class="fas fa-tachometer-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2" data-val="Dashboard">Dash</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sticky-note ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="All content">Content</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-plus ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Add new">Add new</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list ss_category d-flex align-items-center">
+                <i class="fas fa-tags ss_icon_nav"></i>
+                <label class="ss_label ms-1"  data-val="Category">Category</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-user-cog ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="User">User</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list ss_new_user d-flex align-items-center">
+                <i class="fas fa-user-plus ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="New user">New user</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list ss_settings d-flex align-items-center">
+                <i class="fas fa-cogs ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Settings">Settings</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sign-out-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Log out">Logout</label>
+            </li>
+        </ul>
 
-        <li class="px-3 py-2 ss_list d-flex align-items-center">
-            <i class="fas fa-plus ss_icon_nav"></i>
-            <label class="ss_label ms-2"  data-val="Add new">Add new</label>
-        </li>
+    <% } else if(role == 2) { %>
 
-        <li class="px-3 py-2 ss_list ss_category d-flex align-items-center">
-            <i class="fas fa-tags ss_icon_nav"></i>
-            <label class="ss_label ms-1"  data-val="Category">Category</label>
-        </li>
+        <ul class="p-0 ss_ul">
+            <li class="px-3 py-2 ss_list ss_dashboard d-flex align-items-center">
+                <i class="fas fa-tachometer-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2" data-val="Dashboard">Dash</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sticky-note ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="All content">Content</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-plus ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Add new">Add new</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list ss_category d-flex align-items-center">
+                <i class="fas fa-tags ss_icon_nav"></i>
+                <label class="ss_label ms-1"  data-val="Category">Category</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-user-cog ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="User">User</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sign-out-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Log out">Logout</label>
+            </li>
+        </ul>
 
-        <li class="px-3 py-2 ss_list d-flex align-items-center">
-            <i class="fas fa-user-cog ss_icon_nav"></i>
-            <label class="ss_label ms-2"  data-val="User">User</label>
-        </li>
-
-        <li class="px-3 py-2 ss_list ss_new_user d-flex align-items-center">
-            <i class="fas fa-user-plus ss_icon_nav"></i>
-            <label class="ss_label ms-2"  data-val="New user">New user</label>
-        </li>
-
-        <li class="px-3 py-2 ss_list ss_settings d-flex align-items-center">
-            <i class="fas fa-cogs ss_icon_nav"></i>
-            <label class="ss_label ms-2"  data-val="Settings">Settings</label>
-        </li>
-
-        <li class="px-3 py-2 ss_list d-flex align-items-center">
-            <i class="fas fa-sign-out-alt ss_icon_nav"></i>
-            <label class="ss_label ms-2"  data-val="Log out">Logout</label>
-        </li>
-    </ul>
+    <% } else if(role == 3) { %>
+        <ul class="p-0 ss_ul">
+            <li class="px-3 py-2 ss_list ss_dashboard d-flex align-items-center">
+                <i class="fas fa-tachometer-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2" data-val="Dashboard">Dash</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sticky-note ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="All content">Content</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-plus ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Add new">Add new</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list ss_category d-flex align-items-center">
+                <i class="fas fa-tags ss_icon_nav"></i>
+                <label class="ss_label ms-1"  data-val="Category">Category</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sign-out-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Log out">Logout</label>
+            </li>
+        </ul>
+    <% } else if(role == 4) { %>
+        <ul class="p-0 ss_ul">
+            <li class="px-3 py-2 ss_list ss_dashboard d-flex align-items-center">
+                <i class="fas fa-tachometer-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2" data-val="Dashboard">Dash</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sticky-note ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="All content">Content</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-plus ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Add new">Add new</label>
+            </li>
+    
+            <li class="px-3 py-2 ss_list d-flex align-items-center">
+                <i class="fas fa-sign-out-alt ss_icon_nav"></i>
+                <label class="ss_label ms-2"  data-val="Log out">Logout</label>
+            </li>
+        </ul>
+    <% } %>
 
 
 </div>

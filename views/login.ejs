@@ -15,31 +15,28 @@
 
     <div class="container-fluid">
 
-        <div class="row">
-
-            <div class="col-12 ss_bg ">
-
-                <div class="d-flex align-items-center ">
-
-                    <div class="logo"></div>
-
-                    <p class="ms-4 mb-0 fs-4">Name site</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
         <div class="row justify-content-center">
 
             <div class="col-lg-4 col-md-6 col-sm-8 mt-5">
 
-                <h1 class="fs-4">Login</h1>
-
                 <form class="ss_form_login" method="post" action="/login/verify">
 
-                    <div class="mb-3">
+                  <div class="mb-5">
+                    <h2 class="">Login</h2>
+
+                    <% if(login_error != '') { %>
+
+                      <label style="color:red" for=""><%= login_error %></label>
+
+                    <% } else { %>
+
+                      <label for="">Please enter your login and password!</label>
+
+                    <% } %>
+
+                  </div>
+
+                    <div class="mb-4">
 
                       <label for="exampleInputEmail1" class="form-label">Email address</label>
 
@@ -47,7 +44,7 @@
 
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-5">
 
                       <label for="exampleInputPassword1" class="form-label">Password</label>
 
@@ -55,33 +52,9 @@
 
                     </div>
 
-                    <div class="mb-3 form-check">
-
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-
-                    </div>
-
                     <button type="submit" class="btn  ss_submit_login">Log in</button>
 
                   </form>
-
-                  <button class="ss_different_strategy">
-
-                    <div class="d-flex align-items-center justify-content-center">
-
-                        <p class="mb-0 ">With Google</p>
-
-                        <div class="ss_google_icon">
-
-                            <i class="fab fa-google"></i>
-
-                        </div>
-
-                    </div>
-
-                  </button>
 
             </div>
 

@@ -364,7 +364,7 @@ $('#main_display').on('click', '.ss_content_filter', function(){//--------------
 });
 
 //search content
-$('#main_display').on('keyup', '#content_search', function() { //----------------------------------------------------
+$('#main_display').on('keyup', '#content_search', function() { 
     
     let val;
 
@@ -376,6 +376,8 @@ $('#main_display').on('keyup', '#content_search', function() { //---------------
     } else {
         val = $(this).val();
     }
+
+    console.log(val);
 
     $.ajax({
         type:'GET',
@@ -1026,7 +1028,7 @@ $('#main_display').on('click', '#category_recover', function() {
 
 });
 
-$('#main_display').on('keyup', '#category_search', function() { 
+$('#main_display').on('keyup', '#category_search', function() {  //ASdasd
 
     // const input = $(this).val();
 
@@ -1068,8 +1070,6 @@ $('#main_display').on('click', '.ss_users_filter', function(e){
         type: 'GET',
         url: '/admin/users/filter' + catg,
         success: function(res) {
-
-            console.log(catg);
 
             if(catg == '2') {
                 $('#user_confrme_btn').remove();
@@ -1506,13 +1506,13 @@ $('#main_display').on('click','#send_mail', function() {
         checkbox = 4;
     }
 
-    if(contributor.checked) {
-        checkbox = 5;
-    }
+    // if(contributor.checked) {
+    //     checkbox = 5;
+    // }
 
-    if(supporter.checked) {
-        checkbox = 6;
-    }
+    // if(supporter.checked) {
+    //     checkbox = 6;
+    // }
 
     const data = {
         name,

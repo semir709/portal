@@ -257,6 +257,17 @@ module.exports = {
 
   },
 
+  getRole: async function(id) {
+
+    const con = db.getCon();
+
+    const user =  await con.promise().query(`SELECT user_role FROM users WHERE id_user = ?`, id);
+
+    return user[0][0].user_role;
+
+
+  },
+
   sortCatgList: function(data, rows) {
 
     let a = [];
